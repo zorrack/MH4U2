@@ -27,9 +27,9 @@ $( document ).ready(function() {
     })
 
 	var overlays = {  // Create map overlays
-        "Activity code 14": codeFourteenLayer,
-		"Activity code 15": codeFifteenLayer,
-		"Activity code 16": codeSixteenLayer
+        "Клінічне ведення осіб з психічними розладами на первинній ланці медичної допомоги": codeFourteenLayer,
+		"Клінічне ведення осіб з психічними розладами спеціалізованими надавачами допомоги в сфері психічного здоров’я в лікарнях загального профілю": codeFifteenLayer,
+		"Надання допомоги особам з психічними розладами в спеціалізованих закладах з надання психіатричної допомоги": codeSixteenLayer
 	};
 	var layer = L.control.layers(null, overlays).addTo(map);
     init(map, sidebar);
@@ -51,7 +51,7 @@ function init(map, sidebar) {
 }
 // The form of data must be a JSON representation of a table as returned by Tabletop.js
 function googleSheetsToJson(data, map, sidebar) {
-var facilitiesJson = L.GeoJSON();
+var facilitiesJson = new L.GeoJSON();
 
     for (var row in data) {
     	var marker = createMarker(data[row]);
@@ -91,12 +91,7 @@ var facilitiesJson = L.GeoJSON();
     }
 }
  
- function createMarker(markerData) {
-
- }
-
- function parseRow(row)
-
+ function createMarker(row) {
     var marker = L.marker([row.Latitude, row.Longitude]);
     var coords = row.Latitude + ', ' + row.Longitude;
     //Generating features for GeoJSON and parsing features that will
@@ -122,12 +117,12 @@ var facilitiesJson = L.GeoJSON();
             'sac3': row["Subactivity code 3"],
             'sac4': row["Subactivity code 4"],
         }
-	};
+    };
 
-	return marker;
-}
+    return marker;
+ }
 
-// Color coding used for the markers. Returns different colors depending on the string passed. 
+ // Color coding used for the markers. Returns different colors depending on the string passed. 
 function getColor(type) {
     switch (type) {
         case '14':
