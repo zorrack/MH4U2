@@ -1,29 +1,28 @@
-var uniqueResults;
+var uniqueCategories;
 var overlays;
 
-function getUniqueValues(data, prop){
+function getUniqueCategories(data, prop){
 	var i,
-	    unique,
-	    uniqueResults = {};
+	unique;
+	uniqueCategories = {};
 
 	for (i in data) {
 	   unique = data[i].feature.properties.prop;
-	   if (!uniqueResults[prop]) {
-	      uniqueResults[prop]= [];
+	   if (!uniqueCategories[prop]) {
+	      uniqueCategories[prop]= [];
 	   }
 
-	   uniqueResults[prop].push(data[i]);
+	   uniqueCategories[prop].push(data[i]);
 	}
-	return uniqueResults;
-	console.log(uniqueResults);
+	return uniqueCategories;
+	console.log(uniqueCategories);
 }
 
 
 function createLayers(){
 	var categoryLayers = [];
 
-
-		for (var i = 0; i <= uniqueResults; i++) {
+		for (var i = 0; i <= uniqueCategories; i++) {
 			categoryLayers[i] = new L.layerGroup().addTo(map);
 		}
 	return categoryLayers;
@@ -31,16 +30,9 @@ function createLayers(){
 
 function addCategoryOverlays(){
 	overlays = {};
-	for (var i = 0; i <= uniqueResults; i++) {
+	for (var i = 0; i <= uniqueCategories; i++) {
 		// Create map overlays
 		overlays.push(categoryLayers[i] + ": " + categoryLayers[i]);
 	}
 	return overlays;
 }
-
-// function pushFacilitiesToLayers(){
-// 	var overlays = {
-// 		marker.feature.properties.ac1: marker.feature.properties.ac1
-// 	}
-// }
-

@@ -1,77 +1,285 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>MH4U мапа</title>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css"/>
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="node_modules/leaflet.awesome-markers/examples/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.css"/>
-    <link rel="stylesheet" href="node_modules/leaflet-sidebar/src/L.Control.Sidebar.css"/>
-    <style>
-        body {
-            padding: 0;
-            margin: 0;
-        }
-        html, body, #map {
-            height: 100%;
-            width: 100%;
-        }
-            #sidebar-content, #sidebar-title {
-            word-break: break-word;
-            margin-right: 40px;
-        }
-    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="node_modules/leaflet.awesome-markers/examples/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.css" />
+    <link rel="stylesheet" href="node_modules/leaflet-sidebar/src/L.Control.Sidebar.css" />
+
+        <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
 </head>
+
 <body>
+    <div class="wrapper">
 
-    <div id="sidebar" class="leaflet-sidebar collapsed">
-        <div class="leaflet-sidebar-pane">
-            <h1 id="sidebar-title"></h1>
-            <div id="sidebar-content"><p></p></div>
-        </div>
-    </div>
+        <nav id="control-bar">
+            <div class="control-bar-header">
+                <h3>MH4U</h3>
+            </div>
 
-<div class="investCast">
-    <div class="form-group row flex-v-left">
-        <div class="col-md-5">
-            <form class="form-inline">
-                <div class="form-group">
+            <ul class="list-unstyled components">
+                <p>Заклади системи охорони психічного здоров’я України</p>
+                <li class="active">
+                    <a href="#patienttypeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Цільове населення</a>
+                    <ul class="collapse list-unstyled" id="patienttypeSubmenu">
 
-                    <label class="control-label">Цільове населення</label>
-                    <br>
-                    <div class="inputs" id="patient-types">
-                        <input type="checkbox" class="patient-type" value="Older persons" checked="checked">
-                        <label for="box-1">Older persons</div>
+                        <div class="form-check">
+                            <li><div class="inputs" id="patient-types">
+                                <label>
+                                    <input type="checkbox" class="patient-type" value="General" name="check" checked> <span class="label-text">General</span>
+                                </label>
+                            </div></li>
 
-                    <label class="control-label">Тип послуг (Activity code 1)</label>
-                    <br>
-                    <div class="inputs" id="service-categories">
-                        <input type="checkbox" class="service-category" value="15" checked="checked">
-                        <label for="box-2">15</label>
-                        <input type="checkbox" class="service-category" value="13" checked="checked">
-                        <label for="box-2">13</label>
-                        <br>
+                            <li><div class="inputs" id="patient-types">
+                                <label>
+                                    <input type="checkbox" class="patient-type" value="Children, adolescents and adults" name="check" checked> <span class="label-text">Children, adolescents and adults</span>
+                                </label>
+                            </div></li>
+
+                            <li><div class="inputs" id="patient-types">
+                                <label>
+                                    <input type="checkbox" class="patient-type" value="Children and adolescents" name="check" checked> <span class="label-text">Children and adolescents</span>
+                                </label>
+                            </div></li>
+
+                            <li><div class="inputs" id="patient-types">
+                                <label>
+                                    <input type="checkbox" class="patient-type" value="Adult men" name="check" checked> <span class="label-text">Adult men</span>
+                                </label>
+                            </div></li>
+
+                            <li><div class="inputs" id="patient-types">
+                                <label>
+                                    <input type="checkbox" class="patient-type" value="Adult women" name="check" checked> <span class="label-text">Adult women</span>
+                                </label>
+                            </div></li>
+
+                            <li><div class="inputs" id="patient-types">
+                                <label>
+                                    <input type="checkbox" class="patient-type" value="Children" name="check" checked> <span class="label-text">Children</span>
+                                </label>
+                            </div></li>
+
+                            <li><div class="inputs" id="patient-types">
+                                <label>
+                                    <input type="checkbox" class="patient-type" value="Older persons" name="check" checked> <span class="label-text">Older persons</span>
+                                </label>
+                            </div></li>
+
+                            <li><div class="inputs" id="patient-types">
+                                <label>
+                                    <input type="checkbox" class="patient-type" value="Individuals suffering from addictions; seperate programme for adolescents" name="check" checked> <span class="label-text">Individuals suffering from addictions; seperate programme for adolescents</span>
+                                </label>
+                            </div></li>
+
+                            <li><div class="inputs" id="patient-types">
+                                <label>
+                                    <input type="checkbox" class="patient-type" value="Women in crises, women, women with young children" name="check" checked> <span class="label-text">Women in crises, women, women with young children</span>
+                                </label>
+                            </div></li>
+
+                            <li><div class="inputs" id="patient-types">
+                                <label>
+                                    <input type="checkbox" class="patient-type" value="Children with intellectual disabilities" name="check" checked> <span class="label-text">Children with intellectual disabilities</span>
+                                </label>
+                            </div></li>
+
+                            <li><div class="inputs" id="patient-types">
+                                <label>
+                                    <input type="checkbox" class="patient-type" value="Children with intellectual disabilities and mental retardation" name="check" checked> <span class="label-text">Children with intellectual disabilities and mental retardation</span>
+                                </label>
+                            </div></li>
+                        </ul>
+                </li>
+
+                <li>
+                    <a href="#servicecategorySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Категорія послуг (Activity Category 1)</a>
+                    <ul class="collapse list-unstyled" id="servicecategorySubmenu">
+                        <div class="form-check">
+                            <li>
+                                <div class="inputs" id="patient-types">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="13" name="check" checked> <span class="label-text">Психіатричні служби в лікарнях загального профілю</span>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="14" name="check" checked> <span class="label-text">Спеціалізовані психіатричні служби та заклади тривалого перебування</span>
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="15" name="check" checked> <span class="label-text">Будинки-інтернати (будинки догляду)</span>
+                                    </label>
+                                </div>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#mentalhealthworkersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Фахівці з психічного здоров'я</a>
+                    <ul class="collapse list-unstyled" id="mentalhealthworkersSubmenu">
+                        <div class="form-check">
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="Лікарі (unspecified)" name="check" checked> <span class="label-text">Лікарі (unspecified)</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="Сімейні лікарі_filter" name="check" checked> <span class="label-text">Сімейні лікарі</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="Психіатри_filter" name="check" checked> <span class="label-text">Психіатри</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="Дитячі психіатри_filter" name="check" checked> <span class="label-text">Дитячі психіатри</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="Неврологи _filter" name="check" checked> <span class="label-text">Неврологи</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="Педіатри_filter" name="check" checked> <span class="label-text">Педіатри</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="Наркологи_filter" name="check" checked> <span class="label-text">Наркологи</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="Медичні психологи_filter" name="check" checked> <span class="label-text">Медичні психологи</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="Лікарі психотерапевти_filter" name="check" checked> <span class="label-text">Лікарі психотерапевти</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="Медичні сестри" name="check" checked> <span class="label-text">"Медичні сестри"</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="Психологи_filter" name="check" checked> <span class="label-text">Психологи</span>
+                                    </label>
+                                </div>
+                            </li>                                                        
+
+                        </div>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+
+        <div id="content">          
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="control-barCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span>Фільтри пошуку</span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Фільтри пошуку">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Львівська область</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Донецька область</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Луганська область</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </form>
-        </div>
-    </div>
-</div>
+            </nav>
+            <div id="map"></div>
 
-    <div id="map"></div>
-            </div>
-            </div>
+        </div>
+                    <div id="sidebar" class="leaflet-sidebar collapsed">
+                <div class="leaflet-sidebar-pane">
+                    <h1 id="sidebar-title"></h1>
+                    <div id="sidebar-content"><p></p></div>
+                </div>
+            </div>    
     </div>
+
     <script src="node_modules/leaflet/dist/leaflet-src.js"></script>
     <script src="node_modules/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
-    <script src="node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.min.js"></script>
+    <script src="node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
     <script src="node_modules/tabletop/src/tabletop.min.js"></script>
-	<script src="node_modules/jquery/dist/jquery.min.js"></script>
-        <script src="js/init.js"></script>
-        <script src="js/filters.js"></script>
-        <script src="js/layers.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/layers.js"></script>
+
+        <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
 </body>
+
 </html>
