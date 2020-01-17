@@ -3,9 +3,18 @@ body {
     margin: 0;
 }
 
+#sidebar {
+    height: 60%;
+    max-width: 40vw;
+    float: left;
+}
 
 #sidebar-content, #sidebar-title {
     word-break: break-word;
+}
+
+#sidebar-title {
+    font-size: 24px!important;
 }
 
 #map-container, #navbar-container {
@@ -30,14 +39,13 @@ p {
 a,
 a:hover,
 a:focus {
-    color: inherit!important;
-    text-decoration: none;
+    color: inherit;
+    text-decoration: none!important;
     transition: all 0.3s;
 }
 
 .navbar {
-	position: sticky!important;
-	top: 25px;
+
 	width: 100%;
 	z-index: 2000;
     padding: 15px 10px;

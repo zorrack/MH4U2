@@ -180,3 +180,7 @@ function getColor(type) {
     }
 }
 
+//Changing facility title and description to title case
+//function capitalizeFirstLetter(string) {
+//    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+//}
