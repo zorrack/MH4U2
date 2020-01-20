@@ -180,6 +180,13 @@ function getColor(type) {
     }
 }
 
+function selectDeselectAllCheckBoxes() {
+    let checkboxs = document.getElementsByClassName("patient-type");
+        for(let i = 0; i < checkboxs.length ; i++) {
+            checkboxs[i].checked = !checkboxs[i].checked;
+          }
+}
+
 //Changing facility title and description to title case
 //function capitalizeFirstLetter(string) {
 //    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();

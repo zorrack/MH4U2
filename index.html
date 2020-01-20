@@ -33,7 +33,13 @@
                     <ul class="collapse list-unstyled" id="patienttypeSubmenu">
 
                         <div class="form-check">
-                            <li><div class="inputs" id="patient-types">
+
+                                <label>
+                                <input type="checkbox" id="selectall" name="selectall" autocomplete="off" checked onclick="selectDeselectAllCheckBoxes()">
+                                    <span class="label-text">Обрати все/очистити вибір</span>
+                                </label>
+                            
+                      <li><div class="inputs" id="patient-types">
                                 <label>
                                     <input type="checkbox" class="patient-type" value="General" name="check" checked> <span class="label-text">General</span>
                                 </label>
