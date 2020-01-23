@@ -3,6 +3,7 @@ var facilitiesForFiltering = {
     'type': 'FeatureCollection',
     'features': []
 };
+var checkboxIsChecked = new Boolean;
 
 $( document ).ready(function() {
 
@@ -14,7 +15,7 @@ $( document ).ready(function() {
         $('#control-bar').toggleClass('active');
     });
     
-    var map = L.map('map').setView([49.3994, 31.1656], 7);
+    var map = L.map('map').setView([49.8397, 24.0297], 8);
 
 	// This is the Carto Positron basemap
 	var basemap = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png', {
@@ -39,15 +40,24 @@ $( document ).ready(function() {
  //           createLayers();
  //           addCategoryOverlays();
     });
-
 });
 
-function getFilteredFacilities() {
-    return facilitiesForFiltering.features.filter((feature) => {
-        var isPatientTypeChecked = checkboxStates.patientTypes.includes(feature.properties.patienttype)
-        var isServiceCategoryChecked = checkboxStates.serviceCategories.includes(feature.properties.ac1)
-        return isPatientTypeChecked && isServiceCategoryChecked //only true if both are true
-    });
+function getFilteredMarkers(checkboxIsChecked) {
+    //Checking if at least one filter checkbox is checked
+    checkboxIsChecked = $("input[type=checkbox]").is(":checked");
+
+    //If at least one filtering checkbox is checked, filter by the selected feature property is applied
+    if(checkboxIsChecked === true) {
+        return facilitiesForFiltering.features.filter((feature) => {
+            var isPatientTypeChecked = checkboxStates.patientTypes.includes(feature.properties.patienttype)
+            var isServiceCategoryChecked = checkboxStates.serviceCategories.includes(feature.properties.ac1)
+            return isPatientTypeChecked || isServiceCategoryChecked //true if either of variables is true
+        });
+    }
+    //If no filter checkbox is checked, return all the features in the array. for filtering
+    else {
+        return facilitiesForFiltering.features;
+        }
 }
 // init() is called as soon as the page loads
 function init(map, sidebar, initFunction) {
@@ -60,8 +70,9 @@ function init(map, sidebar, initFunction) {
             createFacilitiesArray(data);
             updateCheckboxStates();
             var facilitiesJson = new L.GeoJSON(null);
-            createFilters(facilitiesJson, sidebar);
-        	createMarkers (facilitiesJson, sidebar, getFilteredFacilities());
+            checkboxIsChecked === false;
+            createFilters(facilitiesJson, sidebar, checkboxIsChecked);
+        	createMarkers (facilitiesJson, sidebar, getFilteredMarkers());
             facilitiesJson.addTo(map);
         },
         simpleSheet: true
@@ -72,44 +83,30 @@ function init(map, sidebar, initFunction) {
 function updateMarkers(filteredLayer, sidebar) {
     filteredLayer.clearLayers()
     updateCheckboxStates()
-    createMarkers(filteredLayer, sidebar, getFilteredFacilities());   
+    createMarkers(filteredLayer, sidebar, getFilteredMarkers())
 }
 
-function updateCheckboxStates() {
-  checkboxStates = {
-    patientTypes: [],
-    serviceCategories: []
-  }
-
-  for (let input of document.querySelectorAll('input')) {
-    if(input.checked) {
-      switch (input.className) {
-        case 'patient-type': checkboxStates.patientTypes.push(input.value); break
-        case 'service-category': checkboxStates.serviceCategories.push(input.value); break
-      }
-    }
-  }
-}
 // The form of data must be a JSON representation of a table as returned by Tabletop.js
 function createMarkers(facilitiesJson, sidebar, features) {
     for (var i = 0; i < features.length; i++) {
         var feature = features[i];
     	var marker = createMarker(feature);
             marker.addTo(facilitiesJson);
-            // AwesomeMarkers is used to create facility icons
+
+        // AwesomeMarkers is used to create facility icons
         var icon = L.AwesomeMarkers.icon({
             icon: 'glyphicon-glyphicon-plus',
             iconColor: 'white',
-            markerColor: getColor(feature.ac1),
-            prefix: 'glyphicon',
-            extraClasses: 'fa-rotate-0'
+            markerColor: getColor(feature.properties.ac1),
+            prefix: 'glyphicon'
         });
         marker.setIcon(icon);
 
-        //Function to open right side description panel after clicking on marker
+        //Function to open right sidebar with facility description after clicking on marker
         marker.on({
             click: function(e) {
                 L.DomEvent.stopPropagation(e);
+                //TODO: Add styles to sidebar content elements
                 document.getElementById('sidebar-title').innerHTML = e.target.feature.properties.officialName;
                 document.getElementById('sidebar-content').innerHTML = "Офіційна назва станом на " + e.target.feature.properties.recorddate + ": "
                 + e.target.feature.properties.officialName + "<br />" +
@@ -158,33 +155,24 @@ function createFacilitiesArray(data) {
  
 function createMarker(feature) {
     var marker = null;
-
     marker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]]);
     //Generating features for GeoJSON   
     marker.feature = feature;
-
-return marker;
+    return marker;
 }
 
  // Color coding used for the markers. Returns different colors depending on the string passed. 
 function getColor(type) {
     switch (type) {
         case '14':
-            return 'red';
-        case '15':
-            return 'blue';
+            return 'cadetblue';
+        case '3':
+            return 'darkblue';
                 case '16':
-            return 'orange';    
+            return 'purple';    
         default:
-            return 'green';
+            return 'blue';
     }
-}
-
-function selectDeselectAllCheckBoxes() {
-    let checkboxs = document.getElementsByClassName("patient-type");
-        for(let i = 0; i < checkboxs.length ; i++) {
-            checkboxs[i].checked = !checkboxs[i].checked;
-          }
 }
 
 //Changing facility title and description to title case

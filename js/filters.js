@@ -1,10 +1,32 @@
-function createFilters(filteredLayer, sidebar) {
+function createFilters(filteredLayer, sidebar, checkboxIsChecked) {
   for (let input of document.querySelectorAll('input')) {
     //Listen to 'change' event of all inputs
-
     input.onchange = (e) => {
-      console.log(e);
-      updateMarkers(filteredLayer, sidebar);
+    	updateMarkers(filteredLayer, sidebar); 
     }
   }
+}
+
+function updateCheckboxStates() {
+    checkboxStates = {
+    patientTypes: [],
+    serviceCategories: []
+  }
+  for (let input of document.querySelectorAll('input')) {
+    if(input.checked) {
+		switch (input.className) {
+			case 'patient-type-check': checkboxStates.patientTypes.push(input.value); break
+			case 'service-category': checkboxStates.serviceCategories.push(input.value); break
+      	}
+    }
+  }
+}
+//Button deselecting all the filtering checkboxes
+function clearCheckboxFilters(className, filteredLayer, sidebar) {
+    let checkboxes = document.getElementsByClassName(className);
+    for(let i = 0; i < checkboxes.length ; i++) {
+        checkboxes[i].checked = false; //!checkboxes[i].checked;
+    }
+	updateMarkers(filteredLayer, sidebar)
+	console.log('function clearCheckboxFilters status ' + checkboxIsChecked);
 }

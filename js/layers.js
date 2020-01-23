@@ -3,7 +3,7 @@ var overlays;
 
 function getUniqueCategories(data, prop){
 	var i,
-	unique;
+	unique,
 	uniqueCategories = {};
 
 	for (i in data) {
@@ -15,13 +15,11 @@ function getUniqueCategories(data, prop){
 	   uniqueCategories[prop].push(data[i]);
 	}
 	return uniqueCategories;
-	console.log(uniqueCategories);
 }
 
 
 function createLayers(){
 	var categoryLayers = [];
-
 		for (var i = 0; i <= uniqueCategories; i++) {
 			categoryLayers[i] = new L.layerGroup().addTo(map);
 		}
