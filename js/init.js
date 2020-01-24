@@ -64,7 +64,8 @@ function getFilteredMarkers(checkboxIsChecked) {
 function init(map, sidebar, initFunction) {
 // PASTE YOUR URLs HERE. These URLs come from Google Sheets 'shareable link' form
 //This is the link for old spreadsheet version saved on my Drive var dataURL = 'https://docs.google.com/spreadsheets/d/19de3Asjrw5JVRU0il06NbejNCBqTFjm90R7zlWN1cNE/edit?usp=sharing';
- var dataURL = 'https://docs.google.com/spreadsheets/d/1dxhQfU1AH99eHCfV-klZrzWVSYm81eLRMeK9tenozRY/edit?usp=sharing';
+//NOTE: Google Spreadsheet table should not have empty rows!!! 
+ var dataURL = 'https://docs.google.com/spreadsheets/d/12Me343d7zlUQ2UqCIVG9BrWD8OPL_KRk4DL1nm5RlAE/edit?usp=sharing';
     Tabletop.init({
         key: dataURL,
         callback: (data) => {
@@ -90,6 +91,10 @@ var buttonsJson = [
     {
         buttonId : "clearServiceCategoryFiltersBtn",
         className : "service-category"
+    }, 
+    {
+        buttonId : "clearMentalHealthWorkersBtn",
+        className : "mental-health-worker"
     }
 ];
 
