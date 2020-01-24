@@ -40,6 +40,7 @@ $( document ).ready(function() {
  //           createLayers();
  //           addCategoryOverlays();
     });
+
 });
 
 function getFilteredMarkers(checkboxIsChecked) {
@@ -73,11 +74,36 @@ function init(map, sidebar, initFunction) {
             checkboxIsChecked === false;
             createFilters(facilitiesJson, sidebar, checkboxIsChecked);
         	createMarkers (facilitiesJson, sidebar, getFilteredMarkers());
+            initializeEvents(facilitiesJson, sidebar);
             facilitiesJson.addTo(map);
         },
         simpleSheet: true
     });
     //SimpleSheet assumes there is only one table and automatically sends its data
+}
+
+var buttonsJson = [
+    {
+        buttonId : "clearPatientTypeFiltersBtn",
+        className : "patient-type-check"
+    },
+    {
+        buttonId : "clearServiceCategoryFiltersBtn",
+        className : "service-category"
+    }
+];
+
+function initializeEvents(facilitiesJson, sidebar) {
+    buttonsJson.forEach(element => bindClearFilter(element.buttonId, element.className, facilitiesJson, sidebar));
+}
+
+function bindClearFilter(buttonId, className, facilitiesJson, sidebar) {
+    var btn = document.getElementById(buttonId);
+    if (btn) {
+        btn.onclick = function (e) {
+            clearCheckboxFilters(className, facilitiesJson, sidebar);
+        }
+    }   
 }
 
 function updateMarkers(filteredLayer, sidebar) {
@@ -164,14 +190,12 @@ function createMarker(feature) {
  // Color coding used for the markers. Returns different colors depending on the string passed. 
 function getColor(type) {
     switch (type) {
-        case '14':
-            return 'cadetblue';
-        case '3':
-            return 'darkblue';
-                case '16':
-            return 'purple';    
-        default:
-            return 'blue';
+        case '14': return 'cadetblue';
+        case '3': return 'darkblue';
+        case '4': return 'gray';
+        case '15': return 'lightgray';
+        case '16': return 'purple';
+        default: return 'blue';
     }
 }
 
