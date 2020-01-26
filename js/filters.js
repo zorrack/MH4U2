@@ -9,16 +9,16 @@ function createFilters(filteredLayer, sidebar, checkboxIsChecked) {
 
 function updateCheckboxStates() {
     checkboxStates = {
-    patientTypes: [],
-    serviceCategories: [],
-    mentalHealthWorkers: []
-  }
+        patientTypes: [],
+        serviceCategories: [],
+        mentalHealthWorkers: []
+    }
   for (let input of document.querySelectorAll('input')) {
     if(input.checked) {
 		switch (input.className) {
 			case 'patient-type-check': checkboxStates.patientTypes.push(input.value); break
 			case 'service-category': checkboxStates.serviceCategories.push(input.value); break
-      case 'mental-health-worker': checkboxStates.mentalHealthWorkers.push(input.value); break      
+            case 'mental-health-worker': checkboxStates.mentalHealthWorkers.push(input.value); break
       	}
     }
   }

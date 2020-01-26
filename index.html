@@ -155,109 +155,9 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="#mentalhealthworkersSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Фахівці з психічного здоров'я</a>
-                    <ul class="collapse list-unstyled" id="mentalhealthworkersSubmenu">
-                        <div class="form-check">
-                            <button type="button" id="clearMentalHealthWorkersBtn" class="btn btn-info">Очистити фільтри</button>
-                            
-                            <li>
-                                <div class="inputs" id="service-categories">
-                                    <label>
-                                        <input type="checkbox" class="mental-health-worker" value="Лікарі (unspecified)" name="check"> <span class="label-text">Лікарі (unspecified)</span>
-                                    </label>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="inputs" id="mental-health-workers">
-                                    <label>
-                                        <input type="checkbox" class="mental-health-worker" value="Сімейні лікарі_filter" name="check"> <span class="label-text">Сімейні лікарі</span>
-                                    </label>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="inputs" id="mental-health-workers">
-                                    <label>
-                                        <input type="checkbox" class="mental-health-worker" value="Психіатри_filter" name="check"> <span class="label-text">Психіатри</span>
-                                    </label>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="inputs" id="mental-health-workers">
-                                    <label>
-                                        <input type="checkbox" class="mental-health-worker" value="Дитячі психіатри_filter" name="check"> <span class="label-text">Дитячі психіатри</span>
-                                    </label>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="inputs" id="mental-health-workers">
-                                    <label>
-                                        <input type="checkbox" class="mental-health-worker" value="Неврологи _filter" name="check"> <span class="label-text">Неврологи</span>
-                                    </label>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="inputs" id="mental-health-workers">
-                                    <label>
-                                        <input type="checkbox" class="mental-health-worker" value="Педіатри_filter" name="check"> <span class="label-text">Педіатри</span>
-                                    </label>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="inputs" id="mental-health-workers">
-                                    <label>
-                                        <input type="checkbox" class="mental-health-worker" value="Наркологи_filter" name="check"> <span class="label-text">Наркологи</span>
-                                    </label>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="inputs" id="mental-health-workers">
-                                    <label>
-                                        <input type="checkbox" class="mental-health-worker" value="Медичні психологи_filter" name="check"> <span class="label-text">Медичні психологи</span>
-                                    </label>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="inputs" id="mental-health-workers">
-                                    <label>
-                                        <input type="checkbox" class="mental-health-worker" value="Лікарі психотерапевти_filter" name="check"> <span class="label-text">Лікарі психотерапевти</span>
-                                    </label>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="inputs" id="mental-health-workers">
-                                    <label>
-                                        <input type="checkbox" class="mental-health-worker" value="Медичні сестри" name="check"> <span class="label-text">"Медичні сестри"</span>
-                                    </label>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="inputs" id="mental-health-workers">
-                                    <label>
-                                        <input type="checkbox" class="mental-health-worker" value="Психологи_filter" name="check"> <span class="label-text">Психологи</span>
-                                    </label>
-                                </div>
-                            </li>                                                        
-
-                        </div>
-                    </ul>
-                </li>
-
             </ul>
         </nav>
-
-        <div id="content">          
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
                     <button type="button" id="control-barCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
@@ -269,6 +169,7 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
+
                             <li class="nav-item active">
                                 <a class="nav-link" href="#">Львівська область</a>
                             </li>
@@ -278,21 +179,24 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Луганська область</a>
                             </li>
+
                         </ul>
                     </div>
+
                 </div>
             </nav>
+        <div id="content">
             <div id="map"></div>
 
         </div>
-                    <div id="sidebar" class="leaflet-sidebar collapsed">
-                <div class="leaflet-sidebar-pane">
-                    <h1 id="sidebar-title"></h1>
-                    <div id="sidebar-content"><p></p></div>
-                </div>
-            </div>    
-    </div>
 
+    </div>
+    <div id="sidebar" class="leaflet-sidebar collapsed">
+                    <div class="laflet-sidebar-pane">
+                        <h1 id="sidebar-title"></h1>
+                        <div id="sidebar-content"><p></p></div>
+                    </div>
+    </div>
     <script src="node_modules/leaflet/dist/leaflet-src.js"></script>
     <script src="node_modules/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
     <script src="node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>

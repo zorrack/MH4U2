@@ -26,7 +26,7 @@ $( document ).ready(function() {
 	basemap.addTo(map);
 
         var sidebar = L.control.sidebar('sidebar', {
-            closeButton: false,
+            closeButton: true,
             position: 'right'
         });
         map.addControl(sidebar);
@@ -34,12 +34,12 @@ $( document ).ready(function() {
         sidebar.hide();
     })
 
-	var layer = L.control.layers(null, overlays).addTo(map);
-    init(map, sidebar, () => {
-//        getUniqueCategories(facilitiesForFiltering, ac1);
- //           createLayers();
- //           addCategoryOverlays();
-    });
+//	var layer = L.control.layers(null, overlays).addTo(map);
+   init(map, sidebar, () => {
+       getUniqueCategories(facilitiesForFiltering, ac1);
+           createLayers();
+           addCategoryOverlays();
+   });
 
 });
 
@@ -86,7 +86,7 @@ function init(map, sidebar, initFunction) {
 var buttonsJson = [
     {
         buttonId : "clearPatientTypeFiltersBtn",
-        className : "patient-type-check"
+        className : "patient-type-check",
     },
     {
         buttonId : "clearServiceCategoryFiltersBtn",
@@ -139,11 +139,12 @@ function createMarkers(facilitiesJson, sidebar, features) {
                 L.DomEvent.stopPropagation(e);
                 //TODO: Add styles to sidebar content elements
                 document.getElementById('sidebar-title').innerHTML = e.target.feature.properties.officialName;
-                document.getElementById('sidebar-content').innerHTML = "Офіційна назва станом на " + e.target.feature.properties.recorddate + ": "
+                document.getElementById('sidebar-content').innerHTML = "Офіційна назва"  + ": "
                 + e.target.feature.properties.officialName + "<br />" +
                 "Юридична адреса<br />" + e.target.feature.properties.address + "<br />Контакти<br />" + e.target.feature.properties.phonenumber + " " + 
-                e.target.feature.properties.email + "<br />" + "Цільове населення: " + e.target.feature.properties.patienttype + 
-                "<br />Фахівці з психічного здоров'я<br />" + e.target.feature.properties.mentalhealthworkers;
+                e.target.feature.properties.email + "<br />" + "<br />Цільове населення: <br />" + e.target.feature.properties.patienttype +
+                "<br />Фахівці з психічного здоров'я<br />" + e.target.feature.properties.mentalhealthworkers +
+                "<br />Інформація актуальна станом на " + e.target.feature.properties.recorddate;
                 sidebar.show();
             }
         });
@@ -177,6 +178,19 @@ function createFacilitiesArray(data) {
                     'sac2': row["Subactivity code 2"],
                     'sac3': row["Subactivity code 3"],
                     'sac4': row["Subactivity code 4"],
+
+                    'familydoctors' : row["Сімейні лікарі_filter"],
+                    'psychiatrists' : row["Психіатри_filter"],
+                    'childpsychiatrists' : row["Дитячі психіатри_filter"],
+                    'neurologists' : row["Неврологи _filter"],
+                    'pediaters' : row["Педіатри_filter"],
+                    'narcologists' : row["Наркологи_filter"],
+                    'medpsychologists' : row["Медичні психологи_filter"],
+                    'docpsychotherapists' : row["Лікарі психотерапевти_filter"],
+                    'psychologists' : row["Психологи_filter"],
+                    'psychotherapists' : row["Психотерапевти _filter"],
+                    'logopeads' : row["Логопеди_filter"],
+                    'therapists' : row["Терапевти _filter"],
                 }
             }
             facilitiesForFiltering.features.push(feature);

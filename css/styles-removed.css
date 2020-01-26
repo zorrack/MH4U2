@@ -1,0 +1,17 @@
+/* zoom control */
+
+.leaflet-left .leaflet-control {
+
+	display: block;
+	position: absolute!important;
+	}
+
+.leaflet-sidebar {
+    position: relative!important;
+    float: right;
+}
+
+#map-container, #navbar-container {
+	position: fixed;
+	margin-top: 5px;
+}
