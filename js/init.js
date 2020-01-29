@@ -30,15 +30,16 @@ $( document ).ready(function() {
             position: 'right'
         });
         map.addControl(sidebar);
-    map.on('click', function () {
+        map.on('click', function () {
         sidebar.hide();
     })
 
-//	var layer = L.control.layers(null, overlays).addTo(map);
-   init(map, sidebar, () => {
+    var layer = L.control.layers(null, overlays).addTo(map);
+    init(map, sidebar, () => {
        getUniqueCategories(facilitiesForFiltering, ac1);
-           createLayers();
-           addCategoryOverlays();
+console.log(overlays);
+        createLayers();
+        addCategoryOverlays();
    });
 
 });

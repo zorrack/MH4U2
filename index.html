@@ -23,7 +23,7 @@
 
         <nav id="control-bar">
             <div class="control-bar-header">
-                <h3>MH4U</h3>
+                <h3>Mental Health for Ukraine</h3>
             </div>
 
             <ul class="list-unstyled components">
@@ -34,11 +34,10 @@
 
                         <div class="form-check">
                             <button type="button" id="clearPatientTypeFiltersBtn" class="btn btn-info">Очистити фільтри</button>
-                            
                             <li>
                                 <div class="inputs" id="patient-types">
                                     <label>
-                                        <input type="checkbox" class="patient-type-check" value="General" name="check" unchecked> <span class="label-text">General</span>
+                                        <input type="checkbox" class="patient-type-check" value="General" name="check"> <span class="label-text">General</span>
                                     </label>
                                 </div>
                             </li>
@@ -52,7 +51,7 @@
                             </li>
 
                             <li>
-                                <div class="inputs" id="patient-types">
+                                <div class="inputs inputs chiller_cb" id="patient-types">
                                     <label>
                                         <input type="checkbox" class="patient-type-check" value="Children and adolescents" name="check"> <span class="label-text">Children and adolescents</span>
                                     </label>
@@ -126,17 +125,59 @@
                 </li>
 
                 <li>
-                    <a href="#servicecategorySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Категорія послуг (Activity Category 1)</a>
+                    <a href="#servicecategorySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Категорія послуг</a>
                     <ul class="collapse list-unstyled" id="servicecategorySubmenu">
                         <div class="form-check">
                             <button type="button" id="clearServiceCategoryFiltersBtn" class="btn btn-info">Очистити фільтри</button>
+
                             <li>
                                 <div class="inputs" id="service-categories">
                                     <label>
-                                        <input type="checkbox" class="service-category" value="13" name="check"> <span class="label-text">Психіатричні служби в лікарнях загального профілю</span>
+                                        <input type="checkbox" class="service-category" value="1" name="check"> <span class="label-text">Загальні активності з охорони психічного здоров’я та психосоціальної підтримки</span>
                                     </label>
                                 </div>
                             </li>
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="2" name="check"> <span class="label-text">Поширення інформації в громаді</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="3" name="check"> <span class="label-text">Неформальні психосоціальні послуги в громаді</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="4" name="check"> <span class="label-text">Психосоціальна підтримка в освіті</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="5" name="check"> <span class="label-text">Заходи промоції та превенції на робочому місці</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="service-categories">
+                                    <label>
+                                        <input type="checkbox" class="service-category" value="6" name="check"> <span class="label-text">Психосоціальні втручання</span>
+                                    </label>
+                                </div>
+                            </li>
+
                             <li>
                                 <div class="inputs" id="service-categories">
                                     <label>
@@ -158,7 +199,10 @@
             </ul>
         </nav>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
                 <div class="container-fluid">
                     <button type="button" id="control-barCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
@@ -185,15 +229,14 @@
                     </div>
 
                 </div>
-        </nav>
-        
-        <div id="content">
-        <div id="sidebar" class="leaflet-sidebar collapsed">
-            <div class="laflet-sidebar-pane">
-                <h1 id="sidebar-title"></h1>
-                <div id="sidebar-content"><p></p></div>
+            </nav>
+
+            <div id="sidebar" class="leaflet-sidebar collapsed">
+                <div class="laflet-sidebar-pane">
+                    <h1 id="sidebar-title"></h1>
+                    <div id="sidebar-content"><p></p></div>
+                </div>
             </div>
-        </div>
             <div id="map"></div>
 
         </div>

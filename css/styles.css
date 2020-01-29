@@ -3,10 +3,18 @@ body {
     margin: 0;
 }
 
+/* ---------------------------------------------------
+    LEAFLET INFO SIDEBAR STYLE
+----------------------------------------------------- */
 
+#sidebar {
+    height: auto;
+    position: relative;
+}
 
 #sidebar-content, #sidebar-title {
     word-break: break-word;
+    margin-right: 10px;
 }
 
 #sidebar-title {
@@ -17,12 +25,14 @@ body {
     float: right;
 }
 
+a.close {
+    z-index: 2700!important;
+}
+
 
 #map{
-	height: 100vh;
     width: 100%;
-    position: fixed;
-    margin-top: 85px;
+    min-height: 100vh;
 }
 
 p {
@@ -40,15 +50,16 @@ a:focus {
     transition: all 0.3s;
 }
 
-.navbar {
+/* ---------------------------------------------------
+    UPPER NAVBAR STYLE
+----------------------------------------------------- */
 
-	width: 100%;
-    height: 80px;
-	z-index: 2000;
-    padding: 15px 10px;
+.navbar {
+    padding: 10px;
     background: #fff;
     border: none;
     border-radius: 0;
+    margin-bottom: 10px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -65,18 +76,14 @@ a:focus {
     margin: 40px 0;
 }
 
-a.close {
-	z-index: 2700!important;
-}
-
 
 /* ---------------------------------------------------
-    NAVIGATION (FILTERING) BAR STYLE
+    LEFT (FILTERING) BAR STYLE
 ----------------------------------------------------- */
 
 .wrapper {
     display: flex;
-    width: 100%!important;
+    align-items: stretch;
     align-items: stretch;
 }
 
@@ -174,16 +181,18 @@ a.article:hover {
     color: #fff !important;
 }
 
+.label{
+    margin-left: 20px;
+}
+
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
 
 #content {
     width: 100%;
-    padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
-    position: fixed;
 }
 
 @media (max-width: 768px) {
