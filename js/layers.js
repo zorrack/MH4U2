@@ -1,13 +1,15 @@
 var uniqueCategories;
 var overlays;
 
+//TODO: fix the constructor
 function getUniqueCategories(data, prop){
 	var i,
 	unique,
-	uniqueCategories = {};
+	uniqueCategories = {}; ///collection feature: value
 
 	for (i in data) {
 	   unique = data[i].feature.properties.prop;
+	   console.log(unique);
 	   if (!uniqueCategories[prop]) {
 	      uniqueCategories[prop]= [];
 	   }
@@ -20,17 +22,17 @@ function getUniqueCategories(data, prop){
 
 function createLayers(){
 	var categoryLayers = [];
-		for (var i = 0; i <= uniqueCategories; i++) {
+		for (var i = 0; i < uniqueCategories.length; i++) {
 			categoryLayers[i] = new L.layerGroup().addTo(map);
 		}
-	return categoryLayers;
 }
 
 function addCategoryOverlays(){
-	overlays = {};
-	for (var i = 0; i <= uniqueCategories; i++) {
+	overlays = {}; ///collection feature: value
+	for (var i = 0; i < uniqueCategories.length; i++) {
 		// Create map overlays
 		overlays.push(categoryLayers[i] + ": " + categoryLayers[i]);
 	}
 	return overlays;
 }
+

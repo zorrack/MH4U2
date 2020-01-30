@@ -32,3 +32,16 @@ function clearCheckboxFilters(className, filteredLayer, sidebar) {
 	updateMarkers(filteredLayer, sidebar)
 	console.log('function clearCheckboxFilters status ' + checkboxIsChecked);
 }
+
+function filterByFeature(collection, predicate) {
+    var result = new Array();
+    var length = collection.length;
+    for(var i = 0; i < length; i++) {
+        if(predicate(collection[i]) == true) {
+            result.push(collection[i]);
+        }
+    }
+    return result;
+    console.log(result);
+}
+

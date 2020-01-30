@@ -34,13 +34,10 @@ $( document ).ready(function() {
         sidebar.hide();
     })
 
-    var layer = L.control.layers(null, overlays).addTo(map);
-    init(map, sidebar, () => {
-       getUniqueCategories(facilitiesForFiltering, ac1);
-console.log(overlays);
-        createLayers();
-        addCategoryOverlays();
-   });
+    init(map, sidebar, () => {;
+        var layer = L.control.layers(null, overlays).addTo(map);
+        matchMarkerActivityCategoryCode(facilitiesForFiltering, activityCategoriesJson);
+    });
 
 });
 
@@ -64,24 +61,31 @@ function getFilteredMarkers(checkboxIsChecked) {
 // init() is called as soon as the page loads
 function init(map, sidebar, initFunction) {
 // PASTE YOUR URLs HERE. These URLs come from Google Sheets 'shareable link' form
-//This is the link for old spreadsheet version saved on my Drive var dataURL = 'https://docs.google.com/spreadsheets/d/19de3Asjrw5JVRU0il06NbejNCBqTFjm90R7zlWN1cNE/edit?usp=sharing';
 //NOTE: Google Spreadsheet table should not have empty rows!!! 
- var dataURL = 'https://docs.google.com/spreadsheets/d/12Me343d7zlUQ2UqCIVG9BrWD8OPL_KRk4DL1nm5RlAE/edit?usp=sharing';
-    Tabletop.init({
-        key: dataURL,
-        callback: (data) => {
-            createFacilitiesArray(data);
-            updateCheckboxStates();
-            var facilitiesJson = new L.GeoJSON(null);
-            checkboxIsChecked === false;
-            createFilters(facilitiesJson, sidebar, checkboxIsChecked);
-        	createMarkers (facilitiesJson, sidebar, getFilteredMarkers());
-            initializeEvents(facilitiesJson, sidebar);
-            facilitiesJson.addTo(map);
-        },
-        simpleSheet: true
-    });
-    //SimpleSheet assumes there is only one table and automatically sends its data
+var dataURL = 'https://docs.google.com/spreadsheets/d/12Me343d7zlUQ2UqCIVG9BrWD8OPL_KRk4DL1nm5RlAE/edit?usp=sharing';
+var acCodesURL = 'https://docs.google.com/spreadsheets/d/1jX20bMaNFLYijteEGjJBDNzpkVqTC_YP0mA2B1zpED4/edit?usp=sharing';
+Tabletop.init({
+    key: dataURL,
+    callback: (data) => {
+        createFacilitiesArray(data);
+        updateCheckboxStates();
+        var facilitiesJson = new L.GeoJSON(null);
+        checkboxIsChecked === false;
+        createFilters(facilitiesJson, sidebar, checkboxIsChecked);
+    	createMarkers (facilitiesJson, sidebar, getFilteredMarkers());
+        initializeEvents(facilitiesJson, sidebar);
+        facilitiesJson.addTo(map);
+    },
+    simpleSheet: true
+});
+Tabletop.init({
+    key: acCodesURL,
+    callback: (acCodes) => {
+        getActivityCategoriesJson(acCodes);
+    },
+    simpleSheet: true 
+});
+//SimpleSheet assumes there is only one table and automatically sends its data
 }
 
 var buttonsJson = [
@@ -125,7 +129,7 @@ function createMarkers(facilitiesJson, sidebar, features) {
     	var marker = createMarker(feature);
             marker.addTo(facilitiesJson);
 
-        // AwesomeMarkers is used to create facility icons
+        // AwesomeMarkers is used to create facility icons. TODO: add icons
         var icon = L.AwesomeMarkers.icon({
             icon: 'glyphicon-glyphicon-plus',
             iconColor: 'white',
@@ -174,11 +178,6 @@ function createFacilitiesArray(data) {
                     'patienttype': row["Цільове населення"],
                     'mentalhealthworkers': row["фахівці з психічного здоров'я"],
                     'ac1': row["Activity code 1"],
-                    'ac2': row["Activity code 2"],
-                    'sac1': row["Subactivity code 1"],
-                    'sac2': row["Subactivity code 2"],
-                    'sac3': row["Subactivity code 3"],
-                    'sac4': row["Subactivity code 4"],
 
                     'familydoctors' : row["Сімейні лікарі_filter"],
                     'psychiatrists' : row["Психіатри_filter"],
