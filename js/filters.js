@@ -27,7 +27,7 @@ function updateCheckboxStates() {
 function clearCheckboxFilters(className, filteredLayer, sidebar) {
     let checkboxes = document.getElementsByClassName(className);
     for(let i = 0; i < checkboxes.length ; i++) {
-        checkboxes[i].checked = false; //!checkboxes[i].checked;
+        checkboxes[i].checked = false;
     }
 	updateMarkers(filteredLayer, sidebar)
 	console.log('function clearCheckboxFilters status ' + checkboxIsChecked);

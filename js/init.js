@@ -3,6 +3,7 @@ var facilitiesForFiltering = {
     'type': 'FeatureCollection',
     'features': []
 };
+
 var checkboxIsChecked = new Boolean;
 
 $( document ).ready(function() {
@@ -70,11 +71,18 @@ Tabletop.init({
         createFacilitiesArray(data);
         updateCheckboxStates();
         var facilitiesJson = new L.GeoJSON(null);
+        //Creating cluster layers for each students' year. TODO: deal with this redundant piece of code
+        var markerCluster = new L.markerClusterGroup({
+            showCoverageOnHover: false,
+            zoomToBoundsOnClick: true
+        });
         checkboxIsChecked === false;
-        createFilters(facilitiesJson, sidebar, checkboxIsChecked);
+
+        createFilters(markerCluster, sidebar, checkboxIsChecked);
     	createMarkers (facilitiesJson, sidebar, getFilteredMarkers());
-        initializeEvents(facilitiesJson, sidebar);
-        facilitiesJson.addTo(map);
+        initializeEvents(markerCluster, sidebar);
+        markerCluster.addLayers(facilitiesJson);
+        map.addLayer(markerCluster);
     },
     simpleSheet: true
 });
@@ -103,18 +111,19 @@ var buttonsJson = [
     }
 ];
 
-function initializeEvents(facilitiesJson, sidebar) {
-    buttonsJson.forEach(element => bindClearFilter(element.buttonId, element.className, facilitiesJson, sidebar));
+function initializeEvents(markerCluster, sidebar) {
+    buttonsJson.forEach(element => bindClearFilter(element.buttonId, element.className, markerCluster, sidebar));
 }
 
-function bindClearFilter(buttonId, className, facilitiesJson, sidebar) {
+function bindClearFilter(buttonId, className, markerCluster, sidebar) {
     var btn = document.getElementById(buttonId);
     if (btn) {
         btn.onclick = function (e) {
-            clearCheckboxFilters(className, facilitiesJson, sidebar);
+            clearCheckboxFilters(className, markerCluster, sidebar);
         }
     }   
 }
+
 
 function updateMarkers(filteredLayer, sidebar) {
     filteredLayer.clearLayers()
@@ -128,7 +137,6 @@ function createMarkers(facilitiesJson, sidebar, features) {
         var feature = features[i];
     	var marker = createMarker(feature);
             marker.addTo(facilitiesJson);
-
         // AwesomeMarkers is used to create facility icons. TODO: add icons
         var icon = L.AwesomeMarkers.icon({
             icon: 'glyphicon-glyphicon-plus',
@@ -204,6 +212,12 @@ function createMarker(feature) {
     //Generating features for GeoJSON   
     marker.feature = feature;
     return marker;
+}
+
+
+function getAllClusteredMarkers(e) {
+    e.layer.getAllChildMarkers();
+    console.log('Markers inside clustered layer: ' + e.layer.getAllChildMarkers());
 }
 
  // Color coding used for the markers. Returns different colors depending on the string passed. 
