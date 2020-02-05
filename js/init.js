@@ -1,9 +1,10 @@
 var facilitiesJson;
-var facilitiesForFiltering = {
+var collection = {
     'type': 'FeatureCollection',
     'features': []
 };
-
+var map = L.map('map').setView([49.8397, 24.0297], 8);
+var mapmargin = 10;
 var checkboxIsChecked = new Boolean;
 
 $( document ).ready(function() {
@@ -16,8 +17,7 @@ $( document ).ready(function() {
         $('#control-bar').toggleClass('active');
     });
     
-    var map = L.map('map').setView([49.8397, 24.0297], 8);
-
+    
 	// This is the Carto Positron basemap
 	var basemap = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png', {
 	    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
@@ -26,18 +26,19 @@ $( document ).ready(function() {
 	});
 	basemap.addTo(map);
 
-        var sidebar = L.control.sidebar('sidebar', {
-            closeButton: true,
-            position: 'right'
-        });
-        map.addControl(sidebar);
-        map.on('click', function () {
+    var sidebar = L.control.sidebar('sidebar', {
+        closeButton: true,
+        position: 'right'
+    });
+    map.addControl(sidebar);
+    map.on('click', function () {
         sidebar.hide();
     })
 
-    init(map, sidebar, () => {;
-        var layer = L.control.layers(null, overlays).addTo(map);
-        matchMarkerActivityCategoryCode(facilitiesForFiltering, activityCategoriesJson);
+    init(map, sidebar, () => {
+
+        // var overlays = createLayers(map, activityCategoriesJson);
+        // var layer = L.control.layers(null, overlays).addTo(map);
     });
 
 });
@@ -48,51 +49,56 @@ function getFilteredMarkers(checkboxIsChecked) {
 
     //If at least one filtering checkbox is checked, filter by the selected feature property is applied
     if(checkboxIsChecked === true) {
-        return facilitiesForFiltering.features.filter((feature) => {
+        return collection.features.filter((feature) => {
             var isPatientTypeChecked = checkboxStates.patientTypes.includes(feature.properties.patienttype)
             var isServiceCategoryChecked = checkboxStates.serviceCategories.includes(feature.properties.ac1)
             return isPatientTypeChecked || isServiceCategoryChecked //true if either of variables is true
         });
     }
-    //If no filter checkbox is checked, return all the features in the array. for filtering
+    //If no filter checkbox is checked, return all the features in the array.
     else {
-        return facilitiesForFiltering.features;
+        return collection.features;
         }
 }
 // init() is called as soon as the page loads
 function init(map, sidebar, initFunction) {
 // PASTE YOUR URLs HERE. These URLs come from Google Sheets 'shareable link' form
 //NOTE: Google Spreadsheet table should not have empty rows!!! 
-var dataURL = 'https://docs.google.com/spreadsheets/d/12Me343d7zlUQ2UqCIVG9BrWD8OPL_KRk4DL1nm5RlAE/edit?usp=sharing';
-var acCodesURL = 'https://docs.google.com/spreadsheets/d/1jX20bMaNFLYijteEGjJBDNzpkVqTC_YP0mA2B1zpED4/edit?usp=sharing';
-Tabletop.init({
-    key: dataURL,
-    callback: (data) => {
-        createFacilitiesArray(data);
-        updateCheckboxStates();
-        var facilitiesJson = new L.GeoJSON(null);
-        //Creating cluster layers for each students' year. TODO: deal with this redundant piece of code
-        var markerCluster = new L.markerClusterGroup({
-            showCoverageOnHover: false,
-            zoomToBoundsOnClick: true
-        });
-        checkboxIsChecked === false;
+    var dataURL = 'https://docs.google.com/spreadsheets/d/12Me343d7zlUQ2UqCIVG9BrWD8OPL_KRk4DL1nm5RlAE/edit?usp=sharing';
+    var acCodesURL = 'https://docs.google.com/spreadsheets/d/1jX20bMaNFLYijteEGjJBDNzpkVqTC_YP0mA2B1zpED4/edit?usp=sharing';
+    Tabletop.init({
+        key: dataURL,
+        callback: (data) => {
+            createFacilitiesArray(data);
+            updateCheckboxStates();
 
-        createFilters(markerCluster, sidebar, checkboxIsChecked);
-    	createMarkers (facilitiesJson, sidebar, getFilteredMarkers());
-        initializeEvents(markerCluster, sidebar);
-        markerCluster.addLayers(facilitiesJson);
-        map.addLayer(markerCluster);
-    },
-    simpleSheet: true
-});
-Tabletop.init({
-    key: acCodesURL,
-    callback: (acCodes) => {
-        getActivityCategoriesJson(acCodes);
-    },
-    simpleSheet: true 
-});
+            mergeCodes(collection, codesJson);
+
+            var facilitiesJson = new L.GeoJSON(null);
+            //Creating marker cluster layer group.
+            var parentMarkerCluster = new L.markerClusterGroup({
+                showCoverageOnHover: false,
+                zoomToBoundsOnClick: true
+            });
+            checkboxIsChecked === false;
+
+            createFilters(parentMarkerCluster, sidebar, checkboxIsChecked);
+        	createMarkers (facilitiesJson, sidebar, getFilteredMarkers());
+            initializeEvents(parentMarkerCluster, sidebar);
+            parentMarkerCluster.addLayers(facilitiesJson);
+            map.addLayer(parentMarkerCluster);
+        },
+        simpleSheet: true
+    });
+    Tabletop.init({
+        key: acCodesURL,
+        callback: (acCodes) => {
+            getCodes(acCodes);
+            initFunction();
+//collection.features[25].properties.activitycodename =
+        },
+        simpleSheet: true 
+    });
 //SimpleSheet assumes there is only one table and automatically sends its data
 }
 
@@ -111,24 +117,24 @@ var buttonsJson = [
     }
 ];
 
-function initializeEvents(markerCluster, sidebar) {
-    buttonsJson.forEach(element => bindClearFilter(element.buttonId, element.className, markerCluster, sidebar));
+function initializeEvents(layers, sidebar) {
+    buttonsJson.forEach(element => bindClearFilter(element.buttonId, element.className, layers, sidebar));
 }
 
-function bindClearFilter(buttonId, className, markerCluster, sidebar) {
+function bindClearFilter(buttonId, className, layers, sidebar) {
     var btn = document.getElementById(buttonId);
     if (btn) {
         btn.onclick = function (e) {
-            clearCheckboxFilters(className, markerCluster, sidebar);
+            clearCheckboxFilters(className, layers, sidebar);
         }
     }   
 }
 
 
-function updateMarkers(filteredLayer, sidebar) {
-    filteredLayer.clearLayers()
+function updateMarkers(filters, sidebar) {
+    filters.clearLayers()
     updateCheckboxStates()
-    createMarkers(filteredLayer, sidebar, getFilteredMarkers())
+    createMarkers(filters, sidebar, getFilteredMarkers())
 }
 
 // The form of data must be a JSON representation of a table as returned by Tabletop.js
@@ -201,7 +207,7 @@ function createFacilitiesArray(data) {
                     'therapists' : row["Терапевти _filter"],
                 }
             }
-            facilitiesForFiltering.features.push(feature);
+            collection.features.push(feature);
         }
     }
 }
@@ -214,13 +220,7 @@ function createMarker(feature) {
     return marker;
 }
 
-
-function getAllClusteredMarkers(e) {
-    e.layer.getAllChildMarkers();
-    console.log('Markers inside clustered layer: ' + e.layer.getAllChildMarkers());
-}
-
- // Color coding used for the markers. Returns different colors depending on the string passed. 
+// Color coding used for the markers. Returns different colors depending on the string passed. 
 function getColor(type) {
     switch (type) {
         case '14': return 'cadetblue';
