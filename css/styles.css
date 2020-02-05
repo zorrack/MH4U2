@@ -1,6 +1,8 @@
 body {
 	padding: 0;
     margin: 0;
+    height: 600px;
+    overflow: hidden;
 }
 
 /* ---------------------------------------------------
@@ -30,9 +32,9 @@ a.close {
 }
 
 
-#map{
+#map {
     width: 100%;
-    min-height: 100vh;
+    height: 80vh;
 }
 
 p {
@@ -83,7 +85,6 @@ a:focus {
 
 .wrapper {
     display: flex;
-    align-items: stretch;
     align-items: stretch;
 }
 
@@ -189,8 +190,10 @@ a.article:hover {
     CONTENT STYLE
 ----------------------------------------------------- */
 
+
 #content {
     width: 100%;
+    padding: 20px;
     min-height: 100vh;
     transition: all 0.3s;
 }

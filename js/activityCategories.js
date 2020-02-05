@@ -1,63 +1,74 @@
-var activityCategoriesJson = [ ];
+var codesJson = [ ];
+var codesProperties = [
+	{
+		name: "ac1",
+		columnName: "Activity code"
+	},
+	{
+		name: "activitycategory",
+		columnName: "Activity category"
+	},
+	{
+		name: "activitycodename",
+		columnName: "Activity code name"
+	},
+	{
+		name: "subactivitycode",
+		columnName: "Subactivity code"
+	},
+	{
+		name: "subactivitycodename",
+		columnName: "Subactivity code name"
+	}
+];
 
-function getActivityCategoriesJson(acCodes) {
+function getCodes(acCodes) {
     for (var i = 0; i < acCodes.length; i++) {
         var row = acCodes[i];
-        var feature = {
-			'ac1' : row["Activity code"],
-			'activitycategory' : row["Activity category"],
-			'activitycodename' : row["Activity code name"],
-			'subactivitycode' : row["Subactivity code"],
-			'subactivitycodename' : row["Subactivity code name"],
-		}
-	activityCategoriesJson.push(feature);
+        var feature = {};
+
+        for (var j = 0; j < codesProperties.length; j++) {
+        	feature[codesProperties[j].name] = row[codesProperties[j].columnName];
+        }
+		codesJson.push(feature);
     }
 };
 
-function matchMarkerActivityCategoryCode(facilitiesForFiltering, activityCategoriesJson) {
-	facilitiesForFiltering.features.forEach(element => {
-		var activityCategory = activityCategoriesJson.find(acElement => acElement.ac1 == element.properties.ac1);
-		if (activityCategory) {
-			element.properties.activitycategory = acElement.activitycategory;
-			element.properties.activitycodename = acElement.activitycodename;
-			element.properties.subactivitycode = acElement.subactivitycode;
-			element.properties.subactivitycodename = acElement.subactivitycodename;
-			console.log(element);
+function mergeCodes(arr, codeArr) {
+	arr.features.forEach(element => {
+		match = codeArr.find(codeElement => codeElement.ac1 == element.properties.ac1);
+		if (match) {
+			console.log("Match found ")
+			// Merge the second array into the first one
+			for (var j = 0; j < codesProperties.length; j++) {
+        		element.properties[codesProperties[j].name] = match[codesProperties[j].name];
+        	}
 		}
-		
 	});
 }
 
-///Doesn't work
-function createLayers(activityCategoriesJson, categoryLayers){
-	var categoryLayers = [];
-		for (var i = 0; i < activityCategoriesJson.length; i++) {
-			categoryLayers[i] = new L.layerGroup().addTo(map);
-		}
+function createMarkerClusterSubgroups(parentMarkerCluster){
+ markerClusterSubGroup = L.featureGroup.subGroup(parentMarkerCluster, arrayOfMarkers);
+ markerClusterSubGroup.addTo(map);
 }
 
-function addOverlays(categoryLayers, overlays){
+
+///Doesn't work
+// function createLayers(map, codesJson){
+// 	var categoryLayers = [];
+// 	for (var i = 0; i < codesJson.length; i++) {
+// 		categoryLayers[i] = new L.layerGroup().addTo(map);
+// 	}
+
+// 	return addOverlays(categoryLayers);
+// }
+
+function addOverlays(categoryLayers){
 	var overlays = {}; ///collection feature: value
 	for (var i = 0; i < categoryLayers.length; i++) {
 		// Create map overlays
-		overlays.push(categoryLayers.activitycodename[i] + ": " + categoryLayers.activitycodename[i]);
+		overlays[categoryLayers[i].activitycodename] = categoryLayers[i].activitycodename;
 	}
 	return overlays;
 }
-
-// function createLayers(activityCategoriesJson, categoryLayers){
-// 	var categoryLayers = [];
-// 		for (var i = 0; i < activityCategoriesJson.length; i++) {
-// 			categoryLayers[i] = new L.layerGroup().addTo(map);
-// 		}
-// }
-
-// function addOverlays(categoryLayers, overlays){
-// 	var overlays = {}; ///collection feature: value
-// 	for (var i = 0; i < categoryLayers.length; i++) {
-// 		// Create map overlays
-// 		overlays.push(categoryLayers[i] + ": " + categoryLayers[i]);
-// 	}
-// 	return overlays;
-// }
 
