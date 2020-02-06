@@ -11,7 +11,9 @@ function updateCheckboxStates() {
   checkboxStates = {
       patientTypes: [],
       serviceCategories: [],
-      mentalHealthWorkers: []
+      mentalHealthWorkers: [],
+      inpatientOrOutpationed: [],
+      booleanCategories: []
   }
   for (let input of document.querySelectorAll('input')) {
       if(input.checked) {
@@ -19,6 +21,8 @@ function updateCheckboxStates() {
         			case 'patient-type-check': checkboxStates.patientTypes.push(input.value); break
         			case 'service-category': checkboxStates.serviceCategories.push(input.value); break
               case 'mental-health-worker': checkboxStates.mentalHealthWorkers.push(input.value); break
+              case 'is-inpatient-check': checkboxStates.inpatientOrOutpationed.push(input.value); break
+              case 'boolean-category-check': checkboxStates.booleanCategories.push(input.value); break
           }
       }
   }

@@ -129,7 +129,7 @@
                 </li>
 
                 <li>
-                    <a href="#servicecategorySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Категорія послуг</a>
+                    <a href="#servicecategorySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Тип послуг</a>
                     <ul class="collapse list-unstyled" id="servicecategorySubmenu">
                         <div class="form-check">
                             <button type="button" id="clearServiceCategoryFiltersBtn" class="btn btn-info">Очистити фільтри</button>
@@ -200,6 +200,56 @@
                     </ul>
                 </li>
 
+                <li>
+                    <a href="#isInpatientSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Амбулаторний чи стаціонарний сервіс?</a>
+                    <ul class="collapse list-unstyled" id="isInpatientSubmenu">
+                        <div class="form-check">
+                            <button type="button" id="clearisInpatientFiltersBtn" class="btn btn-info">Очистити фільтри</button>
+
+                            <li>
+                                <div class="inputs" id="is-inpatient-categories">
+                                    <label>
+                                        <input type="checkbox" class="is-inpatient-check" value="Inpatient" name="check"> <span class="label-text">Стаціонарний сервіс</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="is-inpatient-categories">
+                                    <label>
+                                        <input type="checkbox" class="is-inpatient-check" value="Outpatient" name="check"> <span class="label-text">Амбулаторний сервіс</span>
+                                    </label>
+                                </div>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+
+                                <li>
+                    <a href="#booleancategorySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Фахівці з психічного здоров'я</a>
+                    <ul class="collapse list-unstyled" id="booleancategorySubmenu">
+                        <div class="form-check">
+                            <button type="button" id="clearbooleancategoryFiltersBtn" class="btn btn-info">Очистити фільтри</button>
+
+                            <li>
+                                <div class="inputs" id="boolean-categories">
+                                    <label>
+                                        <input type="checkbox" class="boolean-category-check" value="Inpatient" name="check"> <span class="label-text">Стаціонарний сервіс</span>
+                                    </label>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="inputs" id="boolean-categories">
+                                    <label>
+                                        <input type="checkbox" class="boolean-category-check" value="Outpatient" name="check"> <span class="label-text">Амбулаторний сервіс</span>
+                                    </label>
+                                </div>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+
             </ul>
         </nav>
 
@@ -248,7 +298,8 @@
     </div>
     <script src="node_modules/leaflet/dist/leaflet-src.js"></script>
     <script src="node_modules/leaflet.markercluster/dist/leaflet.markercluster.js" type = "text/javascript"> </script>
-    <script src="node_modules/leaflet.featuregroup.subgroup\dist\leaflet.featuregroup.subgroup.js" type = "text/javascript"> </script>
+    <!-- after Leaflet script -->
+    <script src="node_modules/leaflet.featuregroup.subgroup/dist/leaflet.featuregroup.subgroup.js" type = "text/javascript"> </script>
     
     <script src="node_modules/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
     <script src="node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
@@ -258,6 +309,7 @@
     <script src="js/init.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/activityCategories.js"></script>
+    <script src="js/layers.js"></script>
 
         <!-- jQuery Custom Scroller CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>

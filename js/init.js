@@ -4,7 +4,6 @@ var collection = {
     'features': []
 };
 var map = L.map('map').setView([49.8397, 24.0297], 8);
-var mapmargin = 10;
 var checkboxIsChecked = new Boolean;
 
 $( document ).ready(function() {
@@ -25,6 +24,9 @@ $( document ).ready(function() {
 	    maxZoom: 19
 	});
 	basemap.addTo(map);
+
+    layerControl = L.control.layers(null, null, {collapsed: false});
+    layerControl.addTo(map);
 
     var sidebar = L.control.sidebar('sidebar', {
         closeButton: true,
@@ -52,7 +54,9 @@ function getFilteredMarkers(checkboxIsChecked) {
         return collection.features.filter((feature) => {
             var isPatientTypeChecked = checkboxStates.patientTypes.includes(feature.properties.patienttype)
             var isServiceCategoryChecked = checkboxStates.serviceCategories.includes(feature.properties.ac1)
-            return isPatientTypeChecked || isServiceCategoryChecked //true if either of variables is true
+            var isInpatientCategoryChecked = checkboxStates.inpatientOrOutpationed.includes(feature.properties.isinpatient)
+            var isInpatientCategoryChecked = checkboxStates.booleanCategories.includes(feature.properties.isinpatient)
+            return isPatientTypeChecked || isServiceCategoryChecked || isInpatientCategoryChecked //true if either of variables is true
         });
     }
     //If no filter checkbox is checked, return all the features in the array.
@@ -76,17 +80,20 @@ function init(map, sidebar, initFunction) {
 
             var facilitiesJson = new L.GeoJSON(null);
             //Creating marker cluster layer group.
-            var parentMarkerCluster = new L.markerClusterGroup({
+            var markerCluster = new L.markerClusterGroup({
                 showCoverageOnHover: false,
                 zoomToBoundsOnClick: true
             });
             checkboxIsChecked === false;
 
-            createFilters(parentMarkerCluster, sidebar, checkboxIsChecked);
+            createFilters(markerCluster, sidebar, checkboxIsChecked);
         	createMarkers (facilitiesJson, sidebar, getFilteredMarkers());
-            initializeEvents(parentMarkerCluster, sidebar);
-            parentMarkerCluster.addLayers(facilitiesJson);
-            map.addLayer(parentMarkerCluster);
+            initializeEvents(markerCluster, sidebar);
+            markerCluster.addLayers(facilitiesJson);
+            map.addLayer(markerCluster);
+
+            createLayers(markerCluster, codesJson);
+            createOverlays(layerControl);
         },
         simpleSheet: true
     });
@@ -95,7 +102,6 @@ function init(map, sidebar, initFunction) {
         callback: (acCodes) => {
             getCodes(acCodes);
             initFunction();
-//collection.features[25].properties.activitycodename =
         },
         simpleSheet: true 
     });
@@ -114,6 +120,13 @@ var buttonsJson = [
     {
         buttonId : "clearMentalHealthWorkersBtn",
         className : "mental-health-worker"
+    },
+    {
+        buttonId : "clearisInpatientFiltersBtn",
+        className : "is-inpatient-check",
+
+        buttonId : "clearbooleancategoryFiltersBtn",
+        className : "boolean-category-check"
     }
 ];
 
@@ -192,6 +205,8 @@ function createFacilitiesArray(data) {
                     'patienttype': row["Цільове населення"],
                     'mentalhealthworkers': row["фахівці з психічного здоров'я"],
                     'ac1': row["Activity code 1"],
+                    //TODO: set up both inpatient and outpatient data filter 
+                    'isinpatient': row["амбулаторний чи стаціонарний"],
 
                     'familydoctors' : row["Сімейні лікарі_filter"],
                     'psychiatrists' : row["Психіатри_filter"],
@@ -204,7 +219,7 @@ function createFacilitiesArray(data) {
                     'psychologists' : row["Психологи_filter"],
                     'psychotherapists' : row["Психотерапевти _filter"],
                     'logopeads' : row["Логопеди_filter"],
-                    'therapists' : row["Терапевти _filter"],
+                    'therapists' : row["Терапевти _filter"]
                 }
             }
             collection.features.push(feature);
