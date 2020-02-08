@@ -50,12 +50,16 @@ function getFilteredMarkers(checkboxIsChecked) {
     checkboxIsChecked = $("input[type=checkbox]").is(":checked");
 
     //If at least one filtering checkbox is checked, filter by the selected feature property is applied
-    if(checkboxIsChecked === true) {
+    if(checkboxIsChecked) {
         return collection.features.filter((feature) => {
-            var isPatientTypeChecked = checkboxStates.patientTypes.includes(feature.properties.patienttype)
-            var isServiceCategoryChecked = checkboxStates.serviceCategories.includes(feature.properties.ac1)
-            var isInpatientCategoryChecked = checkboxStates.inpatientOrOutpationed.includes(feature.properties.isinpatient)
-            var isInpatientCategoryChecked = checkboxStates.booleanCategories.includes(feature.properties.isinpatient)
+            var isPatientTypeChecked = checkboxStates.patientTypes
+            .includes(feature.properties.patienttype)
+            var isServiceCategoryChecked = checkboxStates.serviceCategories
+            .includes(feature.properties.ac1)
+            var isInpatientCategoryChecked = checkboxStates.inpatientOrOutpationed
+            .includes(feature.properties.isinpatient)
+            var isInpatientCategoryChecked = checkboxStates.booleanCategories
+            .includes(feature.properties.isinpatient)
             return isPatientTypeChecked || isServiceCategoryChecked || isInpatientCategoryChecked //true if either of variables is true
         });
     }
@@ -80,20 +84,20 @@ function init(map, sidebar, initFunction) {
 
             var facilitiesJson = new L.GeoJSON(null);
             //Creating marker cluster layer group.
-            var markerCluster = new L.markerClusterGroup({
+            var markerCluster = L.markerClusterGroup({
                 showCoverageOnHover: false,
                 zoomToBoundsOnClick: true
-            });
+            }).addTo(map);
             checkboxIsChecked === false;
+            let overlays = createOverlays(codesJson);
+            let markers = createMarkers (sidebar, getFilteredMarkers());
+
+            createLayers(markerCluster, collection, markers, overlays, layerControl);
 
             createFilters(markerCluster, sidebar, checkboxIsChecked);
-        	createMarkers (facilitiesJson, sidebar, getFilteredMarkers());
             initializeEvents(markerCluster, sidebar);
-            markerCluster.addLayers(facilitiesJson);
-            map.addLayer(markerCluster);
-
-            createLayers(markerCluster, codesJson);
-            createOverlays(layerControl);
+            //markerCluster.addLayers(markers);
+            //map.addLayer(markerCluster);
         },
         simpleSheet: true
     });
@@ -151,11 +155,12 @@ function updateMarkers(filters, sidebar) {
 }
 
 // The form of data must be a JSON representation of a table as returned by Tabletop.js
-function createMarkers(facilitiesJson, sidebar, features) {
+function createMarkers(sidebar, features) {
+    var markers = []; 
     for (var i = 0; i < features.length; i++) {
         var feature = features[i];
     	var marker = createMarker(feature);
-            marker.addTo(facilitiesJson);
+        markers.push(marker);
         // AwesomeMarkers is used to create facility icons. TODO: add icons
         var icon = L.AwesomeMarkers.icon({
             icon: 'glyphicon-glyphicon-plus',
@@ -181,6 +186,8 @@ function createMarkers(facilitiesJson, sidebar, features) {
             }
         });
     }
+
+    return markers;
 }
 
 function createFacilitiesArray(data) {
