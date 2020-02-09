@@ -1,26 +1,4 @@
 var codesJson = [ ];
-var codesProperties = [
-	{
-		name: "ac1",
-		columnName: "Activity code"
-	},
-	{
-		name: "activitycategory",
-		columnName: "Activity category"
-	},
-	{
-		name: "activitycodename",
-		columnName: "Activity code name"
-	},
-	{
-		name: "subactivitycode",
-		columnName: "Subactivity code"
-	},
-	{
-		name: "subactivitycodename",
-		columnName: "Subactivity code name"
-	}
-];
 
 function getCodes(acCodes) {
     for (var i = 0; i < acCodes.length; i++) {

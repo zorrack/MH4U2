@@ -8,14 +8,17 @@ function createFilters(filters, sidebar, checkboxIsChecked) {
 }
 
 function updateCheckboxStates() {
-  checkboxStates = {
-      patientTypes: [],
-      serviceCategories: [],
-      mentalHealthWorkers: [],
-      inpatientOrOutpationed: [],
-      booleanCategories: []
-  }
-  for (let input of document.querySelectorAll('input')) {
+    let checkboxStates = getCheckboxStatesObject();
+    filterSectionsBinding.forEach(binding => {
+        [... document.getElementsByClassName('filtercontrol ' + binding.filterClass)].forEach(element => {
+                if (element.checked) {
+                    checkboxStates[binding.arrayName].push(element.value);
+                }
+            }
+        );
+    });
+
+  /*for (let input of document.querySelectorAll('input')) {
       if(input.checked) {
       		switch (input.className) {
         			case 'patient-type-check': checkboxStates.patientTypes.push(input.value); break
@@ -25,7 +28,8 @@ function updateCheckboxStates() {
               case 'boolean-category-check': checkboxStates.booleanCategories.push(input.value); break
           }
       }
-  }
+  }*/
+    return checkboxStates;
 }
 //Button deselecting all the filtering checkboxes
 function clearCheckboxFilters(className, filters, sidebar) {
@@ -39,9 +43,9 @@ function clearCheckboxFilters(className, filters, sidebar) {
 
 //TODO: implement filter by a given attribute value  
 function filterByFeature(collection, predicate) {
-    var result = new Array();
-    var length = collection.length;
-    for(var i = 0; i < length; i++) {
+    let result = new Array();
+    let length = collection.length;
+    for(let i = 0; i < length; i++) {
         if(predicate(collection[i]) == true) {
             result.push(collection[i]);
         }

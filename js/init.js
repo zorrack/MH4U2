@@ -45,40 +45,44 @@ $( document ).ready(function() {
 
 });
 
-function getFilteredMarkers(checkboxIsChecked) {
-    //Checking if at least one filter checkbox is checked
-    checkboxIsChecked = $("input[type=checkbox]").is(":checked");
+function getFilteredMarkers() {
+    let checkboxStates = updateCheckboxStates();
+
+    let checkboxIsChecked = false;
+
+    filterSectionsBinding.forEach(binding => {
+        checkboxIsChecked = checkboxIsChecked | checkboxStates[binding.arrayName].length > 0;
+    });
 
     //If at least one filtering checkbox is checked, filter by the selected feature property is applied
     if(checkboxIsChecked) {
         return collection.features.filter((feature) => {
-            var isPatientTypeChecked = checkboxStates.patientTypes
-            .includes(feature.properties.patienttype)
-            var isServiceCategoryChecked = checkboxStates.serviceCategories
-            .includes(feature.properties.ac1)
-            var isInpatientCategoryChecked = checkboxStates.inpatientOrOutpationed
-            .includes(feature.properties.isinpatient)
-            var isInpatientCategoryChecked = checkboxStates.booleanCategories
-            .includes(feature.properties.isinpatient)
+            let isPatientTypeChecked = checkboxStates.patientTypes
+                .includes(feature.properties.patienttype);
+            let isServiceCategoryChecked = checkboxStates.serviceCategories
+                .includes(feature.properties.ac1);
+            let isInpatientCategoryChecked = checkboxStates.inpatientOrOutpationed
+                .includes(feature.properties.isinpatient);
+            isInpatientCategoryChecked = checkboxStates.booleanCategories
+                .includes(feature.properties.isinpatient);
             return isPatientTypeChecked || isServiceCategoryChecked || isInpatientCategoryChecked //true if either of variables is true
         });
     }
     //If no filter checkbox is checked, return all the features in the array.
     else {
         return collection.features;
-        }
+    }
 }
 // init() is called as soon as the page loads
 function init(map, sidebar, initFunction) {
 // PASTE YOUR URLs HERE. These URLs come from Google Sheets 'shareable link' form
 //NOTE: Google Spreadsheet table should not have empty rows!!! 
-    var dataURL = 'https://docs.google.com/spreadsheets/d/12Me343d7zlUQ2UqCIVG9BrWD8OPL_KRk4DL1nm5RlAE/edit?usp=sharing';
-    var acCodesURL = 'https://docs.google.com/spreadsheets/d/1jX20bMaNFLYijteEGjJBDNzpkVqTC_YP0mA2B1zpED4/edit?usp=sharing';
+    const dataURL = 'https://docs.google.com/spreadsheets/d/12Me343d7zlUQ2UqCIVG9BrWD8OPL_KRk4DL1nm5RlAE/edit?usp=sharing';
+    const acCodesURL = 'https://docs.google.com/spreadsheets/d/1jX20bMaNFLYijteEGjJBDNzpkVqTC_YP0mA2B1zpED4/edit?usp=sharing';
     Tabletop.init({
         key: dataURL,
         callback: (data) => {
             createFacilitiesArray(data);
-            updateCheckboxStates();
 
             mergeCodes(collection, codesJson);
 
@@ -88,13 +92,12 @@ function init(map, sidebar, initFunction) {
                 showCoverageOnHover: false,
                 zoomToBoundsOnClick: true
             }).addTo(map);
-            checkboxIsChecked === false;
             let overlays = createOverlays(codesJson);
             let markers = createMarkers (sidebar, getFilteredMarkers());
 
             createLayers(markerCluster, collection, markers, overlays, layerControl);
 
-            createFilters(markerCluster, sidebar, checkboxIsChecked);
+            createFilters(markerCluster, sidebar);
             initializeEvents(markerCluster, sidebar);
             //markerCluster.addLayers(markers);
             //map.addLayer(markerCluster);
@@ -151,7 +154,7 @@ function bindClearFilter(buttonId, className, layers, sidebar) {
 function updateMarkers(filters, sidebar) {
     filters.clearLayers()
     updateCheckboxStates()
-    createMarkers(filters, sidebar, getFilteredMarkers())
+    createMarkers(sidebar, getFilteredMarkers())
 }
 
 // The form of data must be a JSON representation of a table as returned by Tabletop.js
