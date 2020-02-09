@@ -1,15 +1,42 @@
-function createFilters(filters, sidebar, checkboxIsChecked) {
-  for (let input of document.querySelectorAll('input')) {
+function createFilters(markers) {
+
+    filtersSectionBinding.forEach(binding => {
+        [... document.getElementsByClassName('filtercontrol ' + binding.filterClass)].forEach(element => {
+            element.affectedMarkers =
+                markers.filter(marker => marker.feature.properties[binding.featurePropertyName] === element.value);
+
+            let predicate;
+            switch (binding.elementType) {
+                case elementTypes.CHECKBOX: {
+                    predicate = function (element, binding, marker) {
+                        return element.checked &&
+                            marker.feature.properties[binding.featurePropertyName] === element.value;
+                    };
+                    break;
+                }
+                case elementTypes.DROPDOWN: {
+                    predicate = function (element, binding, marker) {
+                        return element.value !== "---" &&
+                            marker.feature.properties[binding.featurePropertyName] === element.value;
+                    };
+                    break;
+                }
+                default: predicate = () => true;
+            }
+            element.onchange = () => updateMarkers(markers);
+        });
+    });
+  /*for (let input of document.querySelectorAll('input')) {
     //Listen to 'change' event of all inputs
     input.onchange = (e) => {
     	updateMarkers(filters, sidebar); 
     }
-  }
+  }*/
 }
 
 function updateCheckboxStates() {
     let checkboxStates = getCheckboxStatesObject();
-    filterSectionsBinding.forEach(binding => {
+    filtersSectionBinding.forEach(binding => {
         [... document.getElementsByClassName('filtercontrol ' + binding.filterClass)].forEach(element => {
                 if (element.checked) {
                     checkboxStates[binding.arrayName].push(element.value);
@@ -18,17 +45,6 @@ function updateCheckboxStates() {
         );
     });
 
-  /*for (let input of document.querySelectorAll('input')) {
-      if(input.checked) {
-      		switch (input.className) {
-        			case 'patient-type-check': checkboxStates.patientTypes.push(input.value); break
-        			case 'service-category': checkboxStates.serviceCategories.push(input.value); break
-              case 'mental-health-worker': checkboxStates.mentalHealthWorkers.push(input.value); break
-              case 'is-inpatient-check': checkboxStates.inpatientOrOutpationed.push(input.value); break
-              case 'boolean-category-check': checkboxStates.booleanCategories.push(input.value); break
-          }
-      }
-  }*/
     return checkboxStates;
 }
 //Button deselecting all the filtering checkboxes
@@ -37,20 +53,5 @@ function clearCheckboxFilters(className, filters, sidebar) {
     for(let i = 0; i < checkboxes.length ; i++) {
         checkboxes[i].checked = false;
     }
-	updateMarkers(filters, sidebar)
-	console.log('function clearCheckboxFilters status ' + checkboxIsChecked);
+    updateMarkers();
 }
-
-//TODO: implement filter by a given attribute value  
-function filterByFeature(collection, predicate) {
-    let result = new Array();
-    let length = collection.length;
-    for(let i = 0; i < length; i++) {
-        if(predicate(collection[i]) == true) {
-            result.push(collection[i]);
-        }
-    }
-    return result;
-    console.log(result);
-}
-

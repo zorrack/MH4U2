@@ -1,19 +1,26 @@
-var filterSectionsBinding = [
+const elementTypes = {
+    CHECKBOX: 1,
+    DROPDOWN: 2,
+    TEXT: 3
+}
+const filtersSectionBinding = [
     {
         filterClass: "patient-type-check",
-        arrayName: "patientTypes"
+        arrayName: "patientTypes",
+        featurePropertyName: "patienttype",
+        elementType: elementTypes.CHECKBOX
     },
     {
         filterClass: "service-category",
-        arrayName: "serviceCategories"
+        arrayName: "serviceCategories",
+        featurePropertyName: "ac1",
+        elementType: elementTypes.CHECKBOX
     },
     {
         filterClass: "mental-health-worker",
-        arrayName: "mentalHealthWorkers"
-    },
-    {
-        filterClass: "is-inpatient-check",
-        arrayName: "inpatientOrOutpationed"
+        arrayName: "mentalHealthWorkers",
+        featurePropertyName: "healthworker", //TODO: Add this filter type to the actual layout
+        elementType: elementTypes.CHECKBOX
     },
     {
         filterClass: "boolean-category-check",
@@ -21,7 +28,7 @@ var filterSectionsBinding = [
     }
 ];
 
-var codesProperties = [
+const codesProperties = [
 	{
 		name: "ac1",
 		columnName: "Activity code"
@@ -42,4 +49,26 @@ var codesProperties = [
 		name: "subactivitycodename",
 		columnName: "Subactivity code name"
 	}
+];
+
+const buttonsJson = [
+    {
+        buttonId : "clearPatientTypeFiltersBtn",
+        className : "patient-type-check",
+    },
+    {
+        buttonId : "clearServiceCategoryFiltersBtn",
+        className : "service-category"
+    },
+    {
+        buttonId : "clearMentalHealthWorkersBtn",
+        className : "mental-health-worker"
+    },
+    {
+        buttonId : "clearisInpatientFiltersBtn",
+        className : "is-inpatient-check",
+
+        buttonId : "clearbooleancategoryFiltersBtn",
+        className : "boolean-category-check"
+    }
 ];

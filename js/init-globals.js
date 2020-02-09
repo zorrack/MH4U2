@@ -1,6 +1,6 @@
 function getCheckboxStatesObject() {
     let checkboxStates = {};
-    filterSectionsBinding.forEach(section => {
+    filtersSectionBinding.forEach(section => {
             checkboxStates[section.arrayName] = [];
         }
     );
