@@ -5,7 +5,7 @@ function createFilters(markers) {
             element.affectedMarkers =
                 markers.filter(marker => marker.feature.properties[binding.featurePropertyName] === element.value);
 
-            let predicate;
+            /*let predicate;
             switch (binding.elementType) {
                 case elementTypes.CHECKBOX: {
                     predicate = function (element, binding, marker) {
@@ -22,16 +22,10 @@ function createFilters(markers) {
                     break;
                 }
                 default: predicate = () => true;
-            }
+            }*/
             element.onchange = () => updateMarkers(markers);
         });
     });
-  /*for (let input of document.querySelectorAll('input')) {
-    //Listen to 'change' event of all inputs
-    input.onchange = (e) => {
-    	updateMarkers(filters, sidebar); 
-    }
-  }*/
 }
 
 function updateCheckboxStates() {
