@@ -13,17 +13,27 @@ $( document ).ready(function() {
     $('#control-barCollapse').on('click', function () {
         $('#control-bar').toggleClass('active');
     });
+
+    $("#sidebar").mCustomScrollbar({
+        theme: "dark-2"
+    });
     
     
 	// This is the Carto Positron basemap
-	let basemap = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png', {
-	    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-	    subdomains: 'abcd',
-	    maxZoom: 19
-	});
-	basemap.addTo(map);
+	// let basemap = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+	//     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+	//     subdomains: 'abcd',
+	//     maxZoom: 19
+	// });
+	// basemap.addTo(map);
 
-    let layerControl = L.control.layers(null, null, {collapsed: false});
+    let basemap = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 18,
+    attribution: "Map data &copy; OpenStreetMap contributors"
+    });
+    basemap.addTo(map);
+
+    let layerControl = L.control.layers(null, null, {collapsed: true});
     map.layerControl = layerControl;
     layerControl.addTo(map);
 
@@ -218,18 +228,6 @@ function createMarker(feature) {
     //Generating features for GeoJSON   
     marker.feature = feature;
     return marker;
-}
-
-// Color coding used for the markers. Returns different colors depending on the string passed. 
-function getColor(type) {
-    switch (type) {
-        case '14': return 'cadetblue';
-        case '3': return 'darkblue';
-        case '4': return 'gray';
-        case '15': return 'lightgray';
-        case '16': return 'purple';
-        default: return 'blue';
-    }
 }
 
 //Changing facility title and description to title case

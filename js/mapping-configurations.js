@@ -72,3 +72,75 @@ const buttonsJson = [
         className : "boolean-category-check"
     }
 ];
+
+const markerColors = [
+    {
+        code: "1",
+        color: "blue"
+    },
+    {
+        code: "2",
+        color: "orange"
+    },  
+    {
+        code: "3",
+        color: "red"
+    },  
+    {
+        code: "4",
+        color: "yellow"
+    },  
+    {
+        code: "5",
+        color: "lightgreen"
+    },  
+    {
+        code: "6",
+        color: "lightpurple"
+    },  
+    {
+        code: "7",
+        color: "lightgreen"
+    },
+    {
+        code: "8",
+        color: "green"
+    },  
+    {
+        code: "9",
+        color: "pink"
+    },
+    {
+        code: "10",
+        color: "darkred"
+    },
+    {
+        code: "11",
+        color: "darkgreen"
+    },
+    {
+        code: "12",
+        color: "cadetblue"
+    },
+    {
+        code: "13",
+        color: "darkblue"
+    },
+    {
+        code: "14",
+        color: "gray"
+    },
+    {
+        code: "15",
+        color: "purple"
+    },
+    {
+        code: "16",
+        color: "lightgray"
+    },
+    {
+        code: "default",
+        color: "blue"
+    }
+                        
+];

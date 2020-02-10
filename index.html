@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.css" />
 
         <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" href="css/styles.css" />
 
     <link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.css"/>
@@ -30,6 +30,8 @@
 
         <nav id="control-bar">
             <div class="control-bar-header">
+                <a href="https://www.google.com">
+                <img class="logo" src="img/logo.png">
                 <h3>Mental Health for Ukraine</h3>
             </div>
 
@@ -238,11 +240,12 @@
 
                 <div class="container-fluid">
                     <button type="button" id="control-barCollapse" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
+                        <span class="icon">&#xf0b0;</span>
                         <span>Фільтри пошуку</span>
                     </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Фільтри пошуку">
-                        <i class="fas fa-align-justify"></i>
+
+                    <button class="btn btn-warning d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="За регіонами">
+                        <span class="icon">&#xf0c9;</span>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -285,13 +288,14 @@
     <script src="node_modules/tabletop/src/tabletop.min.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="js/marker-colorcoding.js"></script>
     <script src="js/init.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/activityCategories.js"></script>
     <script src="js/layers.js"></script>
 
         <!-- jQuery Custom Scroller CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 
 </body>
 
