@@ -35,7 +35,7 @@ $( document ).ready(function() {
     map.sideBar = sidebar;
 
     map.on('click', function () {
-        this.sidebar.hide();
+        map.sideBar.hide();
     });
 
     init(map, sidebar);
@@ -120,7 +120,6 @@ function bindClearFilter(buttonId, className, layers, sidebar) {
     }   
 }
 
-
 function updateMarkers(markers) {
     let filteredMarkers = getFilteredMarkers(markers);
 
@@ -128,11 +127,10 @@ function updateMarkers(markers) {
         subGroup.clearLayers();
 
         let subGroupMarkers = filteredMarkers.filter(marker => marker.subGroup === subGroup);
-        subGroupMarkers.forEach(marker => { subGroup.addLayer(marker); console.log("Added marker to subGroup")});
+        subGroupMarkers.forEach(marker => subGroup.addLayer(marker));
     });
 }
 
-// The form of data must be a JSON representation of a table as returned by Tabletop.js
 function createMarkers(sidebar, features) {
     let markers = [];
     for (let i = 0; i < features.length; i++) {
@@ -143,7 +141,7 @@ function createMarkers(sidebar, features) {
         let icon = L.AwesomeMarkers.icon({
             icon: 'glyphicon-glyphicon-plus',
             iconColor: 'white',
-            markerColor: getColor(feature.properties.ac1),
+            markerColor: getMarkerColor(feature.properties.ac1),
             prefix: 'glyphicon'
         });
         marker.setIcon(icon);
@@ -220,19 +218,12 @@ function createMarker(feature) {
     return marker;
 }
 
-// Color coding used for the markers. Returns different colors depending on the string passed. 
-function getColor(type) {
-    switch (type) {
-        case '14': return 'cadetblue';
-        case '3': return 'darkblue';
-        case '4': return 'gray';
-        case '15': return 'lightgray';
-        case '16': return 'purple';
-        default: return 'blue';
-    }
+
+
+function getMarkerColor(type) {
+    if (markerColors.hasOwnProperty(type))
+        return markerColors[type];
+    else
+        return 'blue';
 }
 
-//Changing facility title and description to title case
-//function capitalizeFirstLetter(string) {
-//    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-//}
