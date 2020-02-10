@@ -78,7 +78,7 @@ function init(map, sidebar, initFunction) {
         key: dataURL,
         callback: (data) => {
             createFacilitiesArray(data);
-            updateCheckboxStates();
+            // updateCheckboxStates();
 
             mergeCodes(collection, codesJson);
 
@@ -94,10 +94,8 @@ function init(map, sidebar, initFunction) {
 
             createLayers(markerCluster, collection, markers, overlays, layerControl);
 
-            createFilters(markerCluster, sidebar, checkboxIsChecked);
+            // createFilters(markerCluster, sidebar, checkboxIsChecked);
             initializeEvents(markerCluster, sidebar);
-            //markerCluster.addLayers(markers);
-            //map.addLayer(markerCluster);
         },
         simpleSheet: true
     });
