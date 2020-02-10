@@ -5,13 +5,39 @@ body {
     overflow: hidden;
 }
 
+.logo {
+    width: 80px;
+    height: 80px;
+    float: left;
+    margin: 5px;
+}
+
+span.icon {
+  font-family: FontAwesome;
+}
+
+
+/* ---------------------------------------------------
+    LEAFLET LAYER CONTROL STYLE
+----------------------------------------------------- */
+
+.leaflet-control-layers.leaflet-control-layers-expanded {
+
+    max-width: 250px;
+}
+
 /* ---------------------------------------------------
     LEAFLET INFO SIDEBAR STYLE
 ----------------------------------------------------- */
 
 #sidebar {
-    height: auto;
     position: relative;
+    height: 75vh;
+    padding: 10 5 10 10;
+}
+
+.leaflet-sidebar {
+    float: right;
 }
 
 #sidebar-content, #sidebar-title {
@@ -23,12 +49,13 @@ body {
     font-size: 24px!important;
 }
 
-.leaflet-sidebar {
-    float: right;
-}
-
-a.close {
+.leaflet-sidebar .close {
     z-index: 2700!important;
+    background: white;
+    opacity: 1;
+    margin: 10px;
+    right: 15px;
+    top: 5px;
 }
 
 
@@ -71,6 +98,10 @@ a:focus {
     border: none;
 }
 
+.nav-link {
+    float: right;
+}
+
 .line {
     width: 100%;
     height: 1px;
@@ -78,9 +109,24 @@ a:focus {
     margin: 40px 0;
 }
 
+.btn-info {
+    background-color: #138496;
+}
+
+.btn-warning {
+    background-color: #F7BB06;
+}
 
 /* ---------------------------------------------------
     LEFT (FILTERING) BAR STYLE
+
+    Color scheme:
+    #0E5F9F - background, base color (saphire blue)
+    #063961 - background, 2nd color (for accents and active elements) (dark midnight blue)
+    #2C8C99 - background, 3rd color (celadon green) 
+
+    #F7BB06 - accent color (for buttons, dividers) (selective yellow)
+    #931621 - danger color (ruby red)
 ----------------------------------------------------- */
 
 .wrapper {
@@ -93,16 +139,20 @@ a:focus {
     max-width: 250px;
     height: 100vh;
     z-index: 999;
-    background: #7386D5;
+    background: #063961;
     color: #fff;
     transition: all 0.3s;
-
     overflow-y: scroll;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
+#control-bar .control-bar-header {
+    background: #0E5F9F!important;
+}
+
 #control-bar.active {
     margin-left: -250px;
+    background: #0E5F9F;
 }
 
 #control-bar .control-bar-header {
@@ -127,14 +177,14 @@ a:focus {
 }
 
 #control-bar ul li a:hover {
-    color: #7386D5;
+    color: #0E5F9F;
     background: #fff;
 }
 
 #control-bar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
+    background: #0E5F9F;
 }
 
 a[data-toggle="collapse"] {
@@ -193,7 +243,7 @@ a.article:hover {
 
 #content {
     width: 100%;
-    padding: 20px;
+    padding: 5px;
     min-height: 100vh;
     transition: all 0.3s;
 }

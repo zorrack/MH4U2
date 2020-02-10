@@ -1,10 +1,8 @@
-var facilitiesJson;
-var collection = {
+let collection = {
     'type': 'FeatureCollection',
     'features': []
 };
-var map = L.map('map').setView([49.8397, 24.0297], 8);
-var checkboxIsChecked = new Boolean;
+let map = L.map('map').setView([49.8397, 24.0297], 8);
 
 $( document ).ready(function() {
 
@@ -15,87 +13,97 @@ $( document ).ready(function() {
     $('#control-barCollapse').on('click', function () {
         $('#control-bar').toggleClass('active');
     });
+
+    $("#sidebar").mCustomScrollbar({
+        theme: "dark-2"
+    });
     
     
 	// This is the Carto Positron basemap
-	var basemap = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png', {
-	    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-	    subdomains: 'abcd',
-	    maxZoom: 19
-	});
-	basemap.addTo(map);
+	// let basemap = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+	//     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+	//     subdomains: 'abcd',
+	//     maxZoom: 19
+	// });
+	// basemap.addTo(map);
 
-    layerControl = L.control.layers(null, null, {collapsed: false});
+    let basemap = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 18,
+    attribution: "Map data &copy; OpenStreetMap contributors"
+    });
+    basemap.addTo(map);
+
+    let layerControl = L.control.layers(null, null, {collapsed: true});
+    map.layerControl = layerControl;
     layerControl.addTo(map);
 
-    var sidebar = L.control.sidebar('sidebar', {
+    let sidebar = L.control.sidebar('sidebar', {
         closeButton: true,
         position: 'right'
     });
     map.addControl(sidebar);
+    map.sideBar = sidebar;
+
     map.on('click', function () {
-        sidebar.hide();
-    })
-
-    init(map, sidebar, () => {
-
-        // var overlays = createLayers(map, activityCategoriesJson);
-        // var layer = L.control.layers(null, overlays).addTo(map);
+        map.sideBar.hide();
     });
+
+    init(map, sidebar);
 
 });
 
-function getFilteredMarkers(checkboxIsChecked) {
-    //Checking if at least one filter checkbox is checked
-    checkboxIsChecked = $("input[type=checkbox]").is(":checked");
+function getFilteredMarkers(markers) {
+    let checkboxStates = updateCheckboxStates();
+
+    let checkboxIsChecked = false;
+
+    filtersSectionBinding.forEach(binding => {
+        checkboxIsChecked = checkboxIsChecked | checkboxStates[binding.arrayName].length > 0;
+    });
 
     //If at least one filtering checkbox is checked, filter by the selected feature property is applied
     if(checkboxIsChecked) {
-        return collection.features.filter((feature) => {
-            var isPatientTypeChecked = checkboxStates.patientTypes
-            .includes(feature.properties.patienttype)
-            var isServiceCategoryChecked = checkboxStates.serviceCategories
-            .includes(feature.properties.ac1)
-            var isInpatientCategoryChecked = checkboxStates.inpatientOrOutpationed
-            .includes(feature.properties.isinpatient)
-            var isInpatientCategoryChecked = checkboxStates.booleanCategories
-            .includes(feature.properties.isinpatient)
+        return markers.filter(marker => {
+            let isPatientTypeChecked = checkboxStates.patientTypes
+                .includes(marker.feature.properties.patienttype);
+            let isServiceCategoryChecked = checkboxStates.serviceCategories
+                .includes(marker.feature.properties.ac1);
+            let isInpatientCategoryChecked = checkboxStates.booleanCategories
+                .includes(marker.feature.properties.isinpatient);
             return isPatientTypeChecked || isServiceCategoryChecked || isInpatientCategoryChecked //true if either of variables is true
         });
     }
     //If no filter checkbox is checked, return all the features in the array.
     else {
-        return collection.features;
-        }
+        return markers;
+    }
 }
 // init() is called as soon as the page loads
-function init(map, sidebar, initFunction) {
+function init(map, sidebar) {
 // PASTE YOUR URLs HERE. These URLs come from Google Sheets 'shareable link' form
 //NOTE: Google Spreadsheet table should not have empty rows!!! 
-    var dataURL = 'https://docs.google.com/spreadsheets/d/12Me343d7zlUQ2UqCIVG9BrWD8OPL_KRk4DL1nm5RlAE/edit?usp=sharing';
-    var acCodesURL = 'https://docs.google.com/spreadsheets/d/1jX20bMaNFLYijteEGjJBDNzpkVqTC_YP0mA2B1zpED4/edit?usp=sharing';
+    const dataURL = 'https://docs.google.com/spreadsheets/d/12Me343d7zlUQ2UqCIVG9BrWD8OPL_KRk4DL1nm5RlAE/edit?usp=sharing';
+    const acCodesURL = 'https://docs.google.com/spreadsheets/d/1jX20bMaNFLYijteEGjJBDNzpkVqTC_YP0mA2B1zpED4/edit?usp=sharing';
     Tabletop.init({
         key: dataURL,
         callback: (data) => {
             createFacilitiesArray(data);
-            // updateCheckboxStates();
 
             mergeCodes(collection, codesJson);
 
-            var facilitiesJson = new L.GeoJSON(null);
             //Creating marker cluster layer group.
-            var markerCluster = L.markerClusterGroup({
+            let markerCluster = L.markerClusterGroup({
                 showCoverageOnHover: false,
                 zoomToBoundsOnClick: true
             }).addTo(map);
-            checkboxIsChecked === false;
+            map.markerCluster = markerCluster;
             let overlays = createOverlays(codesJson);
-            let markers = createMarkers (sidebar, getFilteredMarkers());
+            let markers = createMarkers (sidebar, collection.features);
+            createLayers(markerCluster, collection, markers, overlays);
+            createFilters(markers);
 
-            createLayers(markerCluster, collection, markers, overlays, layerControl);
-
-            // createFilters(markerCluster, sidebar, checkboxIsChecked);
             initializeEvents(markerCluster, sidebar);
+            //map.addLayer(markerCluster);
         },
         simpleSheet: true
     });
@@ -103,34 +111,11 @@ function init(map, sidebar, initFunction) {
         key: acCodesURL,
         callback: (acCodes) => {
             getCodes(acCodes);
-            initFunction();
         },
         simpleSheet: true 
     });
 //SimpleSheet assumes there is only one table and automatically sends its data
 }
-
-var buttonsJson = [
-    {
-        buttonId : "clearPatientTypeFiltersBtn",
-        className : "patient-type-check",
-    },
-    {
-        buttonId : "clearServiceCategoryFiltersBtn",
-        className : "service-category"
-    }, 
-    {
-        buttonId : "clearMentalHealthWorkersBtn",
-        className : "mental-health-worker"
-    },
-    {
-        buttonId : "clearisInpatientFiltersBtn",
-        className : "is-inpatient-check",
-
-        buttonId : "clearbooleancategoryFiltersBtn",
-        className : "boolean-category-check"
-    }
-];
 
 function initializeEvents(layers, sidebar) {
     buttonsJson.forEach(element => bindClearFilter(element.buttonId, element.className, layers, sidebar));
@@ -145,25 +130,28 @@ function bindClearFilter(buttonId, className, layers, sidebar) {
     }   
 }
 
+function updateMarkers(markers) {
+    let filteredMarkers = getFilteredMarkers(markers);
 
-function updateMarkers(filters, sidebar) {
-    filters.clearLayers()
-    updateCheckboxStates()
-    createMarkers(filters, sidebar, getFilteredMarkers())
+    map.markerCluster.subGroups.forEach(subGroup => {
+        subGroup.clearLayers();
+
+        let subGroupMarkers = filteredMarkers.filter(marker => marker.subGroup === subGroup);
+        subGroupMarkers.forEach(marker => subGroup.addLayer(marker));
+    });
 }
 
-// The form of data must be a JSON representation of a table as returned by Tabletop.js
 function createMarkers(sidebar, features) {
-    var markers = []; 
-    for (var i = 0; i < features.length; i++) {
-        var feature = features[i];
-    	var marker = createMarker(feature);
+    let markers = [];
+    for (let i = 0; i < features.length; i++) {
+        let feature = features[i];
+    	let marker = createMarker(feature);
         markers.push(marker);
         // AwesomeMarkers is used to create facility icons. TODO: add icons
-        var icon = L.AwesomeMarkers.icon({
+        let icon = L.AwesomeMarkers.icon({
             icon: 'glyphicon-glyphicon-plus',
             iconColor: 'white',
-            markerColor: getColor(feature.properties.ac1),
+            markerColor: getMarkerColor(feature.properties.ac1),
             prefix: 'glyphicon'
         });
         marker.setIcon(icon);
@@ -189,13 +177,13 @@ function createMarkers(sidebar, features) {
 }
 
 function createFacilitiesArray(data) {
-    for (var i = 0; i < data.length; i++) {
-        var row = data[i];
-        var lat = parseFloat(row.Latitude);
-        var lon = parseFloat(row.Longitude);
+    for (let i = 0; i < data.length; i++) {
+        let row = data[i];
+        let lat = parseFloat(row.Latitude);
+        let lon = parseFloat(row.Longitude);
         if (lat & lon) {
-            var coords = [parseFloat(row.Longitude), parseFloat(row.Latitude)];
-            var feature = {
+            let coords = [parseFloat(row.Longitude), parseFloat(row.Latitude)];
+            let feature = {
                 'type': 'Feature',
                 'geometry': {
                     'type': 'Point',
@@ -240,19 +228,9 @@ function createMarker(feature) {
     return marker;
 }
 
-// Color coding used for the markers. Returns different colors depending on the string passed. 
-function getColor(type) {
-    switch (type) {
-        case '14': return 'cadetblue';
-        case '3': return 'darkblue';
-        case '4': return 'gray';
-        case '15': return 'lightgray';
-        case '16': return 'purple';
-        default: return 'blue';
-    }
+function getMarkerColor(type) {
+    if (markerColors.hasOwnProperty(type))
+        return markerColors[type];
+    else
+        return 'blue';
 }
-
-//Changing facility title and description to title case
-//function capitalizeFirstLetter(string) {
-//    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-//}

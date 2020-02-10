@@ -14,11 +14,14 @@
     <link rel="stylesheet" href="node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.css" />
 
         <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" href="css/styles.css" />
 
     <link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.css"/>
     <link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
+
+    <script src="js/mapping-configurations.js"></script>
+    <script src="js/init-globals.js"></script>
 
 </head>
 
@@ -27,6 +30,8 @@
 
         <nav id="control-bar">
             <div class="control-bar-header">
+                <a href="https://www.google.com">
+                <img class="logo" src="img/logo.png">
                 <h3>Mental Health for Ukraine</h3>
             </div>
 
@@ -41,7 +46,7 @@
                             <li>
                                 <div class="inputs" id="patient-types">
                                     <label>
-                                        <input type="checkbox" class="patient-type-check" value="General" name="check"> <span class="label-text">General</span>
+                                        <input type="checkbox" class="filtercontrol patient-type-check" value="General" name="check"> <span class="label-text">General</span>
                                     </label>
                                 </div>
                             </li>
@@ -49,7 +54,7 @@
                             <li>
                                 <div class="inputs" id="patient-types">
                                     <label>
-                                        <input type="checkbox" class="patient-type-check" value="Children, adolescents and adults" name="check"> <span class="label-text">Children, adolescents and adults</span>
+                                        <input type="checkbox" class="filtercontrol patient-type-check" value="Children, adolescents and adults" name="check"> <span class="label-text">Children, adolescents and adults</span>
                                     </label>
                                 </div>
                             </li>
@@ -57,7 +62,7 @@
                             <li>
                                 <div class="inputs inputs chiller_cb" id="patient-types">
                                     <label>
-                                        <input type="checkbox" class="patient-type-check" value="Children and adolescents" name="check"> <span class="label-text">Children and adolescents</span>
+                                        <input type="checkbox" class="filtercontrol patient-type-check" value="Children and adolescents" name="check"> <span class="label-text">Children and adolescents</span>
                                     </label>
                                 </div>
                             </li>
@@ -65,7 +70,7 @@
                             <li>
                                 <div class="inputs" id="patient-types">
                                     <label>
-                                        <input type="checkbox" class="patient-type-check" value="Adult men" name="check"> <span class="label-text">Adult men</span>
+                                        <input type="checkbox" class="filtercontrol patient-type-check" value="Adult men" name="check"> <span class="label-text">Adult men</span>
                                     </label>
                                 </div>
                             </li>
@@ -73,7 +78,7 @@
                             <li>
                                 <div class="inputs" id="patient-types">
                                     <label>
-                                        <input type="checkbox" class="patient-type-check" value="Adult women" name="check"> <span class="label-text">Adult women</span>
+                                        <input type="checkbox" class="filtercontrol patient-type-check" value="Adult women" name="check"> <span class="label-text">Adult women</span>
                                     </label>
                                 </div>
                             </li>
@@ -81,7 +86,7 @@
                             <li>
                                 <div class="inputs" id="patient-types">
                                     <label>
-                                        <input type="checkbox" class="patient-type-check" value="Children" name="check"> <span class="label-text">Children</span>
+                                        <input type="checkbox" class="filtercontrol patient-type-check" value="Children" name="check"> <span class="label-text">Children</span>
                                     </label>
                                 </div>
                             </li>
@@ -89,7 +94,7 @@
                             <li>
                                 <div class="inputs" id="patient-types">
                                     <label>
-                                        <input type="checkbox" class="patient-type-check" value="Older persons" name="check"> <span class="label-text">Older persons</span>
+                                        <input type="checkbox" class="filtercontrol patient-type-check" value="Older persons" name="check"> <span class="label-text">Older persons</span>
                                     </label>
                                 </div>
                             </li>
@@ -97,7 +102,7 @@
                             <li>
                                 <div class="inputs" id="patient-types">
                                     <label>
-                                        <input type="checkbox" class="patient-type-check" value="Individuals suffering from addictions; seperate programme for adolescents" name="check"> <span class="label-text">Individuals suffering from addictions; seperate programme for adolescents</span>
+                                        <input type="checkbox" class="filtercontrol patient-type-check" value="Individuals suffering from addictions; seperate programme for adolescents" name="check"> <span class="label-text">Individuals suffering from addictions; seperate programme for adolescents</span>
                                     </label>
                                 </div>
                             </li>
@@ -105,7 +110,7 @@
                             <li>
                                 <div class="inputs" id="patient-types">
                                     <label>
-                                        <input type="checkbox" class="patient-type-check" value="Women in crises, women, women with young children" name="check"> <span class="label-text">Women in crises, women, women with young children</span>
+                                        <input type="checkbox" class="filtercontrol patient-type-check" value="Women in crises, women, women with young children" name="check"> <span class="label-text">Women in crises, women, women with young children</span>
                                     </label>
                                 </div>
                             </li>
@@ -113,7 +118,7 @@
                             <li>
                                 <div class="inputs" id="patient-types">
                                     <label>
-                                        <input type="checkbox" class="patient-type-check" value="Children with intellectual disabilities" name="check"> <span class="label-text">Children with intellectual disabilities</span>
+                                        <input type="checkbox" class="filtercontrol patient-type-check" value="Children with intellectual disabilities" name="check"> <span class="label-text">Children with intellectual disabilities</span>
                                     </label>
                                 </div>
                             </li>
@@ -121,7 +126,7 @@
                             <li>
                                 <div class="inputs" id="patient-types">
                                     <label>
-                                        <input type="checkbox" class="patient-type-check" value="Children with intellectual disabilities and mental retardation" name="check"> <span class="label-text">Children with intellectual disabilities and mental retardation</span>
+                                        <input type="checkbox" class="filtercontrol patient-type-check" value="Children with intellectual disabilities and mental retardation" name="check"> <span class="label-text">Children with intellectual disabilities and mental retardation</span>
                                     </label>
                                 </div>
                             </li>
@@ -137,7 +142,7 @@
                             <li>
                                 <div class="inputs" id="service-categories">
                                     <label>
-                                        <input type="checkbox" class="service-category" value="1" name="check"> <span class="label-text">Загальні активності з охорони психічного здоров’я та психосоціальної підтримки</span>
+                                        <input type="checkbox" class="filtercontrol service-category" value="1" name="check"> <span class="label-text">Загальні активності з охорони психічного здоров’я та психосоціальної підтримки</span>
                                     </label>
                                 </div>
                             </li>
@@ -145,7 +150,7 @@
                             <li>
                                 <div class="inputs" id="service-categories">
                                     <label>
-                                        <input type="checkbox" class="service-category" value="2" name="check"> <span class="label-text">Поширення інформації в громаді</span>
+                                        <input type="checkbox" class="filtercontrol service-category" value="2" name="check"> <span class="label-text">Поширення інформації в громаді</span>
                                     </label>
                                 </div>
                             </li>
@@ -153,7 +158,7 @@
                             <li>
                                 <div class="inputs" id="service-categories">
                                     <label>
-                                        <input type="checkbox" class="service-category" value="3" name="check"> <span class="label-text">Неформальні психосоціальні послуги в громаді</span>
+                                        <input type="checkbox" class="filtercontrol service-category" value="3" name="check"> <span class="label-text">Неформальні психосоціальні послуги в громаді</span>
                                     </label>
                                 </div>
                             </li>
@@ -161,7 +166,7 @@
                             <li>
                                 <div class="inputs" id="service-categories">
                                     <label>
-                                        <input type="checkbox" class="service-category" value="4" name="check"> <span class="label-text">Психосоціальна підтримка в освіті</span>
+                                        <input type="checkbox" class="filtercontrol service-category" value="4" name="check"> <span class="label-text">Психосоціальна підтримка в освіті</span>
                                     </label>
                                 </div>
                             </li>
@@ -169,7 +174,7 @@
                             <li>
                                 <div class="inputs" id="service-categories">
                                     <label>
-                                        <input type="checkbox" class="service-category" value="5" name="check"> <span class="label-text">Заходи промоції та превенції на робочому місці</span>
+                                        <input type="checkbox" class="filtercontrol service-category" value="5" name="check"> <span class="label-text">Заходи промоції та превенції на робочому місці</span>
                                     </label>
                                 </div>
                             </li>
@@ -177,7 +182,7 @@
                             <li>
                                 <div class="inputs" id="service-categories">
                                     <label>
-                                        <input type="checkbox" class="service-category" value="6" name="check"> <span class="label-text">Психосоціальні втручання</span>
+                                        <input type="checkbox" class="filtercontrol service-category" value="6" name="check"> <span class="label-text">Психосоціальні втручання</span>
                                     </label>
                                 </div>
                             </li>
@@ -185,14 +190,14 @@
                             <li>
                                 <div class="inputs" id="service-categories">
                                     <label>
-                                        <input type="checkbox" class="service-category" value="14" name="check"> <span class="label-text">Спеціалізовані психіатричні служби та заклади тривалого перебування</span>
+                                        <input type="checkbox" class="filtercontrol service-category" value="14" name="check"> <span class="label-text">Спеціалізовані психіатричні служби та заклади тривалого перебування</span>
                                     </label>
                                 </div>
                             </li>
                             <li>
                                 <div class="inputs" id="service-categories">
                                     <label>
-                                        <input type="checkbox" class="service-category" value="15" name="check"> <span class="label-text">Будинки-інтернати (будинки догляду)</span>
+                                        <input type="checkbox" class="filtercontrol service-category" value="15" name="check"> <span class="label-text">Будинки-інтернати (будинки догляду)</span>
                                     </label>
                                 </div>
                             </li>
@@ -210,7 +215,7 @@
                             <li>
                                 <div class="inputs" id="boolean-categories">
                                     <label>
-                                        <input type="checkbox" class="boolean-category-check" value="Inpatient" name="check"> <span class="label-text">Стаціонарний сервіс</span>
+                                        <input type="checkbox" class="filtercontrol boolean-category-check" value="Inpatient" name="check"> <span class="label-text">Стаціонарний сервіс</span>
                                     </label>
                                 </div>
                             </li>
@@ -218,7 +223,7 @@
                             <li>
                                 <div class="inputs" id="boolean-categories">
                                     <label>
-                                        <input type="checkbox" class="boolean-category-check" value="Outpatient" name="check"> <span class="label-text">Амбулаторний сервіс</span>
+                                        <input type="checkbox" class="filtercontrol boolean-category-check" value="Outpatient" name="check"> <span class="label-text">Амбулаторний сервіс</span>
                                     </label>
                                 </div>
                             </li>
@@ -235,11 +240,12 @@
 
                 <div class="container-fluid">
                     <button type="button" id="control-barCollapse" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
+                        <span class="icon">&#xf0b0;</span>
                         <span>Фільтри пошуку</span>
                     </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Фільтри пошуку">
-                        <i class="fas fa-align-justify"></i>
+
+                    <button class="btn btn-warning d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="За регіонами">
+                        <span class="icon">&#xf0c9;</span>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -282,13 +288,14 @@
     <script src="node_modules/tabletop/src/tabletop.min.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="js/marker-colorcoding.js"></script>
     <script src="js/init.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/activityCategories.js"></script>
     <script src="js/layers.js"></script>
 
         <!-- jQuery Custom Scroller CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 
 </body>
 
