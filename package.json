@@ -12,6 +12,7 @@
     "bootstrap": "^4.4.1",
     "jquery": "^3.4.1",
     "leaflet": "^1.6.0",
+    "leaflet-search": "^2.9.8",
     "leaflet-sidebar": "^0.2.0",
     "leaflet.awesome-markers": "^2.0.5",
     "leaflet.featuregroup.subgroup": "^1.0.2",
