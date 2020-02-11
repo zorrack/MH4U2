@@ -19,6 +19,7 @@
 
     <link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.css"/>
     <link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
+    <link rel="stylesheet" href="node_modules/leaflet-search/src/leaflet-search.css"/>
 
     <script src="js/mapping-configurations.js"></script>
     <script src="js/init-globals.js"></script>
@@ -239,6 +240,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
                 <div class="container-fluid">
+
                     <button type="button" id="control-barCollapse" class="btn btn-info">
                         <span class="icon">&#xf0b0;</span>
                         <span>Фільтри пошуку</span>
@@ -249,31 +251,61 @@
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
+                        <form >
 
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">Львівська область</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Донецька область</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Луганська область</a>
-                            </li>
+                            <div class="form-inline">
 
-                        </ul>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="Lviv"></label>
+                                        <select class="form-control ml-auto" id="Lviv">
+                                            <option>Львівська область</option>
+                                            <option>Жидачівський район</option>
+                                            <option>Ололололололололлоло лолоолол район</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="Donetsk"></label>
+                                        <select class="form-control ml-auto" id="Donetsk">
+                                            <option>Донецька область</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="Luhansk"></label>
+                                        <select class="form-control ml-auto" id="Luhansk">
+                                            <option>Луганська область</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
                     </div>
 
                 </div>
             </nav>
 
+            <div id="map"></div>
             <div id="sidebar" class="leaflet-sidebar collapsed">
                 <div class="laflet-sidebar-pane">
                     <h1 id="sidebar-title"></h1>
                     <div id="sidebar-content"><p></p></div>
                 </div>
             </div>
-            <div id="map"></div>
 
         </div>
 
@@ -288,11 +320,13 @@
     <script src="node_modules/tabletop/src/tabletop.min.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="js/marker-colorcoding.js"></script>
+    <script src="node_modules/leaflet-search/src/leaflet-search.js"></script>
+
     <script src="js/init.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/activityCategories.js"></script>
     <script src="js/layers.js"></script>
+    <script src="js/search.js"></script>
 
         <!-- jQuery Custom Scroller CDN -->
     <script src="node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>

@@ -4,6 +4,7 @@ function createOverlays(arr){
 
 function createLayers(parentMarkerCluster, arr, markers, overlays) {
 	parentMarkerCluster.subGroups = [];
+	console.log(parentMarkerCluster.subGroups);
 
 	overlays.forEach(layer => {
 		if (arr.features

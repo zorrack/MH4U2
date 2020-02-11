@@ -17,8 +17,8 @@ $( document ).ready(function() {
     $("#sidebar").mCustomScrollbar({
         theme: "dark-2"
     });
-    
-    
+    //TODO: add custom scrollbar
+ 
 	// This is the Carto Positron basemap
 	// let basemap = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 	//     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
@@ -85,6 +85,13 @@ function init(map, sidebar) {
     const dataURL = 'https://docs.google.com/spreadsheets/d/12Me343d7zlUQ2UqCIVG9BrWD8OPL_KRk4DL1nm5RlAE/edit?usp=sharing';
     const acCodesURL = 'https://docs.google.com/spreadsheets/d/1jX20bMaNFLYijteEGjJBDNzpkVqTC_YP0mA2B1zpED4/edit?usp=sharing';
     Tabletop.init({
+    key: acCodesURL,
+    callback: (acCodes) => {
+        getCodes(acCodes);
+    },
+    simpleSheet: true 
+    });
+    Tabletop.init({
         key: dataURL,
         callback: (data) => {
             createFacilitiesArray(data);
@@ -103,16 +110,9 @@ function init(map, sidebar) {
             createFilters(markers);
 
             initializeEvents(markerCluster, sidebar);
-            //map.addLayer(markerCluster);
+            addMarkerSearch(markerCluster);
         },
         simpleSheet: true
-    });
-    Tabletop.init({
-        key: acCodesURL,
-        callback: (acCodes) => {
-            getCodes(acCodes);
-        },
-        simpleSheet: true 
     });
 //SimpleSheet assumes there is only one table and automatically sends its data
 }
@@ -162,12 +162,18 @@ function createMarkers(sidebar, features) {
                 L.DomEvent.stopPropagation(e);
                 //TODO: Add styles to sidebar content elements
                 document.getElementById('sidebar-title').innerHTML = e.target.feature.properties.officialName;
-                document.getElementById('sidebar-content').innerHTML = "Офіційна назва"  + ": "
+                document.getElementById('sidebar-content').innerHTML = "Офіційна назва"  + ": " 
                 + e.target.feature.properties.officialName + "<br />" +
-                "Юридична адреса<br />" + e.target.feature.properties.address + "<br />Контакти<br />" + e.target.feature.properties.phonenumber + " " + 
-                e.target.feature.properties.email + "<br />" + "<br />Цільове населення: <br />" + e.target.feature.properties.patienttype +
+                "Юридична адреса<br />" + e.target.feature.properties.address + 
+                "<br />Контакти<br />" + e.target.feature.properties.phonenumber + " " + 
+                e.target.feature.properties.email + "<br />" + 
+                "<br />Цільове населення: <br />" + e.target.feature.properties.patienttype +
                 "<br />Фахівці з психічного здоров'я<br />" + e.target.feature.properties.mentalhealthworkers +
+
+                "<br />Тип послуг<br />"+ e.target.feature.properties.activitycategory + ": " + e.target.feature.properties.activitycodename + ". "
+                + e.target.feature.properties.subactivitycodename + ". " + 
                 "<br />Інформація актуальна станом на " + e.target.feature.properties.recorddate;
+
                 sidebar.show();
             }
         });
@@ -225,6 +231,12 @@ function createMarker(feature) {
     marker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]]);
     //Generating features for GeoJSON   
     marker.feature = feature;
+    //Create a new combined property 'searchby' for searching by multiple features
+    feature.properties.searchby = [feature.properties.officialName, feature.properties.mentalhealthworkers,
+    feature.properties.activitycategory];
+
+    // var p = feature.properties;
+    // p.searchby = p.officialName + " | " + p.mentalhealthworkers + " | " + p.activitycategory;
     return marker;
 }
 

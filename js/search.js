@@ -1,18 +1,25 @@
-function searchMarkers(parentMarkerCluster){
+function addMarkerSearch(parentMarkerCluster){
 
-	let searchLayers = L.layerGroup([]);
+	let searchsubGroups = L.layerGroup([]);
 	map.markerCluster.subGroups.forEach(subGroup => {
-        searchLayers.addLayer(subGroup);
+        searchsubGroups.addLayer(subGroup);
 	});
-	console.log(searchLayers);
+
+	//TODO: make search results dependent on visible layers
 
     map.addControl( new L.Control.Search({
-        layer: searchLayers,
+        layer: searchsubGroups,
         initial: false,
-		propertyName: 'officialName',
+        zoom: 16,
+        textPlaceholder: "Пошук (Назва | фахівці | послуги)",
+        textErr: "Пошук не дав результатів",
+		propertyName: 'searchby',
+		//Fnction that return row tip html node(or html string), receive text tooltip in first param
 		buildTip: function(text, val) {
-			var type = val.layer.feature.properties.activitycategory;
-			return '<a href="#" class="'+type+'">'+text+'<b>'+type+'</b></a>';
+//			var name = val.layer.feature.properties.officialName;
+			return '<a href="#" class="' + " " + '">' + text + '<b>' + " " + name + '</b></a>';
 		}
     }) );
 }
+
+
