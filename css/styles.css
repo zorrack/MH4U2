@@ -46,7 +46,12 @@ span.icon {
 }
 
 #sidebar-title {
-    font-size: 24px!important;
+    font-size: 12px;
+    color: #063961;
+}
+
+#sidebar-section-title {
+    background: red;
 }
 
 .leaflet-sidebar .close {
@@ -58,10 +63,9 @@ span.icon {
     top: 5px;
 }
 
-
 #map {
     width: 100%;
-    height: 80vh;
+    height: 85vh;
 }
 
 p {
@@ -267,6 +271,40 @@ a.article:hover {
     LEAFLET SEARCH STYLE
 ----------------------------------------------------- */
 
+.leaflet-control-search .search-button {
+    transition: none;
+}
+
 .leaflet-control-search .search-tip {
     max-width: 75vw;
-}    
+}  
+
+path.leaflet-interactive{
+    stroke: #931621;
+    fill: #931621;
+    filter: brightness(0.5) sepia(1) hue-rotate(-70deg) saturate(5); 
+}
+
+/* ---------------------------------------------------
+    BREADCRUMB NAVIGATION STYLE
+----------------------------------------------------- */  
+
+.grid {
+    display: grid;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+#dropdownMenu1 {
+    width: min-content;
+    min-width: 150px
+}
+
+.dropdown-menu {
+    height: 250px;
+    overflow-y: scroll;
+}
+
+.collapsed {
+    display: none;
+}

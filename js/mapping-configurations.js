@@ -3,6 +3,13 @@ const elementTypes = {
     DROPDOWN: 2,
     TEXT: 3
 }
+
+const searchByMapping = [
+    "officialName",
+    "mentalhealthworkers",
+    "activitycategory"
+];
+
 const filtersSectionBinding = [
     {
         filterClass: "patient-type-check",
@@ -70,5 +77,25 @@ const buttonsJson = [
 
         buttonId : "clearbooleancategoryFiltersBtn",
         className : "boolean-category-check"
+    }
+];
+
+//TODO: populate an array of health workers in a facility for filtering
+const mentalHealthWorkers = [
+    {
+        healthworkersavailiable :[
+           "Сімейні лікарі_filter",
+            "Психіатри_filter",
+            "Дитячі психіатри_filter",
+            "Неврологи _filter",
+            "Педіатри_filter",
+            "Наркологи_filter",
+            "Медичні психологи_filter",
+            "Лікарі психотерапевти_filter",
+            "Психологи_filter",
+            "Психотерапевти _filter",
+            "Логопеди_filter",
+            "Терапевти _filter"
+        ]
     }
 ];

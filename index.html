@@ -21,6 +21,19 @@
     <link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css"/>
     <link rel="stylesheet" href="node_modules/leaflet-search/src/leaflet-search.css"/>
 
+    <script src="node_modules/leaflet/dist/leaflet-src.js"></script>
+    <script src="node_modules/leaflet.markercluster/dist/leaflet.markercluster.js" type = "text/javascript"> </script>
+    <!-- after Leaflet script -->
+    <script src="node_modules/leaflet.featuregroup.subgroup/dist/leaflet.featuregroup.subgroup.js" type = "text/javascript"> </script>
+    <script src="node_modules/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
+    <script src="node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
+    <script src="node_modules/tabletop/src/tabletop.min.js"></script>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/leaflet-search/src/leaflet-search.js"></script>
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+
     <script src="js/mapping-configurations.js"></script>
     <script src="js/init-globals.js"></script>
 
@@ -236,9 +249,19 @@
         </nav>
 
         <div id="content">
+            <!-- Region filter breadcrumb -->
+            <div class="content-wrapper">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
 
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Region filter breadcrumb END -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-
                 <div class="container-fluid">
 
                     <button type="button" id="control-barCollapse" class="btn btn-info">
@@ -251,52 +274,24 @@
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <form >
+                        <div class="grid">
+                            <div class="container">
 
-                            <div class="form-inline">
-
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="Lviv"></label>
-                                        <select class="form-control ml-auto" id="Lviv">
-                                            <option>Львівська область</option>
-                                            <option>Жидачівський район</option>
-                                            <option>Ололололололололлоло лолоолол район</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" type="button" id="regionsDropdownMenu" data-toggle="dropdown">
+                                        <li id="breadcrumb">Регіони: усі</li>
+                                        <span class="caret"></span>
+                                    </a>
                                 </div>
-
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="Donetsk"></label>
-                                        <select class="form-control ml-auto" id="Donetsk">
-                                            <option>Донецька область</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col">
-                                    <div class="form-group">
-                                        <label for="Luhansk"></label>
-                                        <select class="form-control ml-auto" id="Luhansk">
-                                            <option>Луганська область</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
-                                </div>
-
                             </div>
-                        </form>
+                        </div>
+
                     </div>
 
+
+                    </div>
                 </div>
+
             </nav>
 
             <div id="map"></div>
@@ -310,27 +305,14 @@
         </div>
 
     </div>
-    <script src="node_modules/leaflet/dist/leaflet-src.js"></script>
-    <script src="node_modules/leaflet.markercluster/dist/leaflet.markercluster.js" type = "text/javascript"> </script>
-    <!-- after Leaflet script -->
-    <script src="node_modules/leaflet.featuregroup.subgroup/dist/leaflet.featuregroup.subgroup.js" type = "text/javascript"> </script>
-    
-    <script src="node_modules/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
-    <script src="node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
-    <script src="node_modules/tabletop/src/tabletop.min.js"></script>
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="node_modules/leaflet-search/src/leaflet-search.js"></script>
 
-    <script src="js/init.js"></script>
+    <script src="js/info-sidebar.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/activityCategories.js"></script>
+    <script src="js/regions.js"></script>
     <script src="js/layers.js"></script>
     <script src="js/search.js"></script>
-
-        <!-- jQuery Custom Scroller CDN -->
-    <script src="node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
-
+    <script src="js/init.js"></script>
 </body>
 
 </html>

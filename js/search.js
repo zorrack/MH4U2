@@ -1,14 +1,12 @@
 function addMarkerSearch(parentMarkerCluster){
-
-	let searchsubGroups = L.layerGroup([]);
-	map.markerCluster.subGroups.forEach(subGroup => {
-        searchsubGroups.addLayer(subGroup);
+	let subGroups = L.layerGroup([]);
+	parentMarkerCluster.subGroups.forEach(subGroup => {
+        subGroups.addLayer(subGroup);
 	});
 
 	//TODO: make search results dependent on visible layers
-
     map.addControl( new L.Control.Search({
-        layer: searchsubGroups,
+        layer: subGroups,
         initial: false,
         zoom: 16,
         textPlaceholder: "Пошук (Назва | фахівці | послуги)",
@@ -19,7 +17,7 @@ function addMarkerSearch(parentMarkerCluster){
 //			var name = val.layer.feature.properties.officialName;
 			return '<a href="#" class="' + " " + '">' + text + '<b>' + " " + name + '</b></a>';
 		}
-    }) );
+    }));
 }
 
 

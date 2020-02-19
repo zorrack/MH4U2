@@ -6,6 +6,18 @@ let map = L.map('map').setView([49.8397, 24.0297], 8);
 
 $( document ).ready(function() {
 
+    // $('.items').on('click', function() {
+    //   var $this = $(this),
+    //       $bc = $('<div class="item"></div>');
+
+    //   $this.parents('li').each(function(n, li) {
+    //       var $a = $(li).children('ul').clone();
+    //       $bc.prepend(' / ', $a);
+    //   });
+    //     $('.breadcrumb').html( $bc.prepend('<a href="#home">Home</a>') );
+    //     return false;
+    // }) 
+
     $("#control-bar").mCustomScrollbar({
         theme: "minimal"
     });
@@ -18,8 +30,8 @@ $( document ).ready(function() {
         theme: "dark-2"
     });
     //TODO: add custom scrollbar
- 
-	// This is the Carto Positron basemap
+
+    // This is the Carto Positron basemap
 	// let basemap = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 	//     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
 	//     subdomains: 'abcd',
@@ -42,10 +54,10 @@ $( document ).ready(function() {
         position: 'right'
     });
     map.addControl(sidebar);
-    map.sideBar = sidebar;
+    map.sidebar = sidebar;
 
     map.on('click', function () {
-        map.sideBar.hide();
+        map.sidebar.hide();
     });
 
     init(map, sidebar);
@@ -61,9 +73,11 @@ function getFilteredMarkers(markers) {
         checkboxIsChecked = checkboxIsChecked | checkboxStates[binding.arrayName].length > 0;
     });
 
+    let filteredMarkers;
+
     //If at least one filtering checkbox is checked, filter by the selected feature property is applied
     if(checkboxIsChecked) {
-        return markers.filter(marker => {
+        filteredMarkers = markers.filter(marker => {
             let isPatientTypeChecked = checkboxStates.patientTypes
                 .includes(marker.feature.properties.patienttype);
             let isServiceCategoryChecked = checkboxStates.serviceCategories
@@ -75,9 +89,35 @@ function getFilteredMarkers(markers) {
     }
     //If no filter checkbox is checked, return all the features in the array.
     else {
-        return markers;
+        filteredMarkers = markers;
+    }
+
+    /*
+    TODO: Filter by Region and District
+    */
+    
+    filteredMarkers = getMarkersByDistrict(filteredMarkers, selectedDistrict);
+    filteredMarkers = getMarkersByRegion(filteredMarkers, selectedRegion);
+
+    return filteredMarkers;
+}
+
+function getMarkersByDistrict(filteredMarkers, district) {
+    if (district && district !== "") {
+        return filteredMarkers.filter(element => element.feature.properties.district === district);
+    } else {
+        return filteredMarkers;
     }
 }
+
+function getMarkersByRegion(filteredMarkers, region) {
+    if (region && region !== "") {
+        return filteredMarkers.filter(element => element.feature.properties.region === region);
+    } else {
+        return filteredMarkers;
+    }
+}
+
 // init() is called as soon as the page loads
 function init(map, sidebar) {
 // PASTE YOUR URLs HERE. These URLs come from Google Sheets 'shareable link' form
@@ -95,8 +135,13 @@ function init(map, sidebar) {
         key: dataURL,
         callback: (data) => {
             createFacilitiesArray(data);
-
             mergeCodes(collection, codesJson);
+            // initAdministrativeUnitsTree();
+
+            let regions = getRegions(collection.features);
+            populateRegionsTemplate(regions, regionsTemplate);
+            document.getElementById('breadcrumb').appendChild(createRegionNavigation(regionsTemplate, listItemAttributes));
+            toggleRegionNavigation();
 
             //Creating marker cluster layer group.
             let markerCluster = L.markerClusterGroup({
@@ -105,11 +150,11 @@ function init(map, sidebar) {
             }).addTo(map);
             map.markerCluster = markerCluster;
             let overlays = createOverlays(codesJson);
-            let markers = createMarkers (sidebar, collection.features);
+            let markers = createMarkers (map.sidebar, collection.features);
             createLayers(markerCluster, collection, markers, overlays);
             createFilters(markers);
 
-            initializeEvents(markerCluster, sidebar);
+            initializeEvents(markerCluster, map.sidebar);
             addMarkerSearch(markerCluster);
         },
         simpleSheet: true
@@ -157,26 +202,7 @@ function createMarkers(sidebar, features) {
         marker.setIcon(icon);
 
         //Function to open right sidebar with facility description after clicking on marker
-        marker.on({
-            click: function(e) {
-                L.DomEvent.stopPropagation(e);
-                //TODO: Add styles to sidebar content elements
-                document.getElementById('sidebar-title').innerHTML = e.target.feature.properties.officialName;
-                document.getElementById('sidebar-content').innerHTML = "Офіційна назва"  + ": " 
-                + e.target.feature.properties.officialName + "<br />" +
-                "Юридична адреса<br />" + e.target.feature.properties.address + 
-                "<br />Контакти<br />" + e.target.feature.properties.phonenumber + " " + 
-                e.target.feature.properties.email + "<br />" + 
-                "<br />Цільове населення: <br />" + e.target.feature.properties.patienttype +
-                "<br />Фахівці з психічного здоров'я<br />" + e.target.feature.properties.mentalhealthworkers +
-
-                "<br />Тип послуг<br />"+ e.target.feature.properties.activitycategory + ": " + e.target.feature.properties.activitycodename + ". "
-                + e.target.feature.properties.subactivitycodename + ". " + 
-                "<br />Інформація актуальна станом на " + e.target.feature.properties.recorddate;
-
-                sidebar.show();
-            }
-        });
+        marker.on('click', (e)=> populateInfoSidebar(e, sidebar));
     }
 
     return markers;
@@ -199,26 +225,15 @@ function createFacilitiesArray(data) {
                     'officialName': row["Офіційна назва"],
                     'recorddate': row["Інформація актуальна станом на:"],
                     'address': row["Адреса"],
+                    'region': row["Район"],
+                    'district': row["Область"],
                     'phonenumber': row["контактний номер"],
                     'email': row["електронна пошта веб сайт"],
                     'patienttype': row["Цільове населення"],
                     'mentalhealthworkers': row["фахівці з психічного здоров'я"],
                     'ac1': row["Activity code 1"],
                     //TODO: set up both inpatient and outpatient data filter 
-                    'isinpatient': row["амбулаторний чи стаціонарний"],
-
-                    'familydoctors' : row["Сімейні лікарі_filter"],
-                    'psychiatrists' : row["Психіатри_filter"],
-                    'childpsychiatrists' : row["Дитячі психіатри_filter"],
-                    'neurologists' : row["Неврологи _filter"],
-                    'pediaters' : row["Педіатри_filter"],
-                    'narcologists' : row["Наркологи_filter"],
-                    'medpsychologists' : row["Медичні психологи_filter"],
-                    'docpsychotherapists' : row["Лікарі психотерапевти_filter"],
-                    'psychologists' : row["Психологи_filter"],
-                    'psychotherapists' : row["Психотерапевти _filter"],
-                    'logopeads' : row["Логопеди_filter"],
-                    'therapists' : row["Терапевти _filter"]
+                    'isinpatient': row["амбулаторний чи стаціонарний"]
                 }
             }
             collection.features.push(feature);
@@ -231,12 +246,10 @@ function createMarker(feature) {
     marker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]]);
     //Generating features for GeoJSON   
     marker.feature = feature;
+    feature.properties.searchby = [];
     //Create a new combined property 'searchby' for searching by multiple features
-    feature.properties.searchby = [feature.properties.officialName, feature.properties.mentalhealthworkers,
-    feature.properties.activitycategory];
+    searchByMapping.forEach(element => feature.properties.searchby.push(feature.properties[element]));
 
-    // var p = feature.properties;
-    // p.searchby = p.officialName + " | " + p.mentalhealthworkers + " | " + p.activitycategory;
     return marker;
 }
 
