@@ -47,5 +47,6 @@ function clearCheckboxFilters(className, filters, sidebar) {
     for(let i = 0; i < checkboxes.length ; i++) {
         checkboxes[i].checked = false;
     }
+    bindClearFilter();
     updateMarkers();
 }

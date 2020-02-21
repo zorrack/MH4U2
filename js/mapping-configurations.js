@@ -10,6 +10,35 @@ const searchByMapping = [
     "activitycategory"
 ];
 
+const featurePropertiesBinding = [
+    {
+        featureId: "0District",
+        display: "Область",
+        featurePropertyName: "District",
+        subFeaturePropertyId: "1Region",
+        continue: true
+    },
+    {
+        featureId: "1Region",
+        display: "Район",
+        featurePropertyName: "Region",
+        subFeaturePropertyId: "2Zip",
+        continue: false
+    },
+    {
+        featureId: "2Zip",
+        display: "Індекс",
+        featurePropertyName: "Zip",
+        subFeaturePropertyId: "3AdministrativeUnit",
+        continue: false
+    },
+    {
+        featureId: "3AdministrativeUnit",
+        display: "Населений пункт",
+        featurePropertyName: ""
+    }
+];
+
 const filtersSectionBinding = [
     {
         filterClass: "patient-type-check",

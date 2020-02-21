@@ -295,16 +295,21 @@ path.leaflet-interactive{
     align-items: center;
 }
 
-#dropdownMenu1 {
+#regionsDropdownMenu {
     width: min-content;
-    min-width: 150px
+    min-width: 250px
 }
 
 .dropdown-menu {
     height: 250px;
     overflow-y: scroll;
+    width: -webkit-fill-available;
 }
 
-.collapsed {
+.submenu-collapsed {
     display: none;
+}
+
+#breadcrumb, #breadcrumb ul li {
+list-style-type: none;
 }

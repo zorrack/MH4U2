@@ -96,8 +96,8 @@ function getFilteredMarkers(markers) {
     TODO: Filter by Region and District
     */
     
-    filteredMarkers = getMarkersByDistrict(filteredMarkers, selectedDistrict);
-    filteredMarkers = getMarkersByRegion(filteredMarkers, selectedRegion);
+    filteredMarkers = getMarkersByDistrict(filteredMarkers, selectedAdministrativeUnit.district);
+    filteredMarkers = getMarkersByRegion(filteredMarkers, selectedAdministrativeUnit.region);
 
     return filteredMarkers;
 }
@@ -140,8 +140,8 @@ function init(map, sidebar) {
 
             let regions = getRegions(collection.features);
             populateRegionsTemplate(regions, regionsTemplate);
-            document.getElementById('breadcrumb').appendChild(createRegionNavigation(regionsTemplate, listItemAttributes));
-            toggleRegionNavigation();
+            document.getElementById('breadcrumb').appendChild(createRegionNavigation(regionsTemplate));
+            toggleRegionNavigation(selectedAdministrativeUnit);
 
             //Creating marker cluster layer group.
             let markerCluster = L.markerClusterGroup({

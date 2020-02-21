@@ -1,3 +1,11 @@
+let selectedAdministrativeUnit = [
+	{
+		district : "",
+		region : ""
+	}
+];
+
+
 var regions = [];
 var regionsTemplate = [
 	{
@@ -9,12 +17,6 @@ var regionsTemplate = [
 		regions : regions
 	}
 ];
-
-var listItemAttributes = {
-	"role" : "presentation",
-	"a role" : "menuitem",
-	"tabindex" : "-1"
-}
 
 //Returns list of unique regions
 function getRegions(arr){
@@ -31,7 +33,7 @@ function populateRegionsTemplate(regList, arr) {
 	)
 }
 
-function createRegionNavigation(regionsTemplate, listItemAttributes){
+function createRegionNavigation(regionsTemplate){
     var list = document.createElement('ul');
 
     list.classList.add('dropdown-menu');
@@ -42,27 +44,25 @@ function createRegionNavigation(regionsTemplate, listItemAttributes){
     	if (element) {
 			// Create the list item
 			var listItem = document.createElement('li')
+			listItem.setAttribute('value', element.district);
+
 			listItem.classList.add('items')
 			listItem.setAttribute('role', 'presentation')
-
-			//TODO: create html attributes array
-			// listItemAttributes.forEach(attr => {
-			// 	listItem.setAttribute(attr)
-			// })
-			
 			// Set list item content
 			listItem.appendChild(document.createTextNode(element.district))
 			list.appendChild(listItem);
 
 			//Create ul for each district regions list
 			var sublist = document.createElement('ul')
-			sublist.classList.add('collapsed')
+			sublist.classList.add('submenu-collapsed')
 			listItem.appendChild(sublist);
 
 				element.regions.forEach(el => {
 					if(el) {
 						// Create the sublist item
 						var subListItem = document.createElement('li')
+						subListItem.classList.add('items')
+						subListItem.setAttribute('value', el);
 						subListItem.appendChild(document.createTextNode(el))
 						sublist.appendChild(subListItem);
 					}	
@@ -74,19 +74,29 @@ function createRegionNavigation(regionsTemplate, listItemAttributes){
 	return list;
 }
 
-function toggleRegionNavigation(){
+function toggleRegionNavigation(selectedAdministrativeUnit){
 
 	let item = document.querySelectorAll('.items');
-	console.log(item);
+
 	item.forEach(el => {
 		el.addEventListener('click', function () {
-			el.classList.add('active-item');
+			el.classList.toggle('active-item');
+			selectedAdministrativeUnit.district = el.getAttribute("value");
 
 			// appendRegionNavigationItem();
 
-    		let subItems = el.firstElementChild;
-    			if(subItems) {
-					subItems.classList.toggle('collapsed');
+    		let subList = el.firstElementChild;
+    			if(subList) {
+					subList.classList.toggle('submenu-collapsed');
+
+					let subListItems = subList.children;
+					for(let i = 0; i < subListItems.length ; i++) {
+
+						subListItems[i].addEventListener('click', function () {
+							selectedAdministrativeUnit.region = subListItems[i].getAttribute("value");
+						});
+
+					}
     			}
   		});
 	});
