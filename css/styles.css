@@ -1,28 +1,71 @@
 body {
 	padding: 0;
     margin: 0;
+    height: 600px;
+    overflow: hidden;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    float: left;
+    margin: 5px;
+}
+
+span.icon {
+  font-family: FontAwesome;
 }
 
 
+/* ---------------------------------------------------
+    LEAFLET LAYER CONTROL STYLE
+----------------------------------------------------- */
 
-#sidebar-content, #sidebar-title {
-    word-break: break-word;
+.leaflet-control-layers.leaflet-control-layers-expanded {
+
+    max-width: 250px;
 }
 
-#sidebar-title {
-    font-size: 24px!important;
+/* ---------------------------------------------------
+    LEAFLET INFO SIDEBAR STYLE
+----------------------------------------------------- */
+
+#sidebar {
+    position: relative;
+    height: 75vh;
+    padding: 10 5 10 10;
 }
 
 .leaflet-sidebar {
     float: right;
 }
 
+#sidebar-content, #sidebar-title {
+    word-break: break-word;
+    margin-right: 10px;
+}
 
-#map{
-	height: 100vh;
+#sidebar-title {
+    font-size: 12px;
+    color: #063961;
+}
+
+#sidebar-section-title {
+    background: red;
+}
+
+.leaflet-sidebar .close {
+    z-index: 2700!important;
+    background: white;
+    opacity: 1;
+    margin: 10px;
+    right: 15px;
+    top: 5px;
+}
+
+#map {
     width: 100%;
-    position: fixed;
-    margin-top: 85px;
+    height: 85vh;
 }
 
 p {
@@ -40,15 +83,16 @@ a:focus {
     transition: all 0.3s;
 }
 
-.navbar {
+/* ---------------------------------------------------
+    UPPER NAVBAR STYLE
+----------------------------------------------------- */
 
-	width: 100%;
-    height: 80px;
-	z-index: 2000;
-    padding: 15px 10px;
+.navbar {
+    padding: 10px;
     background: #fff;
     border: none;
     border-radius: 0;
+    margin-bottom: 10px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -65,18 +109,35 @@ a:focus {
     margin: 40px 0;
 }
 
-a.close {
-	z-index: 2700!important;
+.btn-info {
+    background-color: #138496;
 }
 
+.btn-warning {
+    background-color: #F7BB06;
+}
+
+.form-group {
+    display: inline;
+    float: right;
+    margin: 5px;
+    padding: auto;
+}
 
 /* ---------------------------------------------------
-    NAVIGATION (FILTERING) BAR STYLE
+    LEFT (FILTERING) BAR STYLE
+
+    Color scheme:
+    #0E5F9F - background, base color (saphire blue)
+    #063961 - background, 2nd color (for accents and active elements) (dark midnight blue)
+    #2C8C99 - background, 3rd color (celadon green) 
+
+    #F7BB06 - accent color (for buttons, dividers) (selective yellow)
+    #931621 - danger color (ruby red)
 ----------------------------------------------------- */
 
 .wrapper {
     display: flex;
-    width: 100%!important;
     align-items: stretch;
 }
 
@@ -85,16 +146,20 @@ a.close {
     max-width: 250px;
     height: 100vh;
     z-index: 999;
-    background: #7386D5;
+    background: #063961;
     color: #fff;
     transition: all 0.3s;
-
     overflow-y: scroll;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
+#control-bar .control-bar-header {
+    background: #0E5F9F!important;
+}
+
 #control-bar.active {
     margin-left: -250px;
+    background: #0E5F9F;
 }
 
 #control-bar .control-bar-header {
@@ -119,14 +184,14 @@ a.close {
 }
 
 #control-bar ul li a:hover {
-    color: #7386D5;
+    color: #0E5F9F;
     background: #fff;
 }
 
 #control-bar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
+    background: #0E5F9F;
 }
 
 a[data-toggle="collapse"] {
@@ -174,16 +239,20 @@ a.article:hover {
     color: #fff !important;
 }
 
+.label{
+    margin-left: 20px;
+}
+
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
 
+
 #content {
     width: 100%;
-    padding: 20px;
+    padding: 5px;
     min-height: 100vh;
     transition: all 0.3s;
-    position: fixed;
 }
 
 @media (max-width: 768px) {
@@ -198,3 +267,154 @@ a.article:hover {
     }
 }
 
+/* ---------------------------------------------------
+    LEAFLET SEARCH STYLE
+----------------------------------------------------- */
+
+.leaflet-control-search .search-button {
+    transition: none;
+}
+
+.leaflet-control-search .search-tip {
+    max-width: 75vw;
+}  
+
+path.leaflet-interactive{
+    stroke: #931621;
+    fill: #931621;
+    filter: brightness(0.5) sepia(1) hue-rotate(-70deg) saturate(5); 
+}
+
+/* ---------------------------------------------------
+    BREADCRUMB NAVIGATION STYLE
+----------------------------------------------------- */  
+
+.grid {
+    display: grid;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+
+        *,
+*:before,
+*:after {
+  box-sizing: border-box;
+  /* 1 */
+}
+
+/**
+ * Breadcrumb Styles
+ */
+.breadcrumb {
+  font-size: 1em;
+  list-style-type: none;
+}
+
+.breadcrumb > li {
+  display: inline-block;
+  padding: 0.5em;
+}
+.breadcrumb > li:after {
+  content: "/";
+  display: inline-block;
+  margin: 0 0.5em 0 0.25em;
+  font-weight: 300;
+  color: #F7BB06;
+}
+
+.submenu-collapsed {
+    display: none;
+}
+
+.scrollable {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+@media only screen and (min-width: 40em) {
+  .breadcrumb {
+    font-size: 0.825em;
+  }
+}
+
+.breadcrumb:after {
+  display: none;
+}
+@media (hover) {
+  .breadcrumb:after {
+    content: 'hover';
+  }
+}
+
+.breadcrumb > li:hover {
+    cursor: pointer;
+    background-color: #F7BB06;
+    -webkit-transition: border-color 0.3s ease-in-out;
+    transition: border-color 0.3s ease-in-out;
+}
+
+/*Submenu items hover effects*/
+.breadcrumb li:hover {
+    background-color: #F7BB06;
+    transition: all 0.3s;
+}
+
+.breadcrumb li {
+  position: relative;
+  margin-left: 0;
+}
+
+.breadcrumb li ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  left: -9999px;
+  z-index: 3000;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border-radius: .25em;
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 5px;
+  padding-right: 5px;
+
+}
+.breadcrumb li ul a {
+  display: block;
+  white-space: nowrap;
+  padding: 0.5em 1em;
+  border-bottom: 1px solid #cbcccb;
+  color: #4B4D4B;
+}
+
+.breadcrumb li:hover ul li a:hover {
+  color: #B5A54A;
+}
+
+.cutsthemustard .breadcrumb__toggle:after {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: 0;
+  margin-left: 0.3333333333em;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid #e9e4c9;
+  -webkit-transition: border-color 0.3s ease-in-out;
+  transition: border-color 0.3s ease-in-out;
+}
+.breadcrumb li:hover .cutsthemustard .breadcrumb__toggle:after {
+  border-top-color: white;
+}
+
+@media (hover) {
+  .breadcrumb li:hover ul,
+  .breadcrumb li:focus ul {
+    left: 0;
+  }
+}
+.breadcrumb li.is-toggled ul {
+  left: 0;
+}

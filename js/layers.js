@@ -1,36 +1,19 @@
-var uniqueCategories;
-var overlays;
-
-function getUniqueCategories(data, prop){
-	var i,
-	unique,
-	uniqueCategories = {};
-
-	for (i in data) {
-	   unique = data[i].feature.properties.prop;
-	   if (!uniqueCategories[prop]) {
-	      uniqueCategories[prop]= [];
-	   }
-
-	   uniqueCategories[prop].push(data[i]);
-	}
-	return uniqueCategories;
+function createOverlays(arr){
+	return [... new Set(arr.map(data => data.activitycategory))];
 }
 
+function createLayers(parentMarkerCluster, arr, markers, overlays) {
+	parentMarkerCluster.subGroups = [];
 
-function createLayers(){
-	var categoryLayers = [];
-		for (var i = 0; i <= uniqueCategories; i++) {
-			categoryLayers[i] = new L.layerGroup().addTo(map);
-		}
-	return categoryLayers;
-}
-
-function addCategoryOverlays(){
-	overlays = {};
-	for (var i = 0; i <= uniqueCategories; i++) {
-		// Create map overlays
-		overlays.push(categoryLayers[i] + ": " + categoryLayers[i]);
-	}
-	return overlays;
+	overlays.forEach(layer => {
+		if (arr.features
+			.filter(feature => feature.properties.activitycategory == layer).length > 0) {
+				let filteredMarkers = markers.filter(marker => marker.feature.properties.activitycategory == layer);
+				let subGroup = L.featureGroup
+					.subGroup(parentMarkerCluster, filteredMarkers).addTo(map);
+				parentMarkerCluster.subGroups.push(subGroup);
+				filteredMarkers.forEach(marker => marker.subGroup = subGroup);
+				map.layerControl.addOverlay(subGroup, layer);
+			}
+	});
 }
