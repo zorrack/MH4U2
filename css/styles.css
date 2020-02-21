@@ -295,21 +295,126 @@ path.leaflet-interactive{
     align-items: center;
 }
 
-#regionsDropdownMenu {
-    width: min-content;
-    min-width: 250px
+
+        *,
+*:before,
+*:after {
+  box-sizing: border-box;
+  /* 1 */
 }
 
-.dropdown-menu {
-    height: 250px;
-    overflow-y: scroll;
-    width: -webkit-fill-available;
+/**
+ * Breadcrumb Styles
+ */
+.breadcrumb {
+  font-size: 1em;
+  list-style-type: none;
+}
+
+.breadcrumb > li {
+  display: inline-block;
+  padding: 0.5em;
+}
+.breadcrumb > li:after {
+  content: "/";
+  display: inline-block;
+  margin: 0 0.5em 0 0.25em;
+  font-weight: 300;
+  color: #F7BB06;
 }
 
 .submenu-collapsed {
     display: none;
 }
 
-#breadcrumb, #breadcrumb ul li {
-list-style-type: none;
+.scrollable {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+@media only screen and (min-width: 40em) {
+  .breadcrumb {
+    font-size: 0.825em;
+  }
+}
+
+.breadcrumb:after {
+  display: none;
+}
+@media (hover) {
+  .breadcrumb:after {
+    content: 'hover';
+  }
+}
+
+.breadcrumb > li:hover {
+    cursor: pointer;
+    background-color: #F7BB06;
+    -webkit-transition: border-color 0.3s ease-in-out;
+    transition: border-color 0.3s ease-in-out;
+}
+
+/*Submenu items hover effects*/
+.breadcrumb li:hover {
+    background-color: #F7BB06;
+    transition: all 0.3s;
+}
+
+.breadcrumb li {
+  position: relative;
+  margin-left: 0;
+}
+
+.breadcrumb li ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  left: -9999px;
+  z-index: 3000;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border-radius: .25em;
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 5px;
+  padding-right: 5px;
+
+}
+.breadcrumb li ul a {
+  display: block;
+  white-space: nowrap;
+  padding: 0.5em 1em;
+  border-bottom: 1px solid #cbcccb;
+  color: #4B4D4B;
+}
+
+.breadcrumb li:hover ul li a:hover {
+  color: #B5A54A;
+}
+
+.cutsthemustard .breadcrumb__toggle:after {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: 0;
+  margin-left: 0.3333333333em;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid #e9e4c9;
+  -webkit-transition: border-color 0.3s ease-in-out;
+  transition: border-color 0.3s ease-in-out;
+}
+.breadcrumb li:hover .cutsthemustard .breadcrumb__toggle:after {
+  border-top-color: white;
+}
+
+@media (hover) {
+  .breadcrumb li:hover ul,
+  .breadcrumb li:focus ul {
+    left: 0;
+  }
+}
+.breadcrumb li.is-toggled ul {
+  left: 0;
 }

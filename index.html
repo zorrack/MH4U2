@@ -276,22 +276,17 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <div class="grid">
                             <div class="container">
-
                                 <div class="dropdown">
-                                    <a class="dropdown-toggle" type="button" id="regionsDropdownMenu" data-toggle="dropdown">
-                                        <li id="breadcrumb">Регіони: усі</li>
-                                        <span class="caret"></span>
-                                    </a>
-                                </div>
+                                    <ul id="js-breadcrumb" class="breadcrumb">
+                                        <li id="breadcrumb" class="breadcrumb__toggle">Регіони: усі</li>
+                                    </ul>
+                                </div>      
                             </div>
                         </div>
-
                     </div>
 
 
-                    </div>
                 </div>
-
             </nav>
 
             <div id="map"></div>
@@ -312,6 +307,7 @@
     <script src="js/regions.js"></script>
     <script src="js/layers.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/breadcrumbs.js"></script>    
     <script src="js/init.js"></script>
 </body>
 

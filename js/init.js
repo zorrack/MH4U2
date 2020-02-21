@@ -151,10 +151,11 @@ function init(map, sidebar) {
             map.markerCluster = markerCluster;
             let overlays = createOverlays(codesJson);
             let markers = createMarkers (map.sidebar, collection.features);
+            map.markers = markers;
             createLayers(markerCluster, collection, markers, overlays);
             createFilters(markers);
 
-            initializeEvents(markerCluster, map.sidebar);
+            initializeEvents(markerCluster, map.sidebar, markers);
             addMarkerSearch(markerCluster);
         },
         simpleSheet: true
@@ -162,15 +163,15 @@ function init(map, sidebar) {
 //SimpleSheet assumes there is only one table and automatically sends its data
 }
 
-function initializeEvents(layers, sidebar) {
-    buttonsJson.forEach(element => bindClearFilter(element.buttonId, element.className, layers, sidebar));
+function initializeEvents(layers, sidebar, markers) {
+    buttonsJson.forEach(element => bindClearFilter(element.buttonId, element.className, layers, sidebar, markers));
 }
 
-function bindClearFilter(buttonId, className, layers, sidebar) {
+function bindClearFilter(buttonId, className, layers, sidebar, markers) {
     var btn = document.getElementById(buttonId);
     if (btn) {
         btn.onclick = function (e) {
-            clearCheckboxFilters(className, layers, sidebar);
+            clearCheckboxFilters(className, layers, sidebar, markers);
         }
     }   
 }

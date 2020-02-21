@@ -42,11 +42,10 @@ function updateCheckboxStates() {
     return checkboxStates;
 }
 //Button deselecting all the filtering checkboxes
-function clearCheckboxFilters(className, filters, sidebar) {
+function clearCheckboxFilters(className, filters, sidebar, markers) {
     let checkboxes = document.getElementsByClassName(className);
     for(let i = 0; i < checkboxes.length ; i++) {
         checkboxes[i].checked = false;
     }
-    bindClearFilter();
-    updateMarkers();
+    updateMarkers(markers);
 }
