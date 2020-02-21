@@ -59,7 +59,7 @@ function createRegionNavigation(regionsTemplate){
 						// Create the sublist item (eg. m. Chervonograd)
 						var subListItem = document.createElement('li')
 						// subListItem.classList.add('breadcrumb__toggle')
-						subListItem.classList.add('items')
+						subListItem.classList.add('subitems')
 						subListItem.setAttribute('value', el);
 						subListItem.appendChild(document.createTextNode(el))
 						sublist.appendChild(subListItem);
@@ -81,6 +81,7 @@ function toggleRegionNavigation() {
 			el.classList.toggle('breadcrumb__toggle');
 			//Assign value attribute because filtering is based on value attribute
 			selectedAdministrativeUnit.district = el.getAttribute("value");
+			selectedAdministrativeUnit.region = "";
 			console.log("Filter by district: " + selectedAdministrativeUnit.district);
 
 			updateMarkers(map.markers);
@@ -93,11 +94,12 @@ function toggleRegionNavigation() {
 
 			let subListItems = subList.children;
 			for(let i = 0; i < subListItems.length ; i++) {
-				subListItems[i].addEventListener('click', function () {
+				subListItems[i].addEventListener('click', function (e) {
 					//Assign value attribute because filtering is based on value attribute
 					selectedAdministrativeUnit.region = subListItems[i].getAttribute("value");
 					console.log("Filter by region: " + selectedAdministrativeUnit.region);
 					updateMarkers(map.markers);
+					e.stopPropagation();
 				});
 
 			}
