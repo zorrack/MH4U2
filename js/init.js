@@ -29,6 +29,11 @@ $( document ).ready(function() {
     $("#sidebar").mCustomScrollbar({
         theme: "dark-2"
     });
+
+    $(".scrollable").mCustomScrollbar({
+        theme: "dark-2"
+    });
+
     //TODO: add custom scrollbar
 
     // This is the Carto Positron basemap
