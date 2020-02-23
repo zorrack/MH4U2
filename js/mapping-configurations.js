@@ -10,32 +10,16 @@ const searchByMapping = [
     "activitycategory"
 ];
 
-const featurePropertiesBinding = [
+const administrativeUnitsBindingTemplate = [
     {
-        featureId: "0District",
-        display: "Область",
-        featurePropertyName: "District",
-        subFeaturePropertyId: "1Region",
-        continue: true
+        auLevel: 1,
+        auSourceProperty: "region",
+        auId: "region",
     },
     {
-        featureId: "1Region",
-        display: "Район",
-        featurePropertyName: "Region",
-        subFeaturePropertyId: "2Zip",
-        continue: false
-    },
-    {
-        featureId: "2Zip",
-        display: "Індекс",
-        featurePropertyName: "Zip",
-        subFeaturePropertyId: "3AdministrativeUnit",
-        continue: false
-    },
-    {
-        featureId: "3AdministrativeUnit",
-        display: "Населений пункт",
-        featurePropertyName: ""
+        auLevel: 2,
+        auSourceProperty: "district",
+        auId: "district"
     }
 ];
 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../js/utils.js"></script>
+    <script src="../js/administrativeunits.js"></script>
+</head>
+<body>
+<h1>Test Page</h1>
+</body>
+<script>
+    let worldAu = new AdministrativeUnit("world", 0, "Світ");
+    let rootUnit = new AdministrativeUnit("country", 1, "Україна");
+    worldAu.addChildAdministrativeUnit(rootUnit);
+    worldAu.addChildAdministrativeUnit(new AdministrativeUnit("country", 1, "Poland"));
+
+    let lvUnit = new AdministrativeUnit("region", 2, "Львівська");
+    rootUnit.addChildAdministrativeUnit(lvUnit);
+    rootUnit.addChildAdministrativeUnit(new AdministrativeUnit("region", 2, "Тернопільська"));
+    rootUnit.addChildAdministrativeUnit(new AdministrativeUnit("region", 2, "Донецька"));
+    lvUnit.addChildAdministrativeUnit(new AdministrativeUnit("district", 3, "Золочівський рн."));
+    lvUnit.addChildAdministrativeUnit(new AdministrativeUnit("district", 3, "Бродівський рн."));
+    lvUnit.addChildAdministrativeUnit(new AdministrativeUnit("district", 3, "Дрогобицький рн."));
+    worldAu.debugDisplayAuTree();
+
+</script>
+</html>
