@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="node_modules/leaflet-sidebar/src/L.Control.Sidebar.css" />
@@ -37,6 +38,8 @@
     <script src="js/mapping-configurations.js"></script>
     <script src="js/init-globals.js"></script>
     <script src="js/utils.js"></script>
+    <script src="js/templates.js"></script>
+
     <script src="js/administrativeunits.js"></script>
 
 </head>
@@ -278,11 +281,13 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <div class="grid">
                             <div class="container">
-                                <div class="dropdown">
+                                <!-- <div class="dropdown">
                                     <ul id="js-breadcrumb" class="breadcrumb">
                                         <li id="breadcrumb" class="breadcrumb__toggle">Регіони: усі</li>
                                     </ul>
-                                </div>      
+                                </div> -->
+                                <div class="breadcrumbs" style="z-index: 10000" id="breadCrumbRootLevel">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -306,10 +311,10 @@
     <script src="js/info-sidebar.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/activityCategories.js"></script>
-    <script src="js/regions.js"></script>
+<!--    <script src="js/regions.js"></script>-->
     <script src="js/layers.js"></script>
     <script src="js/search.js"></script>
-    <script src="js/breadcrumbs.js"></script>    
+<!--    <script src="js/breadcrumbs.js"></script>    -->
     <script src="js/init.js"></script>
 </body>
 

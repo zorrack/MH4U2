@@ -143,10 +143,10 @@ function init(map, sidebar) {
             mergeCodes(collection, codesJson);
             // initAdministrativeUnitsTree();
 
-            let regions = getRegions(collection.features);
-            populateRegionsTemplate(regions, regionsTemplate);
-            document.getElementById('breadcrumb').appendChild(createRegionNavigation(regionsTemplate));
-            toggleRegionNavigation(selectedAdministrativeUnit);
+            // let regions = getRegions(collection.features);
+            // populateRegionsTemplate(regions, regionsTemplate);
+            // document.getElementById('breadcrumb').appendChild(createRegionNavigation(regionsTemplate));
+            // toggleRegionNavigation(selectedAdministrativeUnit);
 
             //Creating marker cluster layer group.
             let markerCluster = L.markerClusterGroup({
@@ -162,6 +162,7 @@ function init(map, sidebar) {
 
             initializeEvents(markerCluster, map.sidebar, markers);
             addMarkerSearch(markerCluster);
+            initBreadcrumbs(map.rootAdministrativeUnit);
         },
         simpleSheet: true
     });
@@ -247,7 +248,7 @@ function createFacilitiesArray(data) {
     }
 
     map.rootAdministrativeUnit = new AdministrativeUnit("root", 0, "Всі");
-    //buildAdministrativeUnitsTree(map.rootAdministrativeUnit, collection.features);
+    buildAdministrativeUnitsTree(map.rootAdministrativeUnit, collection.features);
 }
 
 function buildAdministrativeUnitsTree(rootAu, features) {
