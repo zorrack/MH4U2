@@ -6,18 +6,6 @@ let map = L.map('map').setView([49.8397, 24.0297], 8);
 
 $( document ).ready(function() {
 
-    // $('.items').on('click', function() {
-    //   var $this = $(this),
-    //       $bc = $('<div class="item"></div>');
-
-    //   $this.parents('li').each(function(n, li) {
-    //       var $a = $(li).children('ul').clone();
-    //       $bc.prepend(' / ', $a);
-    //   });
-    //     $('.breadcrumb').html( $bc.prepend('<a href="#home">Home</a>') );
-    //     return false;
-    // }) 
-
     $("#control-bar").mCustomScrollbar({
         theme: "minimal"
     });
@@ -27,6 +15,10 @@ $( document ).ready(function() {
     });
 
     $("#sidebar").mCustomScrollbar({
+        theme: "dark-2"
+    });
+
+    $("#region").mCustomScrollbar({
         theme: "dark-2"
     });
 
@@ -53,6 +45,10 @@ $( document ).ready(function() {
     let layerControl = L.control.layers(null, null, {collapsed: true});
     map.layerControl = layerControl;
     layerControl.addTo(map);
+
+    // addUserLocationControl(map);
+    // getUserGeolocation(map, map.userLocation);
+    getUserGeolocation(map);
 
     let sidebar = L.control.sidebar('sidebar', {
         closeButton: true,
