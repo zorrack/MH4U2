@@ -12,6 +12,11 @@ const searchByMapping = [
 
 const administrativeUnitsBindingTemplate = [
     {
+        auLevel: 0,
+        auSourceProperty: "",
+        auId: "root",
+    },
+    {
         auLevel: 1,
         auSourceProperty: "region",
         auId: "region",

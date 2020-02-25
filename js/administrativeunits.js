@@ -41,8 +41,6 @@ class AdministrativeUnit {
                         parseInt(administrativeUnit.level) - 1 === this.level) {
                     this.childAus.push(administrativeUnit);
                     administrativeUnit.ParentAu = this;
-                    console.log("Administrative unit " + administrativeUnit.DisplayName +
-                        " is successfully added as a child of " + this.DisplayName);
                 } else {
                     console.log("The level of child administrative unit is wrong: " + administrativeUnit.level)
                 }
