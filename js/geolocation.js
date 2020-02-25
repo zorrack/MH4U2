@@ -12,7 +12,8 @@ function onLocationFound(e) {
     var radius = e.accuracy / 2;
     let marker = L.marker(e.latlng)
         let icon = L.AwesomeMarkers.icon({
-            markerColor: "white"
+            markerColor: "white",
+            prefix: 'glyphicon'
         });
         marker.setIcon(icon);
 

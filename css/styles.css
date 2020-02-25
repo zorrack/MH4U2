@@ -404,7 +404,7 @@ path.leaflet-interactive{
     left: 4px;
     height: 18px;
     width: 18px;
-    background-color: #fff;
+    background-color: #FFFFFF;
     border-color: #063961;
     border-style: solid;
     border-width: 1px;
@@ -413,15 +413,15 @@ path.leaflet-interactive{
 
 .checkmark:hover {
   background-color: #DBC300;
-  transition: all 0.3s;
-  -webkit-transition: all 0.3s;
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
 }
 
 
 /* When the checkbox is checked, change the checkbox background */
 .check input:checked ~ .checkmark {
     background-color: #F7BB06;
-    border-color: #F7BB06;
+    border-color: #2C8C99;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -443,7 +443,7 @@ path.leaflet-interactive{
     width: 5px;
     height: 10px;
     border: solid ;
-    border-color: #fff;
+    border-color: #FFFFFF;
     border-width: 0 3px 3px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
@@ -467,10 +467,11 @@ path.leaflet-interactive{
   height: 32px;
   z-index: 1500;
   position: absolute;
-  top: 185px;
+  top: 200px;
   margin: 10px;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  font-size: 16px;
 
 }
