@@ -6,18 +6,6 @@ let map = L.map('map').setView([49.8397, 24.0297], 8);
 
 $( document ).ready(function() {
 
-    // $('.items').on('click', function() {
-    //   var $this = $(this),
-    //       $bc = $('<div class="item"></div>');
-
-    //   $this.parents('li').each(function(n, li) {
-    //       var $a = $(li).children('ul').clone();
-    //       $bc.prepend(' / ', $a);
-    //   });
-    //     $('.breadcrumb').html( $bc.prepend('<a href="#home">Home</a>') );
-    //     return false;
-    // }) 
-
     $("#control-bar").mCustomScrollbar({
         theme: "minimal"
     });
@@ -29,6 +17,15 @@ $( document ).ready(function() {
     $("#sidebar").mCustomScrollbar({
         theme: "dark-2"
     });
+
+    $("#region").mCustomScrollbar({
+        theme: "dark-2"
+    });
+
+    $(".scrollable").mCustomScrollbar({
+        theme: "dark-2"
+    });
+
     //TODO: add custom scrollbar
 
     // This is the Carto Positron basemap
@@ -48,6 +45,10 @@ $( document ).ready(function() {
     let layerControl = L.control.layers(null, null, {collapsed: true});
     map.layerControl = layerControl;
     layerControl.addTo(map);
+
+    // addUserLocationControl(map);
+    // getUserGeolocation(map, map.userLocation);
+    getUserGeolocation(map);
 
     let sidebar = L.control.sidebar('sidebar', {
         closeButton: true,
@@ -92,12 +93,12 @@ function getFilteredMarkers(markers) {
         filteredMarkers = markers;
     }
 
-    /*
-    TODO: Filter by Region and District
-    */
-    
-    filteredMarkers = getMarkersByDistrict(filteredMarkers, selectedAdministrativeUnit.district);
-    filteredMarkers = getMarkersByRegion(filteredMarkers, selectedAdministrativeUnit.region);
+    if (map.breadcrumbs.length > 1) {
+        filteredMarkers = getMarkersByRegion(filteredMarkers, map.breadcrumbs[1].DisplayName);
+    }
+    if (map.breadcrumbs.length > 2) {
+        filteredMarkers = getMarkersByDistrict(filteredMarkers, map.breadcrumbs[2].DisplayName);
+    }
 
     return filteredMarkers;
 }
@@ -122,7 +123,7 @@ function getMarkersByRegion(filteredMarkers, region) {
 function init(map, sidebar) {
 // PASTE YOUR URLs HERE. These URLs come from Google Sheets 'shareable link' form
 //NOTE: Google Spreadsheet table should not have empty rows!!! 
-    const dataURL = 'https://docs.google.com/spreadsheets/d/12Me343d7zlUQ2UqCIVG9BrWD8OPL_KRk4DL1nm5RlAE/edit?usp=sharing';
+    const dataURL = 'https://docs.google.com/spreadsheets/d/1owqbO4TlfVq3dw-Zyp-DxrooyCB0m1Hohstlha_o800/edit?usp=sharing';
     const acCodesURL = 'https://docs.google.com/spreadsheets/d/1jX20bMaNFLYijteEGjJBDNzpkVqTC_YP0mA2B1zpED4/edit?usp=sharing';
     Tabletop.init({
     key: acCodesURL,
@@ -138,10 +139,10 @@ function init(map, sidebar) {
             mergeCodes(collection, codesJson);
             // initAdministrativeUnitsTree();
 
-            let regions = getRegions(collection.features);
-            populateRegionsTemplate(regions, regionsTemplate);
-            document.getElementById('breadcrumb').appendChild(createRegionNavigation(regionsTemplate));
-            toggleRegionNavigation(selectedAdministrativeUnit);
+            // let regions = getRegions(collection.features);
+            // populateRegionsTemplate(regions, regionsTemplate);
+            // document.getElementById('breadcrumb').appendChild(createRegionNavigation(regionsTemplate));
+            // toggleRegionNavigation(selectedAdministrativeUnit);
 
             //Creating marker cluster layer group.
             let markerCluster = L.markerClusterGroup({
@@ -157,6 +158,7 @@ function init(map, sidebar) {
 
             initializeEvents(markerCluster, map.sidebar, markers);
             addMarkerSearch(markerCluster);
+            initBreadcrumbs(map.rootAdministrativeUnit);
         },
         simpleSheet: true
     });
@@ -226,8 +228,8 @@ function createFacilitiesArray(data) {
                     'officialName': row["Офіційна назва"],
                     'recorddate': row["Інформація актуальна станом на:"],
                     'address': row["Адреса"],
-                    'region': row["Район"],
-                    'district': row["Область"],
+                    'district': row["Район"],
+                    'region': row["Область"],
                     'phonenumber': row["контактний номер"],
                     'email': row["електронна пошта веб сайт"],
                     'patienttype': row["Цільове населення"],
@@ -240,8 +242,24 @@ function createFacilitiesArray(data) {
             collection.features.push(feature);
         }
     }
+
+    map.rootAdministrativeUnit = new AdministrativeUnit("root", 0, "Всі");
+    buildAdministrativeUnitsTree(map.rootAdministrativeUnit, collection.features);
 }
- 
+
+function buildAdministrativeUnitsTree(rootAu, features) {
+    let childAuTemplate = administrativeUnitsBindingTemplate.find(au => au.auLevel === rootAu.Level + 1);
+
+    if (childAuTemplate !== undefined) {
+        let currentLevelAus = [... new Set(features.map(feature => feature.properties[childAuTemplate.auSourceProperty]))];
+        currentLevelAus.forEach(auRecord => {
+            let childAu = new AdministrativeUnit(childAuTemplate.auId, childAuTemplate.auLevel, auRecord);
+            rootAu.addChildAdministrativeUnit(childAu);
+            buildAdministrativeUnitsTree(childAu, features.filter(feature => feature.properties[childAuTemplate.auSourceProperty] == auRecord));
+        });
+    }
+}
+
 function createMarker(feature) {
     var marker = null;
     marker = L.marker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]]);

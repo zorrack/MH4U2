@@ -12,9 +12,9 @@ function addMarkerSearch(parentMarkerCluster){
         textPlaceholder: "Пошук (Назва | фахівці | послуги)",
         textErr: "Пошук не дав результатів",
 		propertyName: 'searchby',
+		
 		//Fnction that return row tip html node(or html string), receive text tooltip in first param
 		buildTip: function(text, val) {
-//			var name = val.layer.feature.properties.officialName;
 			return '<a href="#" class="' + " " + '">' + text + '<b>' + " " + name + '</b></a>';
 		}
     }));
