@@ -42,6 +42,7 @@ function buildMainLevel(auElement) {
                     }
                     $("#breadCrumbRootLevel").append(buildMainLevel(auChildElement));
                 }
+                updateMarkers(map.markers);
             });
             childrenContainer.append(childElement);
         });
@@ -53,20 +54,13 @@ function buildMainLevel(auElement) {
                 map.breadcrumbs[map.breadcrumbs.length - 1].jqElement.remove();
                 map.breadcrumbs.pop();
             }
+            updateMarkers(map.markers);
         });
     }
 
     return element;
 }
-function buildChildrenHtml(parentAu) {
-    let childElements = "";
 
-    parentAu.ChildAus.forEach(childAu => {
-        childElements += "<li class='child' data-id=''>" + childAu.DisplayName + "</li>";
-    });
-
-    return childElements;
-}
 // $("#breadCrumbRootLevel").append($(breadcrumbItemTemplate.replace("{bcElements}",
 // `<li>Element 1</li>
 // <li>Element 2</li>

@@ -97,12 +97,12 @@ function getFilteredMarkers(markers) {
         filteredMarkers = markers;
     }
 
-    /*
-    TODO: Filter by Region and District
-    */
-    
-    filteredMarkers = getMarkersByDistrict(filteredMarkers, selectedAdministrativeUnit.district);
-    filteredMarkers = getMarkersByRegion(filteredMarkers, selectedAdministrativeUnit.region);
+    if (map.breadcrumbs.length > 1) {
+        filteredMarkers = getMarkersByRegion(filteredMarkers, map.breadcrumbs[1].DisplayName);
+    }
+    if (map.breadcrumbs.length > 2) {
+        filteredMarkers = getMarkersByDistrict(filteredMarkers, map.breadcrumbs[2].DisplayName);
+    }
 
     return filteredMarkers;
 }
