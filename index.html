@@ -79,7 +79,7 @@
                             </li>
 
                             <li>
-                                <div class="inputs inputs chiller_cb" id="patient-types">
+                                <div class="inputs" id="patient-types">
                                     <label>
                                         <input type="checkbox" class="filtercontrol patient-type-check" value="Children and adolescents" name="check"> <span class="label-text">Children and adolescents</span>
                                     </label>
@@ -254,18 +254,9 @@
         </nav>
 
         <div id="content">
-            <!-- Region filter breadcrumb -->
+
             <div class="content-wrapper">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12">
 
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- Region filter breadcrumb END -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
 
@@ -273,34 +264,32 @@
                         <span class="icon">&#xf0b0;</span>
                         <span>Фільтри пошуку</span>
                     </button>
-
-                    <button class="btn btn-warning d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="За регіонами">
-                        <span class="icon">&#xf0c9;</span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <div class="grid">
-                            <div class="container">
                                 <!-- <div class="dropdown">
                                     <ul id="js-breadcrumb" class="breadcrumb">
                                         <li id="breadcrumb" class="breadcrumb__toggle">Регіони: усі</li>
                                     </ul>
                                 </div> -->
-                                <div class="breadcrumbs" style="z-index: 10000" id="breadCrumbRootLevel">
+                                <!-- Region filter breadcrumb -->
+                                <div class="breadcrumbs btn btn-warning mr-auto" style="z-index: 10000" id="breadCrumbRootLevel">
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                                <!-- Region filter breadcrumb END -->
 
+<!--                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                            </div>
+
+                            <button class="btn btn-warning d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="За регіонами">
+                                <span class="icon">&#xf0c9;</span>
+                            </button> -->
 
                 </div>
             </nav>
 
             <div id="map"></div>
-            <div id="sidebar" class="leaflet-sidebar collapsed">
+            <div id="sidebar" class="card leaflet-sidebar collapsed">
                 <div class="laflet-sidebar-pane">
                     <h1 id="sidebar-title"></h1>
-                    <div id="sidebar-content"><p></p></div>
+                    <div class="card-body" id="sidebar-content"><p></p></div>
                 </div>
             </div>
 

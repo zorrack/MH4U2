@@ -12,14 +12,14 @@ function getReplacedString (demoTemplateHtml, feature) {
 }
 
 const sidebarTemplate = 
-	`Офіційна назва {{officialName}} <br />
-	Юридична адреса <br /> {{address}} <br />
-	Контакти<br /> {{phonenumber}} {{email}} <br />
-	Цільове населення <br /> {{patienttype}} <br />
-	Фахівці з психічного здоров'я <br /> {{mentalhealthworkers}} <br />
-	Тип послуг <br /> {{activitycategory}}: {{activitycodename}}.
-	{{subactivitycodename}}. <br />
-	Інформація актуальна станом на {{recorddate}}`;
+	`<h5 class="card-header text-center">Офіційна назва</h5> {{officialName}} 
+	<h5 class="card-header text-center">Юридична адреса</h5> {{address}} 
+	<h5 class="card-header text-center">Контакти</h5> {{phonenumber}} {{email}}
+	<h5 class="card-header text-center">Цільове населення</h5> {{patienttype}}
+	<h5 class="card-header text-center">Фахівці з психічного здоров'я</h5> {{mentalhealthworkers}}
+	<h5 class="card-header text-center">Тип послуг</h4> {{activitycategory}}: {{activitycodename}}.
+	{{subactivitycodename}}. </br>
+	<p><small class="text-muted">Інформація актуальна станом на {{recorddate}}</small></p>`
 
 
 function populateInfoSidebar(e, sidebar) {

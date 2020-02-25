@@ -10,6 +10,7 @@ body {
     height: 80px;
     float: left;
     margin: 5px;
+    border-radius: 50%;
 }
 
 span.icon {
@@ -33,34 +34,43 @@ span.icon {
 #sidebar {
     position: relative;
     height: 75vh;
-    padding: 10 5 10 10;
+/*    padding: 10 5 10 10;*/
 }
 
 .leaflet-sidebar {
     float: right;
 }
 
-#sidebar-content, #sidebar-title {
+.leaflet-sidebar > .leaflet-control {
+    padding: 30px 10px 10px 10px;
+}
+
+/*#sidebar-content: {
+    font-size: 0.9rem;
+}*/
+
+/*#sidebar-content, #sidebar-title {
     word-break: break-word;
-    margin-right: 10px;
+}*/
+
+.card {
+  background-color: rgba(0,0,0,.03);
 }
 
-#sidebar-title {
-    font-size: 12px;
-    color: #063961;
-}
-
-#sidebar-section-title {
-    background: red;
+.card-header {
+  background-color: white;
+  margin: 15px 0px 5px 0px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .leaflet-sidebar .close {
     z-index: 2700!important;
     background: white;
     opacity: 1;
-    margin: 10px;
-    right: 15px;
-    top: 5px;
+    margin: 5px 15px 10px 10px;
+    top: 15px;
 }
 
 #map {
@@ -111,6 +121,7 @@ a:focus {
 
 .btn-info {
     background-color: #138496;
+    margin: 4px;
 }
 
 .btn-warning {
@@ -282,146 +293,17 @@ a.article:hover {
 path.leaflet-interactive{
     stroke: #931621;
     fill: #931621;
-    filter: brightness(0.5) sepia(1) hue-rotate(-70deg) saturate(5); 
+    radius: 30px;
+    filter: brightness(1) sepia(1) hue-rotate(-70deg) saturate(5); 
 }
 
 /* ---------------------------------------------------
     BREADCRUMB NAVIGATION STYLE
 ----------------------------------------------------- */  
 
-.grid {
-    display: grid;
-    -webkit-box-align: center;
-    align-items: center;
-}
-
-
-/*        *,*/
-/**:before,*/
-/**:after {*/
-/*  box-sizing: border-box;*/
-/*  !* 1 *!*/
-/*}*/
-
-/*!***/
-/* * Breadcrumb Styles*/
-/* *!*/
-/*.breadcrumb {*/
-/*  font-size: 1em;*/
-/*  list-style-type: none;*/
-/*}*/
-
-/*.breadcrumb > li {*/
-/*  display: inline-block;*/
-/*  padding: 0.5em;*/
-/*}*/
-/*.breadcrumb > li:after {*/
-/*  content: "/";*/
-/*  display: inline-block;*/
-/*  margin: 0 0.5em 0 0.25em;*/
-/*  font-weight: 300;*/
-/*  color: #F7BB06;*/
-/*}*/
-
-/*.submenu-collapsed {*/
-/*    display: none;*/
-/*}*/
-
-/*.scrollable {*/
-/*    max-height: 300px;*/
-/*    overflow-y: scroll;*/
-/*}*/
-
-/*@media only screen and (min-width: 40em) {*/
-/*  .breadcrumb {*/
-/*    font-size: 0.825em;*/
-/*  }*/
-/*}*/
-
-/*.breadcrumb:after {*/
-/*  display: none;*/
-/*}*/
-/*@media (hover) {*/
-/*  .breadcrumb:after {*/
-/*    content: 'hover';*/
-/*  }*/
-/*}*/
-
-/*.breadcrumb > li:hover {*/
-/*    cursor: pointer;*/
-/*    background-color: #F7BB06;*/
-/*    -webkit-transition: border-color 0.3s ease-in-out;*/
-/*    transition: border-color 0.3s ease-in-out;*/
-/*}*/
-
-/*!*Submenu items hover effects*!*/
-/*.breadcrumb li:hover {*/
-/*    background-color: #F7BB06;*/
-/*    transition: all 0.3s;*/
-/*}*/
-
-/*.breadcrumb li {*/
-/*  position: relative;*/
-/*  margin-left: 0;*/
-/*}*/
-
-/*.breadcrumb li ul {*/
-/*  position: absolute;*/
-/*  top: 100%;*/
-/*  left: 0;*/
-/*  left: -9999px;*/
-/*  z-index: 3000;*/
-/*  background-color: white;*/
-/*  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);*/
-/*  border-radius: .25em;*/
-/*  list-style-type: none;*/
-/*  margin-left: 0;*/
-/*  padding-left: 5px;*/
-/*  padding-right: 5px;*/
-
-/*}*/
-/*.breadcrumb li ul a {*/
-/*  display: block;*/
-/*  white-space: nowrap;*/
-/*  padding: 0.5em 1em;*/
-/*  border-bottom: 1px solid #cbcccb;*/
-/*  color: #4B4D4B;*/
-/*}*/
-
-/*.breadcrumb li:hover ul li a:hover {*/
-/*  color: #B5A54A;*/
-/*}*/
-
-/*.cutsthemustard .breadcrumb__toggle:after {*/
-/*  content: "";*/
-/*  display: inline-block;*/
-/*  vertical-align: middle;*/
-/*  width: 0;*/
-/*  height: 0;*/
-/*  margin-left: 0.3333333333em;*/
-/*  border-left: 4px solid transparent;*/
-/*  border-right: 4px solid transparent;*/
-/*  border-top: 5px solid #e9e4c9;*/
-/*  -webkit-transition: border-color 0.3s ease-in-out;*/
-/*  transition: border-color 0.3s ease-in-out;*/
-/*}*/
-/*.breadcrumb li:hover .cutsthemustard .breadcrumb__toggle:after {*/
-/*  border-top-color: white;*/
-/*}*/
-
-/*@media (hover) {*/
-/*  .breadcrumb li:hover ul,*/
-/*  .breadcrumb li:focus ul {*/
-/*    left: 0;*/
-/*  }*/
-/*}*/
-/*.breadcrumb li.is-toggled ul {*/
-/*  left: 0;*/
-/*}*/
-
 .breadcrumbs {
   overflow: hidden;
-  background-color: #333;
+  padding: 0;
 }
 
 .breadcrumbs li {
@@ -443,14 +325,14 @@ path.leaflet-interactive{
   border: none;
   outline: none;
   color: white;
-  padding: 14px 16px;
+  padding: 7px 16px;
   background-color: inherit;
   font-family: inherit;
   margin: 0;
 }
 
 .breadcrumbs li:hover, .breadcrumbs-dropdown:hover .dropbtn {
-  background-color: red;
+  background-color: #DBC300;
 }
 
 .breadcrumbs-dropdown-content {
@@ -460,6 +342,7 @@ path.leaflet-interactive{
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  padding: 2px;
 }
 
 .breadcrumbs-dropdown-content li {
@@ -477,4 +360,94 @@ path.leaflet-interactive{
 
 .breadcrumbs-dropdown:hover .breadcrumbs-dropdown-content {
   display: block;
+}
+
+/* ---------------------------------------------------
+    CUSTOM CHECKBOX STYLE
+----------------------------------------------------- */  
+
+
+/* The check */
+.check {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    padding-right: 15px;
+    cursor: pointer;
+    font-size: 18px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.check input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #fff ;
+    border-color:#f8204f;
+    border-style:solid;
+    border-width:2px;
+}
+
+
+
+/* When the checkbox is checked, add a blue background */
+.check input:checked ~ .checkmark {
+    background-color: #fff  ;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.check input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.check .checkmark:after {
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid ;
+    border-color:#f8204f;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.cust-btn{
+  margin-bottom: 10px;
+  background-color: #f8204f;
+  border-width: 2px;
+  border-color: #f8204f;
+  color: #fff;
+}
+.cust-btn:hover{
+  
+  border-color: #f8204f;
+  background-color: #fff;
+  color: #f8204f;
+  border-radius: 20px;
+  transform-style: 2s;
+
 }
