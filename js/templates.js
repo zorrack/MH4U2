@@ -3,7 +3,7 @@ let breadcrumbItemTemplate = `
         <button class="dropbtn">
             <i class="fa fa-times-circle clearfilter"></i> <!-- //On click - clear this level -->
             {auDisplayName}
-            <i class="fa fa-caret-down"></i>
+            <i class="fa fa-caret-down nextlevel"></i>
         </button>
         <div class="breadcrumbs-dropdown-content" id="{elementId}">
         </div>
@@ -46,6 +46,9 @@ function buildMainLevel(auElement) {
             });
             childrenContainer.append(childElement);
         });
+    }
+    if (auElement.ChildAus.length === 0) {
+        auElement.jqElement.find(".nextlevel").remove();
     }
     let clearFilterElement = element.find(".clearfilter");
     if (clearFilterElement) {
