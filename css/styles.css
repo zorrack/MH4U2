@@ -144,6 +144,7 @@ a:focus {
     #2C8C99 - background, 3rd color (celadon green) 
 
     #F7BB06 - accent color (for buttons, dividers) (selective yellow)
+    #DBC300 - accent color (for buttons, dividers) on hover
     #931621 - danger color (ruby red)
 ----------------------------------------------------- */
 
@@ -260,10 +261,10 @@ a.article:hover {
 
 
 #content {
-    width: 100%;
-    padding: 5px;
-    min-height: 100vh;
-    transition: all 0.3s;
+  width: 100%;
+  padding: 5px;
+  min-height: 100vh;
+  transition: all 0.3s;
 }
 
 @media (max-width: 768px) {
@@ -273,8 +274,11 @@ a.article:hover {
     #control-bar.active {
         margin-left: 0;
     }
-    #control-barCollapse span {
+/*    #control-barCollapse span {
         display: none;
+    }*/
+    .button-label-minimize {
+      display: none;
     }
 }
 
@@ -283,8 +287,12 @@ a.article:hover {
 ----------------------------------------------------- */
 
 .leaflet-control-search .search-button {
-    transition: none;
+  transition: none;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
+
 
 .leaflet-control-search .search-tip {
     max-width: 75vw;
@@ -343,6 +351,8 @@ path.leaflet-interactive{
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   padding: 2px;
+  max-height: 350px;
+  overflow-y: scroll;
 }
 
 .breadcrumbs-dropdown-content li {
@@ -366,7 +376,6 @@ path.leaflet-interactive{
     CUSTOM CHECKBOX STYLE
 ----------------------------------------------------- */  
 
-
 /* The check */
 .check {
     display: block;
@@ -375,7 +384,6 @@ path.leaflet-interactive{
     margin-bottom: 12px;
     padding-right: 15px;
     cursor: pointer;
-    font-size: 18px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -389,24 +397,31 @@ path.leaflet-interactive{
     cursor: pointer;
 }
 
-/* Create a custom checkbox */
+/* Style a custom checkbox */
 .checkmark {
     position: absolute;
     top: 3px;
-    left: 0;
+    left: 4px;
     height: 18px;
     width: 18px;
-    background-color: #fff ;
-    border-color:#f8204f;
-    border-style:solid;
-    border-width:2px;
+    background-color: #fff;
+    border-color: #063961;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 2px;
+}    
+
+.checkmark:hover {
+  background-color: #DBC300;
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
 }
 
 
-
-/* When the checkbox is checked, add a blue background */
+/* When the checkbox is checked, change the checkbox background */
 .check input:checked ~ .checkmark {
-    background-color: #fff  ;
+    background-color: #F7BB06;
+    border-color: #F7BB06;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -428,26 +443,34 @@ path.leaflet-interactive{
     width: 5px;
     height: 10px;
     border: solid ;
-    border-color:#f8204f;
+    border-color: #fff;
     border-width: 0 3px 3px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
 
-.cust-btn{
-  margin-bottom: 10px;
-  background-color: #f8204f;
-  border-width: 2px;
-  border-color: #f8204f;
-  color: #fff;
+/* ---------------------------------------------------
+    CUSTOM SCROLLBAR STYLE
+----------------------------------------------------- */ 
+
+.mCSB_inside > .mCSB_container {
+  margin-right: 0px;
 }
-.cust-btn:hover{
-  
-  border-color: #f8204f;
-  background-color: #fff;
-  color: #f8204f;
-  border-radius: 20px;
-  transform-style: 2s;
+
+/* ---------------------------------------------------
+    GEOLOCATION CONTROL STYLE
+----------------------------------------------------- */ 
+
+#locate-position {
+  width: 32px;
+  height: 32px;
+  z-index: 1500;
+  position: absolute;
+  top: 185px;
+  margin: 10px;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 
 }

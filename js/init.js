@@ -6,18 +6,8 @@ let map = L.map('map').setView([49.8397, 24.0297], 8);
 
 $( document ).ready(function() {
 
-    // $('.items').on('click', function() {
-    //   var $this = $(this),
-    //       $bc = $('<div class="item"></div>');
-
-    //   $this.parents('li').each(function(n, li) {
-    //       var $a = $(li).children('ul').clone();
-    //       $bc.prepend(' / ', $a);
-    //   });
-    //     $('.breadcrumb').html( $bc.prepend('<a href="#home">Home</a>') );
-    //     return false;
-    // }) 
-
+    getUserGeolocation(map);
+    
     $("#control-bar").mCustomScrollbar({
         theme: "minimal"
     });
