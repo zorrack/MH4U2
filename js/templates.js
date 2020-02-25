@@ -49,7 +49,10 @@ function buildMainLevel(auElement) {
     let clearFilterElement = element.find(".clearfilter");
     if (clearFilterElement) {
         clearFilterElement.on("click", (ev) => {
-            console.log("Close level")
+            while (map.breadcrumbs.length > auElement.Level) {
+                map.breadcrumbs[map.breadcrumbs.length - 1].jqElement.remove();
+                map.breadcrumbs.pop();
+            }
         });
     }
 
