@@ -2,6 +2,12 @@
 <html>
 
 <head>
+
+    $(window).load(function() {
+        // Animate loader off screen
+        $(".se-pre-con").fadeOut("slow");;
+    });
+
     <title>MH4U мапа</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,10 +36,15 @@
     <script src="node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
     <script src="node_modules/tabletop/src/tabletop.min.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="node_modules/leaflet-search/src/leaflet-search.js"></script>
     <!-- jQuery Custom Scroller CDN -->
     <script src="node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<!--     <script src="js/page-loader.js"></script> -->
 
     <script src="js/mapping-configurations.js"></script>
     <script src="js/init-globals.js"></script>
@@ -45,6 +56,9 @@
 </head>
 
 <body>
+
+    <div class="se-pre-con"></div>
+
     <div class="wrapper">
 
         <nav id="control-bar">
