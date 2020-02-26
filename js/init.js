@@ -127,7 +127,7 @@ function getMarkersByRegion(filteredMarkers, region) {
 function init(map, sidebar) {
 // PASTE YOUR URLs HERE. These URLs come from Google Sheets 'shareable link' form
 //NOTE: Google Spreadsheet table should not have empty rows!!! 
-    const dataURL = 'https://docs.google.com/spreadsheets/d/1owqbO4TlfVq3dw-Zyp-DxrooyCB0m1Hohstlha_o800/edit?usp=sharing';
+    const dataURL = 'https://docs.google.com/spreadsheets/d/12Me343d7zlUQ2UqCIVG9BrWD8OPL_KRk4DL1nm5RlAE/edit?usp=sharing';
     const acCodesURL = 'https://docs.google.com/spreadsheets/d/1jX20bMaNFLYijteEGjJBDNzpkVqTC_YP0mA2B1zpED4/edit?usp=sharing';
     Tabletop.init({
     key: acCodesURL,
