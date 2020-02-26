@@ -3,6 +3,7 @@ let collection = {
     'features': []
 };
 let map = L.map('map').setView([49.8397, 24.0297], 8);
+var loader;
 
 $( document ).ready(function() {
 
@@ -41,6 +42,9 @@ $( document ).ready(function() {
     attribution: "Map data &copy; OpenStreetMap contributors"
     });
     basemap.addTo(map);
+    //Map loader
+    loader = L.control.loader();
+    loader.addTo(map);
 
     let layerControl = L.control.layers(null, null, {collapsed: true});
     map.layerControl = layerControl;
@@ -159,6 +163,9 @@ function init(map, sidebar) {
             initializeEvents(markerCluster, map.sidebar, markers);
             addMarkerSearch(markerCluster);
             initBreadcrumbs(map.rootAdministrativeUnit);
+            //After all the map controls being initialized,
+            //hide map loader
+            loader.hide();
         },
         simpleSheet: true
     });
