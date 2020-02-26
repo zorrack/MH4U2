@@ -465,7 +465,7 @@ path.leaflet-interactive{
 #locate-position {
   width: 32px;
   height: 32px;
-  z-index: 1000;
+  z-index: 500;
   position: absolute;
   top: 200px;
   margin: 10px;

@@ -3,6 +3,7 @@ let collection = {
     'features': []
 };
 let map = L.map('map').setView([49.8397, 24.0297], 8);
+var loader;
 
 $( document ).ready(function() {
 
@@ -41,6 +42,9 @@ $( document ).ready(function() {
     attribution: "Map data &copy; OpenStreetMap contributors"
     });
     basemap.addTo(map);
+    //Map loader
+    loader = L.control.loader();
+    loader.addTo(map);
 
     let layerControl = L.control.layers(null, null, {collapsed: true});
     map.layerControl = layerControl;
@@ -123,7 +127,7 @@ function getMarkersByRegion(filteredMarkers, region) {
 function init(map, sidebar) {
 // PASTE YOUR URLs HERE. These URLs come from Google Sheets 'shareable link' form
 //NOTE: Google Spreadsheet table should not have empty rows!!! 
-    const dataURL = 'https://docs.google.com/spreadsheets/d/1owqbO4TlfVq3dw-Zyp-DxrooyCB0m1Hohstlha_o800/edit?usp=sharing';
+    const dataURL = 'https://docs.google.com/spreadsheets/d/12Me343d7zlUQ2UqCIVG9BrWD8OPL_KRk4DL1nm5RlAE/edit?usp=sharing';
     const acCodesURL = 'https://docs.google.com/spreadsheets/d/1jX20bMaNFLYijteEGjJBDNzpkVqTC_YP0mA2B1zpED4/edit?usp=sharing';
     Tabletop.init({
     key: acCodesURL,
@@ -159,6 +163,9 @@ function init(map, sidebar) {
             initializeEvents(markerCluster, map.sidebar, markers);
             addMarkerSearch(markerCluster);
             initBreadcrumbs(map.rootAdministrativeUnit);
+            //After all the map controls being initialized,
+            //hide map loader
+            loader.hide();
         },
         simpleSheet: true
     });
