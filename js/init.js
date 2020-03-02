@@ -5,18 +5,16 @@ let collection = {
 let map = L.map('map').setView([49.8397, 24.0297], 8);
 var loader;
 
-let wantedSheets = [
-    {
-        type: "sheetsForMapping",
-        data: []
-    },
-    {
-        type: "configSheets",
-        data: []
-    }
-];
-
-var mappingSheets;
+// let wantedSheets = [
+//     {
+//         type: "sheetsForMapping",
+//         data: []
+//     },
+//     {
+//         type: "configSheets",
+//         data: []
+//     }
+// ];
 
 $( document ).ready(function() {
 
@@ -138,8 +136,6 @@ function getMarkersByRegion(filteredMarkers, region) {
 
 // init() is called as soon as the page loads
 function init(map, sidebar) {
-// PASTE YOUR URLs HERE. These URLs come from Google Sheets 'shareable link' form
-//NOTE: Google Spreadsheet table should not have empty rows!!! 
     Tabletop.init({
         key: acCodesURL,
         callback: (acCodes) => {
@@ -152,29 +148,16 @@ function init(map, sidebar) {
 
         key: dataURL,
         callback: (data, tabletop, mappingData) => {           
-
             parseNumbers: true;
             simpleSheet: false;
 
-            // let mappingSheets = getData(tabletop);
-                         mappingSheets = getData(tabletop);
+            let mappingSheets = getData(tabletop);
             wanted: mappingSheets;
-
-            //TODO: access to a single sheet features
             let regions = [];
             for (let i = 0; i < mappingSheets.length; i++) {
                 regions.push(mappingSheets.sheets[i]);
             }
-            // mappingSheets.forEach(name => data.name
-            //     regions.push(name));
-            console.log("regions" + regions);
 
-            // let facilities = region.elements;
-            // console.log(facilities);
-
-            //TODO: get data with the parse: true value.
-            // wanted: facilities;
-            // createFacilitiesArray(facilities);
             createFacilitiesArray(mappingSheets);
             mergeCodes(collection, codesJson);
 
@@ -259,8 +242,7 @@ function createFacilitiesArray(array) {
 
         let rows = region.elements;
         rows.forEach(row => {
-            console.log("this row: " + row)
-            // let row = data[i];
+
             let lat = parseFloat(row.Latitude);
             let lon = parseFloat(row.Longitude);
             if (lat & lon) {
