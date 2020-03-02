@@ -5,6 +5,19 @@ let collection = {
 let map = L.map('map').setView([49.8397, 24.0297], 8);
 var loader;
 
+let wantedSheets = [
+    {
+        type: "sheetsForMapping",
+        data: []
+    },
+    {
+        type: "configSheets",
+        data: []
+    }
+];
+
+var mappingSheets;
+
 $( document ).ready(function() {
 
     $("#control-bar").mCustomScrollbar({
@@ -127,20 +140,44 @@ function getMarkersByRegion(filteredMarkers, region) {
 function init(map, sidebar) {
 // PASTE YOUR URLs HERE. These URLs come from Google Sheets 'shareable link' form
 //NOTE: Google Spreadsheet table should not have empty rows!!! 
-    const dataURL = 'https://docs.google.com/spreadsheets/d/12Me343d7zlUQ2UqCIVG9BrWD8OPL_KRk4DL1nm5RlAE/edit?usp=sharing';
-    const acCodesURL = 'https://docs.google.com/spreadsheets/d/1jX20bMaNFLYijteEGjJBDNzpkVqTC_YP0mA2B1zpED4/edit?usp=sharing';
     Tabletop.init({
-    key: acCodesURL,
-    callback: (acCodes) => {
-        getCodes(acCodes);
+        key: acCodesURL,
+        callback: (acCodes) => {
+            getCodes(acCodes);
     },
-    simpleSheet: true 
+    simpleSheet: true
+
     });
     Tabletop.init({
+
         key: dataURL,
-        callback: (data) => {
-            createFacilitiesArray(data);
+        callback: (data, tabletop, mappingData) => {           
+
+            parseNumbers: true;
+            simpleSheet: false;
+
+            // let mappingSheets = getData(tabletop);
+                         mappingSheets = getData(tabletop);
+            wanted: mappingSheets;
+
+            //TODO: access to a single sheet features
+            let regions = [];
+            for (let i = 0; i < mappingSheets.length; i++) {
+                regions.push(mappingSheets.sheets[i]);
+            }
+            // mappingSheets.forEach(name => data.name
+            //     regions.push(name));
+            console.log("regions" + regions);
+
+            // let facilities = region.elements;
+            // console.log(facilities);
+
+            //TODO: get data with the parse: true value.
+            // wanted: facilities;
+            // createFacilitiesArray(facilities);
+            createFacilitiesArray(mappingSheets);
             mergeCodes(collection, codesJson);
+
             // initAdministrativeUnitsTree();
 
             // let regions = getRegions(collection.features);
@@ -148,12 +185,13 @@ function init(map, sidebar) {
             // document.getElementById('breadcrumb').appendChild(createRegionNavigation(regionsTemplate));
             // toggleRegionNavigation(selectedAdministrativeUnit);
 
-            //Creating marker cluster layer group.
+            //Create marker cluster layer group.
             let markerCluster = L.markerClusterGroup({
-                showCoverageOnHover: false,
-                zoomToBoundsOnClick: true
+                showCoverageOnHover: true,
+                zoomToBoundsOnClick: true,
             }).addTo(map);
             map.markerCluster = markerCluster;
+
             let overlays = createOverlays(codesJson);
             let markers = createMarkers (map.sidebar, collection.features);
             map.markers = markers;
@@ -163,13 +201,10 @@ function init(map, sidebar) {
             initializeEvents(markerCluster, map.sidebar, markers);
             addMarkerSearch(markerCluster);
             initBreadcrumbs(map.rootAdministrativeUnit);
-            //After all the map controls being initialized,
-            //hide map loader
+            //When all the map controls being initialized, hide map loader
             loader.hide();
         },
-        simpleSheet: true
     });
-//SimpleSheet assumes there is only one table and automatically sends its data
 }
 
 function initializeEvents(layers, sidebar, markers) {
@@ -218,38 +253,43 @@ function createMarkers(sidebar, features) {
     return markers;
 }
 
-function createFacilitiesArray(data) {
-    for (let i = 0; i < data.length; i++) {
-        let row = data[i];
-        let lat = parseFloat(row.Latitude);
-        let lon = parseFloat(row.Longitude);
-        if (lat & lon) {
-            let coords = [parseFloat(row.Longitude), parseFloat(row.Latitude)];
-            let feature = {
-                'type': 'Feature',
-                'geometry': {
-                    'type': 'Point',
-                    'coordinates': coords
-                },
-                'properties': {
-                    'officialName': row["Офіційна назва"],
-                    'recorddate': row["Інформація актуальна станом на:"],
-                    'address': row["Адреса"],
-                    'district': row["Район"],
-                    'region': row["Область"],
-                    'phonenumber': row["контактний номер"],
-                    'email': row["електронна пошта веб сайт"],
-                    'patienttype': row["Цільове населення"],
-                    'mentalhealthworkers': row["фахівці з психічного здоров'я"],
-                    'ac1': row["Activity code 1"],
-                    //TODO: set up both inpatient and outpatient data filter 
-                    'isinpatient': row["амбулаторний чи стаціонарний"]
-                }
-            }
-            collection.features.push(feature);
-        }
-    }
+function createFacilitiesArray(array) {
 
+    let regions = array.data.forEach(region => {
+
+        let rows = region.elements;
+        rows.forEach(row => {
+            console.log("this row: " + row)
+            // let row = data[i];
+            let lat = parseFloat(row.Latitude);
+            let lon = parseFloat(row.Longitude);
+            if (lat & lon) {
+                let coords = [parseFloat(row.Longitude), parseFloat(row.Latitude)];
+                let feature = {
+                    'type': 'Feature',
+                    'geometry': {
+                        'type': 'Point',
+                        'coordinates': coords
+                    },
+                    'properties': {
+                        'officialName': row["Офіційна назва"],
+                        'recorddate': row["Інформація актуальна станом на:"],
+                        'address': row["Адреса"],
+                        'district': row["Район"],
+                        'region': row["Область"],
+                        'phonenumber': row["контактний номер"],
+                        'email': row["електронна пошта веб сайт"],
+                        'patienttype': row["Цільове населення"],
+                        'mentalhealthworkers': row["фахівці з психічного здоров'я"],
+                        'ac1': row["Activity code 1"],
+                        //TODO: set up both inpatient and outpatient data filter 
+                        'isinpatient': row["амбулаторний чи стаціонарний"]
+                    }
+                }
+                collection.features.push(feature);
+            }
+        }) 
+    })
     map.rootAdministrativeUnit = new AdministrativeUnit("root", 0, "Всі");
     buildAdministrativeUnitsTree(map.rootAdministrativeUnit, collection.features);
 }

@@ -7,7 +7,10 @@ const elementTypes = {
 const searchByMapping = [
     "officialName",
     "mentalhealthworkers",
-    "activitycategory"
+    "activitycategory",
+    "activitycodename",
+    "subactivitycodename"
+
 ];
 
 const administrativeUnitsBindingTemplate = [

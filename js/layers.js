@@ -7,7 +7,7 @@ function createLayers(parentMarkerCluster, arr, markers, overlays) {
 
 	overlays.forEach(layer => {
 		if (arr.features
-			.filter(feature => feature.properties.activitycategory == layer).length > 0) {
+			.filter(feature => feature.properties.activitycategory == layer).length > 0) { ///Create overlay if the category has at least one element
 				let filteredMarkers = markers.filter(marker => marker.feature.properties.activitycategory == layer);
 				let subGroup = L.featureGroup
 					.subGroup(parentMarkerCluster, filteredMarkers).addTo(map);
