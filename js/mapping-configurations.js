@@ -13,6 +13,8 @@ const searchByMapping = [
 
 ];
 
+const codesTab = "[conf] Coding table for mental health services mapping";
+
 const administrativeUnitsBindingTemplate = [
     {
         auLevel: 0,

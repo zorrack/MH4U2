@@ -5,16 +5,16 @@ let collection = {
 let map = L.map('map').setView([49.8397, 24.0297], 8);
 var loader;
 
-// let wantedSheets = [
-//     {
-//         type: "sheetsForMapping",
-//         data: []
-//     },
-//     {
-//         type: "configSheets",
-//         data: []
-//     }
-// ];
+let wantedSheets = [
+    {
+        type: "sheetsForMapping",
+        data: []
+    },
+    {
+        type: "configSheets",
+        data: []
+    }
+];
 
 $( document ).ready(function() {
 
@@ -53,6 +53,7 @@ $( document ).ready(function() {
     attribution: "Map data &copy; OpenStreetMap contributors"
     });
     basemap.addTo(map);
+
     //Map loader
     loader = L.control.loader();
     loader.addTo(map);
@@ -60,9 +61,6 @@ $( document ).ready(function() {
     let layerControl = L.control.layers(null, null, {collapsed: true});
     map.layerControl = layerControl;
     layerControl.addTo(map);
-
-    // addUserLocationControl(map);
-    // getUserGeolocation(map, map.userLocation);
     getUserGeolocation(map);
 
     let sidebar = L.control.sidebar('sidebar', {
@@ -136,30 +134,27 @@ function getMarkersByRegion(filteredMarkers, region) {
 
 // init() is called as soon as the page loads
 function init(map, sidebar) {
-    Tabletop.init({
-        key: acCodesURL,
-        callback: (acCodes) => {
-            getCodes(acCodes);
-    },
-    simpleSheet: true
+    // Tabletop.init({
+    //     key: acCodesURL,
+    //     callback: (acCodes) => {
+    //         getCodes(acCodes);
+    // },
+    // simpleSheet: true
 
-    });
+    // });
     Tabletop.init({
 
         key: dataURL,
-        callback: (data, tabletop, mappingData) => {           
+        callback: (data, tabletop, mappingData) => {        
             parseNumbers: true;
             simpleSheet: false;
 
             let mappingSheets = getData(tabletop);
+            createRegions(mappingSheets);
             wanted: mappingSheets;
-            let regions = [];
-            for (let i = 0; i < mappingSheets.length; i++) {
-                regions.push(mappingSheets.sheets[i]);
-            }
-
+            
             createFacilitiesArray(mappingSheets);
-            mergeCodes(collection, codesJson);
+            let codes = mergeCodes(collection, dataTypesTemplate);
 
             // initAdministrativeUnitsTree();
 
@@ -175,7 +170,7 @@ function init(map, sidebar) {
             }).addTo(map);
             map.markerCluster = markerCluster;
 
-            let overlays = createOverlays(codesJson);
+            let overlays = createOverlays(codes);
             let markers = createMarkers (map.sidebar, collection.features);
             map.markers = markers;
             createLayers(markerCluster, collection, markers, overlays);
@@ -245,7 +240,11 @@ function createFacilitiesArray(array) {
 
             let lat = parseFloat(row.Latitude);
             let lon = parseFloat(row.Longitude);
-            if (lat & lon) {
+
+            // let showOnMap = Boolean(row["Додати на мапу"]);
+            let showOnMap = row["Додати на мапу"];
+            //If feature has the lat and long property AND the showOnMap checkbox is set to true
+            if (lat && lon && showOnMap === "TRUE") {
                 let coords = [parseFloat(row.Longitude), parseFloat(row.Latitude)];
                 let feature = {
                     'type': 'Feature',
