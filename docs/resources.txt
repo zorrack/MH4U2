@@ -1,0 +1,8 @@
+Tabletop.js https://gist.github.com/jsvine/3295633
+
+@zzolo & @cperryk -- Look in the Tabletop.js repo's "caching" folder, there are two scripts that create a locally-cached version. jsoma/flatware is another option if you want something a bit more dynamic. Personally, I just used the snippet from here to save a local version of the Json object and then provided that to my existing code with jQuery's getJSON() method (Ultimately replacing the Tabletop.js calls).
+
+Another option would be to export your production spreadsheet as a JSON file and then call it in with a getJSON().
+
+http://blog.pamelafox.org/2013/06/exporting-google-spreadsheet-as-json.html
+https://rdrn.me/leaflet-maps-google-sheets/

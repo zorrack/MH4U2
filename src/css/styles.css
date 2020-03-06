@@ -1,0 +1,477 @@
+body {
+	padding: 0;
+    margin: 0;
+    height: 600px;
+    overflow: hidden;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    float: left;
+    margin: 5px;
+    border-radius: 50%;
+}
+
+span.icon {
+  font-family: FontAwesome;
+}
+
+
+/* ---------------------------------------------------
+    LEAFLET LAYER CONTROL STYLE
+----------------------------------------------------- */
+
+.leaflet-control-layers.leaflet-control-layers-expanded {
+
+    max-width: 250px;
+}
+
+/* ---------------------------------------------------
+    LEAFLET INFO SIDEBAR STYLE
+----------------------------------------------------- */
+
+#sidebar {
+    position: relative;
+    height: 75vh;
+/*    padding: 10 5 10 10;*/
+}
+
+.leaflet-sidebar {
+    float: right;
+}
+
+.leaflet-sidebar > .leaflet-control {
+    padding: 30px 10px 10px 10px;
+}
+
+/*#sidebar-content: {
+    font-size: 0.9rem;
+}*/
+
+/*#sidebar-content, #sidebar-title {
+    word-break: break-word;
+}*/
+
+.card {
+  background-color: rgba(0,0,0,.03);
+}
+
+.card-header {
+  background-color: white;
+  margin: 15px 0px 5px 0px;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.leaflet-sidebar .close {
+    z-index: 2700!important;
+    background: white;
+    opacity: 1;
+    margin: 5px 15px 10px 10px;
+    top: 15px;
+}
+
+#map {
+    width: 100%;
+    height: 85vh;
+}
+
+p {
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none!important;
+    transition: all 0.3s;
+}
+
+/* ---------------------------------------------------
+    UPPER NAVBAR STYLE
+----------------------------------------------------- */
+
+.navbar {
+    padding: 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 10px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+.btn-info {
+    background-color: #138496;
+    margin: 4px;
+}
+
+.btn-warning {
+    background-color: #F7BB06;
+}
+
+.form-group {
+    display: inline;
+    float: right;
+    margin: 5px;
+    padding: auto;
+}
+
+/* ---------------------------------------------------
+    LEFT (FILTERING) BAR STYLE
+
+    Color scheme:
+    #0E5F9F - background, base color (saphire blue)
+    #063961 - background, 2nd color (for accents and active elements) (dark midnight blue)
+    #2C8C99 - background, 3rd color (celadon green) 
+
+    #F7BB06 - accent color (for buttons, dividers) (selective yellow)
+    #DBC300 - accent color (for buttons, dividers) on hover
+    #931621 - danger color (ruby red)
+----------------------------------------------------- */
+
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#control-bar {
+    min-width: 250px;
+    max-width: 250px;
+    height: 100vh;
+    z-index: 999;
+    background: #063961;
+    color: #fff;
+    transition: all 0.3s;
+    overflow-y: scroll;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+#control-bar .control-bar-header {
+    background: #0E5F9F!important;
+}
+
+#control-bar.active {
+    margin-left: -250px;
+    background: #0E5F9F;
+}
+
+#control-bar .control-bar-header {
+    padding: 20px;
+    background: #6d7fcc;
+}
+
+#control-bar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
+}
+
+#control-bar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#control-bar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#control-bar ul li a:hover {
+    color: #0E5F9F;
+    background: #fff;
+}
+
+#control-bar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    background: #0E5F9F;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle {
+    white-space: normal!important;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #6d7fcc;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+a.download {
+    background: #fff;
+    color: #7386D5;
+}
+
+a.article,
+a.article:hover {
+    background: #6d7fcc !important;
+    color: #fff !important;
+}
+
+.label{
+    margin-left: 20px;
+}
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+
+#content {
+  width: 100%;
+  padding: 5px;
+  min-height: 100vh;
+  transition: all 0.3s;
+}
+
+@media (max-width: 768px) {
+    #control-bar {
+        margin-left: -250px;
+    }
+    #control-bar.active {
+        margin-left: 0;
+    }
+/*    #control-barCollapse span {
+        display: none;
+    }*/
+    .button-label-minimize {
+      display: none;
+    }
+}
+
+/* ---------------------------------------------------
+    LEAFLET SEARCH STYLE
+----------------------------------------------------- */
+
+.leaflet-control-search .search-button {
+  transition: none;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+}
+
+
+.leaflet-control-search .search-tip {
+    max-width: 75vw;
+}  
+
+path.leaflet-interactive{
+    stroke: #931621;
+    fill: #931621;
+    radius: 30px;
+    filter: brightness(1) sepia(1) hue-rotate(-70deg) saturate(5); 
+}
+
+/* ---------------------------------------------------
+    BREADCRUMB NAVIGATION STYLE
+----------------------------------------------------- */  
+
+.breadcrumbs {
+  overflow: hidden;
+  padding: 0;
+}
+
+.breadcrumbs li {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.breadcrumbs-dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.breadcrumbs-dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 7px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.breadcrumbs li:hover, .breadcrumbs-dropdown:hover .dropbtn {
+  background-color: #DBC300;
+}
+
+.breadcrumbs-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  padding: 2px;
+  max-height: 350px;
+  overflow-y: scroll;
+}
+
+.breadcrumbs-dropdown-content li {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.breadcrumbs-dropdown-content li:hover {
+  background-color: #ddd;
+}
+
+.breadcrumbs-dropdown:hover .breadcrumbs-dropdown-content {
+  display: block;
+}
+
+/* ---------------------------------------------------
+    CUSTOM CHECKBOX STYLE
+----------------------------------------------------- */  
+
+/* The check */
+.check {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 12px;
+    padding-right: 15px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.check input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Style a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    height: 18px;
+    width: 18px;
+    background-color: #FFFFFF;
+    border-color: #063961;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 2px;
+}    
+
+.checkmark:hover {
+  background-color: #DBC300;
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+}
+
+
+/* When the checkbox is checked, change the checkbox background */
+.check input:checked ~ .checkmark {
+    background-color: #F7BB06;
+    border-color: #2C8C99;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.check input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.check .checkmark:after {
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid ;
+    border-color: #FFFFFF;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/* ---------------------------------------------------
+    CUSTOM SCROLLBAR STYLE
+----------------------------------------------------- */ 
+
+.mCSB_inside > .mCSB_container {
+  margin-right: 0px;
+}
+
+/* ---------------------------------------------------
+    GEOLOCATION CONTROL STYLE
+----------------------------------------------------- */ 
+
+#locate-position {
+  width: 32px;
+  height: 32px;
+  z-index: 500;
+  position: absolute;
+  top: 200px;
+  margin: 10px;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  font-size: 16px;
+
+}
