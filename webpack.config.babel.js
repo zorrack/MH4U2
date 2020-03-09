@@ -13,11 +13,11 @@ export default {
         filename: '[name].bundle.js'
     },
     module: {
-  rules: [{
-    test: require.resolve('jquery'),
-    use: [{
-        loader: 'expose-loader',
-        options: 'jQuery'
+        rules: [{
+            test: require.resolve('jquery'),
+        use: [{
+            loader: 'expose-loader',
+            options: 'jQuery'
     },{
         loader: 'expose-loader',
         options: '$'
@@ -27,7 +27,8 @@ export default {
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Custom template',
-            template: "./src/index.html"
+            template: "./src/index.html",
+            hash: true
         }),
         new webpack.ProvidePlugin({
             $: 'jquery',
@@ -38,6 +39,8 @@ export default {
             defaultAttribute: 'defer'
         }),
     ],
+
+    watch: true,
 
     stats: {
         colors: true

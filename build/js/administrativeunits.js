@@ -1,31 +1,56 @@
-"use strict";
+require("core-js/modules/es.array.iterator");
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+require("core-js/modules/web.dom-collections.iterator");
 
-var _toConsumableArray2 = _interopRequireDefault(require("@babel/runtime/helpers/toConsumableArray"));
+define(["@babel/runtime-corejs3/core-js-stable/instance/for-each", "@babel/runtime-corejs3/core-js-stable/number/is-integer", "@babel/runtime-corejs3/core-js-stable/set", "@babel/runtime-corejs3/core-js-stable/parse-int"], function (_forEach, _isInteger, _set, _parseInt2) {
+  "use strict";
 
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+  var _interopRequireDefault = require("@babel/runtime-corejs3/helpers/interopRequireDefault");
 
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+  _forEach = _interopRequireDefault(_forEach);
+  _isInteger = _interopRequireDefault(_isInteger);
+  _set = _interopRequireDefault(_set);
+  _parseInt2 = _interopRequireDefault(_parseInt2);
 
-var AdministrativeUnit = /*#__PURE__*/function () {
-  function AdministrativeUnit(auId, auLevel, auDisplayName) {
-    (0, _classCallCheck2.default)(this, AdministrativeUnit);
-    this.id = auId;
-    this.level = parseInt(auLevel);
-    this.displayName = auDisplayName;
-    this.parentAu = null;
-    this.childAus = [];
-  }
+  class AdministrativeUnit {
+    constructor(auId, auLevel, auDisplayName) {
+      this.id = auId;
+      this.level = (0, _parseInt2.default)(auLevel);
+      this.displayName = auDisplayName;
+      this.parentAu = null;
+      this.childAus = [];
+    }
 
-  (0, _createClass2.default)(AdministrativeUnit, [{
-    key: "addChildAdministrativeUnit",
-    value: function addChildAdministrativeUnit(administrativeUnit) {
+    get Id() {
+      return this.id;
+    }
+
+    get Level() {
+      return this.level;
+    }
+
+    get DisplayName() {
+      return this.displayName;
+    }
+
+    get ParentAu() {
+      return this.parentAu;
+    }
+
+    get ChildAus() {
+      return [...new _set.default(this.childAus)];
+    }
+
+    set ParentAu(parentAdministrativeUnit) {
+      this.parentAu = parentAdministrativeUnit;
+    }
+
+    addChildAdministrativeUnit(administrativeUnit) {
       if (administrativeUnit.constructor.name !== "AdministrativeUnit") {
         console.log("Error adding an administrative unit: ", administrativeUnit.constructor.name);
       } else {
         if (this._isUniqueChild(administrativeUnit)) {
-          if (Number.isInteger(parseInt(administrativeUnit.level)) && parseInt(administrativeUnit.level) - 1 === this.level) {
+          if ((0, _isInteger.default)((0, _parseInt2.default)(administrativeUnit.level)) && (0, _parseInt2.default)(administrativeUnit.level) - 1 === this.level) {
             this.childAus.push(administrativeUnit);
             administrativeUnit.ParentAu = this;
           } else {
@@ -36,17 +61,15 @@ var AdministrativeUnit = /*#__PURE__*/function () {
         }
       }
     }
-  }, {
-    key: "debugDisplayAuTree",
-    value: function debugDisplayAuTree() {
+
+    debugDisplayAuTree() {
+      var _context;
+
       console.log(indentString(this.DisplayName, this.Level));
-      this.ChildAus.forEach(function (el) {
-        return el.debugDisplayAuTree();
-      });
+      (0, _forEach.default)(_context = this.ChildAus).call(_context, el => el.debugDisplayAuTree());
     }
-  }, {
-    key: "_isUniqueChild",
-    value: function _isUniqueChild(administrativeUnit) {
+
+    _isUniqueChild(administrativeUnit) {
       var unique = true;
 
       for (var i = 0; i < this.childAus.length; i++) {
@@ -58,34 +81,6 @@ var AdministrativeUnit = /*#__PURE__*/function () {
 
       return unique;
     }
-  }, {
-    key: "Id",
-    get: function get() {
-      return this.id;
-    }
-  }, {
-    key: "Level",
-    get: function get() {
-      return this.level;
-    }
-  }, {
-    key: "DisplayName",
-    get: function get() {
-      return this.displayName;
-    }
-  }, {
-    key: "ParentAu",
-    get: function get() {
-      return this.parentAu;
-    },
-    set: function set(parentAdministrativeUnit) {
-      this.parentAu = parentAdministrativeUnit;
-    }
-  }, {
-    key: "ChildAus",
-    get: function get() {
-      return (0, _toConsumableArray2.default)(new Set(this.childAus));
-    }
-  }]);
-  return AdministrativeUnit;
-}();
+
+  }
+});

@@ -1,11 +1,13 @@
-"use strict";
+define([], function () {
+  "use strict";
 
-function indentString(string, indentLevel) {
-  var indentTemplate = "";
+  function indentString(string, indentLevel) {
+    var indentTemplate = "";
 
-  for (var i = 0; i < indentLevel; i++) {
-    indentTemplate += "    ";
+    for (var i = 0; i < indentLevel; i++) {
+      indentTemplate += "    ";
+    }
+
+    return indentTemplate + string;
   }
-
-  return indentTemplate + string;
-}
+});

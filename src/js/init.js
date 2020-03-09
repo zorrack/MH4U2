@@ -1,3 +1,4 @@
+
 let collection = {
     'type': 'FeatureCollection',
     'features': []

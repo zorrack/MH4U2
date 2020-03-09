@@ -1,0 +1,1 @@
+  Babel 7 build (package.json): "build": "./node_modules/.bin/babel src -d build"
