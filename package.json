@@ -2,10 +2,10 @@
   "name": "mh4u",
   "version": "1.0.0",
   "description": "Map solution for MH4U",
-  "main": "index.js",
+  "main": "init.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "./node_modules/.bin/babel src -d build"
   },
   "author": "Iryna Herasymuk",
   "license": "MIT",
@@ -29,14 +29,13 @@
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.7",
+    "@babel/plugin-syntax-dynamic-import": "file:@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.7",
     "@babel/register": "^7.8.6",
+    "@babel/runtime": "^7.8.7",
     "@babel/runtime-corejs3": "^7.8.7",
     "babel-loader": "^8.0.6",
-    "gulp-babel": "^8.0.0",
-    "html-webpack-plugin": "^3.0.7",
-    "script-ext-html-webpack-plugin": "^2.1.4",
-    "webpack": "^4.42.0",
-    "webpack-cli": "^3.3.11"
+    "gulp-babel": "^8.0.0"
   }
 }
