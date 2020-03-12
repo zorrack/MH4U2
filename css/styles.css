@@ -6,9 +6,9 @@ body {
 }
 
 .logo {
-    width: 80px;
-    height: 80px;
-    float: left;
+    width: 120px;
+    height: 120px;
+    float: none;
     margin: 5px;
     border-radius: 50%;
 }
@@ -25,6 +25,23 @@ span.icon {
 .leaflet-control-layers.leaflet-control-layers-expanded {
 
     max-width: 250px;
+}
+
+/* ---------------------------------------------------
+    LEAFLET OVERLAY INFO STYLE
+----------------------------------------------------- */
+
+.info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
 }
 
 /* ---------------------------------------------------
@@ -153,6 +170,11 @@ a:focus {
     align-items: stretch;
 }
 
+.control-bar-header {
+    background: #fff!important;
+    color: #063961;
+}
+
 #control-bar {
     min-width: 250px;
     max-width: 250px;
@@ -165,7 +187,7 @@ a:focus {
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
-#control-bar .control-bar-header {
+#control-bar {
     background: #0E5F9F!important;
 }
 
@@ -462,16 +484,11 @@ path.leaflet-interactive{
     GEOLOCATION CONTROL STYLE
 ----------------------------------------------------- */ 
 
-#locate-position {
-  width: 32px;
-  height: 32px;
+.locate-position {
   z-index: 500;
-  position: absolute;
-  top: 200px;
-  margin: 10px;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-  font-size: 16px;
+  font-size: 18px;
 
 }

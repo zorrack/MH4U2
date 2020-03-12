@@ -9,7 +9,7 @@ L.Control.Loader = L.Control.extend({
         this.loaderContainer = L.DomUtil.create('div', 'leaflet-loader-container', this._map._container);
         this.loaderBG = L.DomUtil.create('div', 'leaflet-loader-background', this.loaderContainer);
         this.loader = L.DomUtil.create('div', 'leaflet-loader', this.loaderBG);
-        for (i=0; i<3; i++) {
+        for (var i=0; i<3; i++) {
             L.DomUtil.create('div', '', this.loader);
         }
 

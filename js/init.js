@@ -38,6 +38,8 @@ $( document ).ready(function() {
         theme: "dark-2"
     });
 
+    $('[data-toggle="tooltip"]').tooltip(); 
+
     //TODO: add custom scrollbar
 
     // This is the Carto Positron basemap
@@ -58,9 +60,19 @@ $( document ).ready(function() {
     loader = L.control.loader();
     loader.addTo(map);
 
-    let layerControl = L.control.layers(null, null, {collapsed: true});
+    let layerControl = new L.Control.Custom(null, null, {collapsed: true});
     map.layerControl = layerControl;
     layerControl.addTo(map);
+
+///map legend START  
+    let legend = new L.Control.Legend();
+    legend.addTo(map);
+
+    map.on('overlayadd', e => $(`.legend > span:contains(${e.name})`).toggle() );
+    map.on('overlayremove', e => $(`.legend > span:contains(${e.name})`).toggle() );
+    $(".info.legend.leaflet-control").hide();
+    
+    createUserLocationBtn(map);
     getUserGeolocation(map);
 
     let sidebar = L.control.sidebar('sidebar', {
@@ -134,14 +146,6 @@ function getMarkersByRegion(filteredMarkers, region) {
 
 // init() is called as soon as the page loads
 function init(map, sidebar) {
-    // Tabletop.init({
-    //     key: acCodesURL,
-    //     callback: (acCodes) => {
-    //         getCodes(acCodes);
-    // },
-    // simpleSheet: true
-
-    // });
     Tabletop.init({
 
         key: dataURL,
@@ -173,7 +177,7 @@ function init(map, sidebar) {
             let overlays = createOverlays(codes);
             let markers = createMarkers (map.sidebar, collection.features);
             map.markers = markers;
-            createLayers(markerCluster, collection, markers, overlays);
+            createLayers(markerCluster, collection, markers, overlays, dataTypesTemplate);
             createFilters(markers);
 
             initializeEvents(markerCluster, map.sidebar, markers);
