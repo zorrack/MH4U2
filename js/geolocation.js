@@ -2,29 +2,40 @@ function getUserGeolocation(map){
 
 $('.locate-position').on('click', function(){
 
-  map.locate({setView: true, maxZoom: 15
+  map.locate( {
+    setView: true,
+    maxZoom: 15
 
   });
 });
 
 function onLocationFound(e) {
 
-    var radius = e.accuracy / 2;
-    let marker = L.marker(e.latlng)
-        let icon = L.AwesomeMarkers.icon({
-            markerColor: "white",
-            prefix: 'glyphicon'
-        });
-        marker.setIcon(icon);
+  if (map.hasOwnProperty("locationMarker")) {
+    map.removeLayer(map.locationMarker);
+    map.removeLayer(map.locationRadius);
+  }
 
-    marker.addTo(map)
+  let radius = L.circle([e.latitude, e.longitude], e.accuracy / 2);
+  let locationMarker = L.marker(e.latlng);
+  console.log (locationMarker + "defined");
 
-        .on('click', function() {
-          confirm("are you sure?");
-        });
-        marker.bindPopup("Ви у радіусі " + radius + " м від цієї точки").openPopup();
-    L.circle(e.latlng, radius).addTo(map);
-}
+  let icon = L.AwesomeMarkers.icon({
+    markerColor: "white",
+    prefix: 'glyphicon'
+  });
+  locationMarker.setIcon(icon);
+
+  map.addLayer(locationMarker);
+      // .on('click', function() {
+      //   confirm("are you sure?");
+      // });
+  locationMarker.bindPopup("Ви у радіусі " + radius.options.radius + " м від цієї точки").openPopup();
+  map.addLayer(radius);
+
+  map.locationMarker = locationMarker;
+  map.locationRadius = radius;
+};
 
 map.on('locationfound', onLocationFound);
 
@@ -41,11 +52,9 @@ function createUserLocationBtn(map) {
     L.Control.LocationBtn = L.Control.extend({
       onAdd: function(map) {
         var el = L.DomUtil.create('div', 'leaflet-control btn btn-light btn-sm locate-position'); 
-
         el.innerHTML = `<span class="icon">&#xf05b;</span>`;
         return el;
     },
-
       onRemove: function(map) {
         // Nothing to do here
       }

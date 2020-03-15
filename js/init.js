@@ -30,16 +30,6 @@ $( document ).ready(function() {
         theme: "dark-2"
     });
 
-    $("#region").mCustomScrollbar({
-        theme: "dark-2"
-    });
-
-    $(".scrollable").mCustomScrollbar({
-        theme: "dark-2"
-    });
-
-    $('[data-toggle="tooltip"]').tooltip(); 
-
     //TODO: add custom scrollbar
 
     // This is the Carto Positron basemap
@@ -179,10 +169,14 @@ function init(map, sidebar) {
             map.markers = markers;
             createLayers(markerCluster, collection, markers, overlays, dataTypesTemplate);
             createFilters(markers);
-
             initializeEvents(markerCluster, map.sidebar, markers);
             addMarkerSearch(markerCluster);
             initBreadcrumbs(map.rootAdministrativeUnit);
+
+            $(".breadcrumbs-dropdown-content").mCustomScrollbar({
+                theme: "dark-2"
+            });
+
             //When all the map controls being initialized, hide map loader
             loader.hide();
         },
