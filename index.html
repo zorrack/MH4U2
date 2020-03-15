@@ -33,13 +33,13 @@
     <script src="node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
     <script src="node_modules/tabletop/src/tabletop.min.js"></script>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="node_modules/leaflet-search/src/leaflet-search.js"></script>
     <!-- jQuery Custom Scroller CDN -->
     <script src="node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <script src="js/data-parser.js"></script>
+    <script src="js/geolocation.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/leaflet-search/src/leaflet-search.js"></script>
     <script src="js/mapping-configurations.js"></script>
     <script src="js/init-globals.js"></script>
     <script src="js/utils.js"></script>
@@ -55,12 +55,13 @@
         <nav id="control-bar">
             <div class="control-bar-header">
                 <a href="./index.html">
-                <img class="logo" src="img/logo.png">
-                <h3>Mental Health for Ukraine</h3></a>
+                <img class="logo" src="img/MH4U_sign+title.png">
+                <img class="bund-logo" src="img/Bund-ukrain_RGB_pos.jpg">
+                <h3>Психічне здоров'я для України</h3>
+                <p>Заклади системи охорони психічного здоров’я України</p></a>
             </div>
 
             <ul class="list-unstyled components">
-                <p>Заклади системи охорони психічного здоров’я України</p>
                 <li>
                     <a href="#patienttypeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Цільове населення</a>
                     <ul class="collapse list-unstyled" id="patienttypeSubmenu">
@@ -255,7 +256,7 @@
                     </ul>
                 </li>
 
-            </ul>
+            </ul>   
         </nav>
 
         <div id="content">
@@ -290,10 +291,6 @@
                 </div>
             </nav>
 
-                <button class="leaflet-control btn btn-light btn-sm" id="locate-position">
-                    <span class="icon">&#xf05b;</span> 
-                </button>
-
             <div id="map"></div>
             <div id="sidebar" class="card leaflet-sidebar collapsed">
                 <div class="laflet-sidebar-pane">
@@ -306,14 +303,12 @@
 
     </div>
 
-    <script src="js/geolocation.js"></script>
     <script src="js/info-sidebar.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/activityCategories.js"></script>
 <!--    <script src="js/regions.js"></script>-->
     <script src="js/layers.js"></script>
     <script src="js/search.js"></script>
-<!--    <script src="js/breadcrumbs.js"></script>    -->
     <script src="js/init.js"></script>
 </body>
 

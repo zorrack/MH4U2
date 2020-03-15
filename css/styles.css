@@ -6,11 +6,28 @@ body {
 }
 
 .logo {
-    width: 80px;
-    height: 80px;
-    float: left;
+    height: 70px;
+    float: none;
     margin: 5px;
     border-radius: 50%;
+    display: inline;
+   /*image-rendering: -moz-crisp-edges;  Firefox */
+   image-rendering: -o-crisp-edges; /* Opera */
+   image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming) */
+   -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
+}
+
+.bund-logo {
+  width: inherit;
+  box-sizing: initial;
+  height: 50px;
+  float: none;
+  padding: 10px;
+  display: inline;
+   /*image-rendering: -moz-crisp-edges;  Firefox */
+   image-rendering: -o-crisp-edges; /* Opera */
+   image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming) */
+   -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
 }
 
 span.icon {
@@ -25,6 +42,30 @@ span.icon {
 .leaflet-control-layers.leaflet-control-layers-expanded {
 
     max-width: 250px;
+}
+
+/* ---------------------------------------------------
+    LEAFLET LEGEND CONTROL STYLE
+----------------------------------------------------- */
+
+.legend {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    max-width: 250px;
+    font-size: 12px;
+}
+.legend h4 {
+    margin: 0 0 5px;
+    color: #777;
+    font-size: 14px;
+}
+
+.list-group-item {
+  padding: 5px;
 }
 
 /* ---------------------------------------------------
@@ -75,7 +116,7 @@ span.icon {
 
 #map {
     width: 100%;
-    height: 85vh;
+    height: 90vh;
 }
 
 p {
@@ -98,11 +139,10 @@ a:focus {
 ----------------------------------------------------- */
 
 .navbar {
-    padding: 10px;
+    padding: 5px;
     background: #fff;
     border: none;
     border-radius: 0;
-    margin-bottom: 10px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -153,10 +193,17 @@ a:focus {
     align-items: stretch;
 }
 
+.control-bar-header {
+    background: #fff!important;
+    color: #063961;
+}
+
 #control-bar {
     min-width: 250px;
     max-width: 250px;
     height: 100vh;
+    top: 0;
+    bottom: 0;
     z-index: 999;
     background: #063961;
     color: #fff;
@@ -165,7 +212,7 @@ a:focus {
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
-#control-bar .control-bar-header {
+#control-bar {
     background: #0E5F9F!important;
 }
 
@@ -175,8 +222,14 @@ a:focus {
 }
 
 #control-bar .control-bar-header {
-    padding: 20px;
+    padding: 10px;
     background: #6d7fcc;
+}
+
+.control-bar-footer {
+    background-color: #fff!important;
+    position: fixed;
+    bottom: 0; 
 }
 
 #control-bar ul.components {
@@ -225,8 +278,9 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background-color: #fff;
 }
+
 
 ul.CTAs {
     padding: 20px;
@@ -299,8 +353,8 @@ a.article:hover {
 }  
 
 path.leaflet-interactive{
-    stroke: #931621;
-    fill: #931621;
+    stroke: #063961;
+    fill: #0E5F9F;
     radius: 30px;
     filter: brightness(1) sepia(1) hue-rotate(-70deg) saturate(5); 
 }
@@ -462,17 +516,12 @@ path.leaflet-interactive{
     GEOLOCATION CONTROL STYLE
 ----------------------------------------------------- */ 
 
-#locate-position {
-  width: 32px;
-  height: 32px;
+.locate-position {
   z-index: 500;
-  position: absolute;
-  top: 200px;
-  margin: 10px;
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-  font-size: 16px;
+  font-size: 18px;
 
 }
 

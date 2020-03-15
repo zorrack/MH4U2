@@ -7,8 +7,13 @@ const elementTypes = {
 const searchByMapping = [
     "officialName",
     "mentalhealthworkers",
-    "activitycategory"
+    "activitycategory",
+    "activitycodename",
+    "subactivitycodename"
+
 ];
+
+const codesTab = "[conf] Coding table for mental health services mapping";
 
 const administrativeUnitsBindingTemplate = [
     {
