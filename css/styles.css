@@ -6,11 +6,20 @@ body {
 }
 
 .logo {
-    width: 120px;
-    height: 120px;
+    height: 70px;
     float: none;
     margin: 5px;
     border-radius: 50%;
+    display: inline;
+}
+
+.bund-logo {
+  width: inherit;
+  box-sizing: initial;
+  height: 50px;
+  float: none;
+  padding: 10px;
+  display: inline;
 }
 
 span.icon {
@@ -28,20 +37,27 @@ span.icon {
 }
 
 /* ---------------------------------------------------
-    LEAFLET OVERLAY INFO STYLE
+    LEAFLET LEGEND CONTROL STYLE
 ----------------------------------------------------- */
 
-.info {
+.legend {
     padding: 6px 8px;
     font: 14px/16px Arial, Helvetica, sans-serif;
     background: white;
     background: rgba(255,255,255,0.8);
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
     border-radius: 5px;
+    max-width: 250px;
+    font-size: 12px;
 }
-.info h4 {
+.legend h4 {
     margin: 0 0 5px;
     color: #777;
+    font-size: 14px;
+}
+
+.list-group-item {
+  padding: 5px;
 }
 
 /* ---------------------------------------------------
@@ -179,6 +195,8 @@ a:focus {
     min-width: 250px;
     max-width: 250px;
     height: 100vh;
+    top: 0;
+    bottom: 0;
     z-index: 999;
     background: #063961;
     color: #fff;
@@ -197,8 +215,14 @@ a:focus {
 }
 
 #control-bar .control-bar-header {
-    padding: 20px;
+    padding: 10px;
     background: #6d7fcc;
+}
+
+.control-bar-footer {
+    background-color: #fff!important;
+    position: fixed;
+    bottom: 0; 
 }
 
 #control-bar ul.components {
@@ -247,8 +271,9 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background-color: #fff;
 }
+
 
 ul.CTAs {
     padding: 20px;
@@ -321,8 +346,8 @@ a.article:hover {
 }  
 
 path.leaflet-interactive{
-    stroke: #931621;
-    fill: #931621;
+    stroke: #063961;
+    fill: #0E5F9F;
     radius: 30px;
     filter: brightness(1) sepia(1) hue-rotate(-70deg) saturate(5); 
 }

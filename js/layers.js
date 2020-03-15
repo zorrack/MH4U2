@@ -21,11 +21,6 @@ function createLayers(parentMarkerCluster, arr, markers, overlays, codeData) {
 				"layer" : layer,
 				"subActivities" : subActivities
 			});
-			//Add received text to the infowindow
-			// let content = document.createTextNode(subActivities);
-			// let infoWindow = document.getElementsByClassName('info')[0].appendChild(content);
-
-			///Create overlay if the category has at least one element
 				let filteredMarkers = markers.filter(marker =>
 					marker.feature.properties.activitycategory == layer);
 
@@ -36,7 +31,8 @@ function createLayers(parentMarkerCluster, arr, markers, overlays, codeData) {
 				map.layerControl.addOverlay(subGroup, layer);
 			}
 	});
-	let spans = $(".leaflet-control-layers-overlays span");
+	//Get the name of the overlay on hover and show corresponding subcategories in the legend control
+	let spans = $(".leaflet-control-layers-overlays div");
 	spans.each(overlaySpanIndex => {
 		let overlayObject = overlayMap.find(el => el.layer == spans[overlaySpanIndex].innerText.trim());
 		spans[overlaySpanIndex].onmouseover = () => {
@@ -54,76 +50,34 @@ function createLayers(parentMarkerCluster, arr, markers, overlays, codeData) {
 	map.overlayMap = overlayMap;
 }
 
+//Build the template for legend control
 function buildLegendControl(overlayObject) {
-	let html = "<h4>" + overlayObject.layer + "</h4>";
-	html += "<ul>";
-	overlayObject.subActivities.forEach(activity => html += "<li>" + activity + "</li>");
-	html += "</ul>";
+	let html = "<h4>" + overlayObject.layer + '</h4>';
+	html += '<ul class="list-group">';
+	overlayObject.subActivities.forEach(activity => html += '<li class="list-group-item">' 
+	+ activity + '</li>');
+	html += '</ul>';
 
 	return html;
 }
-
+//Create custom overlay control
 L.Control.Custom = L.Control.Layers.extend({
 
   onAdd: function () {
 		this._initLayout();
-		this._addBtn();
 		this._update();
 		return this._container;
-	},
-
-	_addBtn: function () {
-	  let objects = this._container.getElementsByClassName('leaflet-control-layers-list');
-	  let button = L.DomUtil.create('button', 'layer-control-close', objects[0]);
-	  button.title = "Enter Tooltip Here";
-	  button.textContent = 'Close control';
-  		L.DomEvent.on(objects, 'click', function(e){
-	    L.DomEvent.stop(e);
-	    this._collapse();
-	  }, this);
 	}
 
 });
 
-///
-L.Control.Layers.include({
-    getOverlays: function () {
-        var control, layers;
-        layers = {};
-        control = this;
-        control._layers.forEach(function (obj) {
-            let layerName;
-            if (obj.overlay) {
-                layerName = obj.name;
-                return layers[layerName] = control._map.hasLayer(obj.layer);
-            }
-        });
-        return layers;
-    }
-});
-
+//Create legend control
 L.Control.Legend = L.Control.Layers.extend({
 
     onAdd: map => {
 	  let title = '<h4>Заголовок</h4>';
 	  let div = L.DomUtil.create('div', 'info legend');
-	  // div.innerHTML = title + [
-	  // 	['0', 'Неформальні послуги в громаді'],
-	  //   ['1','Формальні послуги в громаді'],
-	  //   ['2','Допомога у сфері психічного здоров’я на рівні первинної медико-санітарної допомоги']
-	  // ].map(a => `<span id="${a[0]}"><i></i> ${a[1]}</span>`).join('')
 	  return div;
 	},
 
    });
-
-function onEachFeature(feature, layer) {
-	layer.on('mouseover', e => $(`.legend > span:contains(${e.name})`).toggle() );
-	layer.on('mouseout', e => $(`.legend > span:contains(${e.name})`).toggle() );
-		
-	layer.on('click', e => $(`.legend > span:contains(${e.name})`).toggle(), 
-			console.log("Layer name -" + layer + "subactivities -" + subActivities)
-	);
-};
-
-///////////Add overlay subcategories info tooltip
