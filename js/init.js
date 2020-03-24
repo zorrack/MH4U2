@@ -30,19 +30,11 @@ $( document ).ready(function() {
         theme: "dark-2"
     });
 
-    //TODO: add custom scrollbar
-
     // This is the Carto Positron basemap
-	// let basemap = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-	//     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
-	//     subdomains: 'abcd',
-	//     maxZoom: 19
-	// });
-	// basemap.addTo(map);
-
     let basemap = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    // let basemap = L.tileLayer("https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png", {
     maxZoom: 18,
-    attribution: "Map data &copy; OpenStreetMap contributors"
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
     });
     basemap.addTo(map);
 

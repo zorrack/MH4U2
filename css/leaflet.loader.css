@@ -11,13 +11,13 @@
 	position:fixed;
 	height: 100%;
 	width: 100%;
-	background-color: rgba(14,95,159, 0.9);
+	/*background-color: rgba(14,95,159, 0.9);*/
+  background-color: rgba(255,208,0, 0.9);
 }
 
 .leaflet-loader {
 	width:57.6px;
 	margin: 30em auto;
-
 }
 
 @-webkit-keyframes hideLoader {

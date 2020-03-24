@@ -6,9 +6,8 @@ body {
 }
 
 .logo {
-    height: 70px;
+    height: 90px;
     float: none;
-    margin: 5px;
     background: #fff;
     display: inline;
    /*image-rendering: -moz-crisp-edges;  Firefox */
@@ -22,9 +21,7 @@ body {
 .bund-logo {
   width: inherit;
   box-sizing: initial;
-  height: 50px;
   float: none;
-  padding: 9px;
   display: inline;
    /*image-rendering: -moz-crisp-edges;  Firefox */
    image-rendering:optimize-contrast;         /* CSS3 Proposed  */
@@ -90,14 +87,6 @@ span.icon {
     padding: 30px 10px 10px 10px;
 }
 
-/*#sidebar-content: {
-    font-size: 0.9rem;
-}*/
-
-/*#sidebar-content, #sidebar-title {
-    word-break: break-word;
-}*/
-
 .card {
   background-color: rgba(0,0,0,.03);
 }
@@ -105,6 +94,7 @@ span.icon {
 .card-header {
   background-color: white;
   margin: 15px 0px 5px 0px;
+  font-family: 'Roboto Mono', sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 14px;
@@ -124,10 +114,10 @@ span.icon {
 }
 
 p {
-    font-size: 1.1em;
-    font-weight: 300;
-    line-height: 1.7em;
-    color: #999;
+  font-size: 1.1em;
+  font-weight: 300;
+  line-height: 1.7em;
+  color: #999;
 }
 
 a,
@@ -164,12 +154,12 @@ a:focus {
 }
 
 .btn-info {
-    background-color: #138496;
+    /*background-color: #08b5ff;*/
     margin: 4px;
 }
 
 .btn-warning {
-    background-color: #F7BB06;
+    background-color: #ffd000;
 }
 
 .form-group {
@@ -183,14 +173,18 @@ a:focus {
     LEFT (FILTERING) BAR STYLE
 
     Color scheme:
-    #0E5F9F - background, base color (saphire blue)
+    #7500ff - background, base color (electric indigo)
     #063961 - background, 2nd color (for accents and active elements) (dark midnight blue)
     #2C8C99 - background, 3rd color (celadon green) 
 
-    #F7BB06 - accent color (for buttons, dividers) (selective yellow)
+    #ffd000 - accent color (for buttons, dividers) (YELLOW (NCS))
     #DBC300 - accent color (for buttons, dividers) on hover
     #931621 - danger color (ruby red)
 ----------------------------------------------------- */
+
+.mCSB_container {
+  height: 100%;
+}
 
 .wrapper {
     display: flex;
@@ -202,22 +196,27 @@ a:focus {
     color: #063961;
 }
 
+.controlbar-decoration {
+  height: 300px;
+  background-image: url('../img/MH4U_Sign-white.png');
+  background-position: calc(100% - 125px) 100%;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
 #control-bar {
     min-width: 250px;
     max-width: 250px;
-    height: 100vh;
+    /*height: 100vh;*/
     top: 0;
     bottom: 0;
     z-index: 999;
-    background: #063961;
+    /*background-color: #0E5F9F;*/
+    background-color: #7500ff;
     color: #fff;
     transition: all 0.3s;
     overflow-y: scroll;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
-}
-
-#control-bar {
-    background: #0E5F9F!important;
 }
 
 #control-bar.active {
@@ -230,10 +229,14 @@ a:focus {
     background: #6d7fcc;
 }
 
-.control-bar-footer {
-    background-color: #fff!important;
-    position: fixed;
-    bottom: 0; 
+.fixed-content {
+    bottom: 0;
+    /*position: fixed;*/
+    position: relative;
+    overflow-x: hidden;
+    width: 250px;
+    padding: 5px;
+    background-color: #f5f5f5;
 }
 
 #control-bar ul.components {
@@ -260,7 +263,7 @@ a:focus {
 #control-bar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-    background: #0E5F9F;
+    background: #472172;
 }
 
 a[data-toggle="collapse"] {
@@ -285,6 +288,9 @@ ul ul a {
     background-color: #fff;
 }
 
+.filter-subitem {
+  display: inline;
+}
 
 ul.CTAs {
     padding: 20px;
@@ -398,7 +404,7 @@ path.leaflet-interactive{
 }
 
 .breadcrumbs li:hover, .breadcrumbs-dropdown:hover .dropbtn {
-  background-color: #DBC300;
+  background-color: #FFAD05;
 }
 
 .breadcrumbs-dropdown-content {
@@ -527,20 +533,4 @@ path.leaflet-interactive{
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
   font-size: 18px;
 
-}
-
-/* ---------------------------------------------------
-    PAGE LOADER STYLE
------------------------------------------------------ */ 
-
-.no-js #loader { display: none;  }
-.js #loader { display: block; position: absolute; left: 100px; top: 0; }
-.se-pre-con {
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  z-index: 9999;
-  background: url(http://smallenvelop.com/wp-content/uploads/2014/08/Preloader_11.gif) center no-repeat #fff;
 }
