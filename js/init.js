@@ -30,6 +30,44 @@ $( document ).ready(function() {
         theme: "dark-2"
     });
 
+    ///Hide breadcrumb dropdown on map click
+    map.on('click', function(e) {
+        $('.breadcrumbs-dropdown-content').collapse();
+    });
+
+    ///Handling click event for the Clear Filter button inside Bootstrap control sidebar START
+     $('.parent').on('click', function(e) {
+      // Do not trigger if target elm or it's child has `no-orange` class
+      if(!treeHasClass(e.target, "no-orange", this)) {
+        $(this).css('backgroundColor', 'darkorange');
+      }
+    });
+
+    $('.no-collapse').on('click', function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      $('.original-dropper .dropdown-toggle').dropdown("toggle");
+      //Disable Clear Filter button after click
+      $(this).prop("disabled",true);
+      console.log('clicked');
+    });
+    /**
+     * Checks if any of parent nodes of elm has a class name
+     * @param {HTMLElement} elm the starting node
+     * @param {string} className
+     * @param {HTMLElement} stopAtElm if this parent is reached, search stops
+    **/
+    function treeHasClass(elm, className, stopAtElm) {
+      while(elm != null && elm != stopAtElm) {
+        if(elm.classList.contains(className)) {
+          return true;
+        }
+        elm = elm.parentNode;
+      }
+      return false;
+    }
+    ///Handling click event for the Clear Filter button inside Bootstrap control sidebar END
+
     // This is the Carto Positron basemap
     let basemap = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     // let basemap = L.tileLayer("https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png", {

@@ -18,7 +18,6 @@ function onLocationFound(e) {
 
   let radius = L.circle([e.latitude, e.longitude], e.accuracy / 2);
   let locationMarker = L.marker(e.latlng);
-  console.log (locationMarker + "defined");
 
   let icon = L.AwesomeMarkers.icon({
     markerColor: "white",
@@ -53,6 +52,7 @@ function createUserLocationBtn(map) {
       onAdd: function(map) {
         var el = L.DomUtil.create('div', 'leaflet-control btn btn-light btn-sm locate-position'); 
         el.innerHTML = `<span class="icon">&#xf05b;</span>`;
+        el.setAttribute('title', "Показати моє місцезнаходження");
         return el;
     },
       onRemove: function(map) {
