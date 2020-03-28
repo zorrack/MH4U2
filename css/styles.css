@@ -19,7 +19,6 @@ body {
 }
 
 .bund-logo {
-  width: inherit;
   box-sizing: initial;
   float: none;
   display: inline;
@@ -33,6 +32,10 @@ body {
 
 span.icon {
   font-family: FontAwesome;
+}
+
+.label-primary {
+  background-color: 'orange';
 }
 
 
