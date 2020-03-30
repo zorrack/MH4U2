@@ -2,6 +2,9 @@ let collection = {
     'type': 'FeatureCollection',
     'features': []
 };
+
+let otherCategories = new Set();
+
 let map = L.map('map').setView([49.8397, 24.0297], 8);
 var loader;
 
@@ -16,7 +19,7 @@ let wantedSheets = [
     }
 ];
 
-$( document ).ready(function() {
+$( document ).init(function() {
 
     $("#control-bar").mCustomScrollbar({
         theme: "minimal"
@@ -155,7 +158,7 @@ function init(map, sidebar) {
                 zoomToBoundsOnClick: true,
             }).addTo(map);
             map.markerCluster = markerCluster;
-
+            buildOtherCategories();
             let overlays = createOverlays(codes);
             let markers = createMarkers (map.sidebar, collection.features);
             map.markers = markers;
@@ -222,7 +225,6 @@ function createMarkers(sidebar, features) {
 }
 
 function createFacilitiesArray(array) {
-
     let regions = array.data.forEach(region => {
 
         let rows = region.elements;
@@ -257,6 +259,15 @@ function createFacilitiesArray(array) {
                         'isinpatient': row["амбулаторний чи стаціонарний"]
                     }
                 }
+                Object.keys(row)
+                    .filter(el => el.includes("_filter")).forEach(filterColumn => {
+                    let filterName = filterColumn.replace("_filter", "");
+                    let canonicalName = filterName.trim();
+                    let filterValue = row[filterName];
+                    otherCategories.add(canonicalName);
+                    feature["properties"][`f_${canonicalName}`] = row[filterColumn];
+                    feature["properties"][canonicalName] = (typeof filterValue !== "undefined")?filterValue:"";
+                });
                 collection.features.push(feature);
             }
         }) 

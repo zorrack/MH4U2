@@ -1,69 +1,53 @@
-function createBreadcrumbs(){
-	(function(win, doc) {
-			'use strict';
-
-			// Return if addEventListener isn't supported
-			if (!win.addEventListener) {
-				return;
-			}
-
-			// Store Variables
-			var enhanceclass = 'cutsthemustard',
-					breadcrumbNav = document.getElementById('js-breadcrumb'),
-					breadcrumbToggleClass = 'breadcrumb__toggle',
-					breadcrumbHoverClass = 'is-toggled';
-
-			// Remove string quotes to normalize browser behavior
-			var removeQuotes = function(string) {
-					if (typeof string === 'string' || string instanceof String) {
-						string = string.replace(/^['"]+|\s+|\\|(;\s?})+|['"]$/g, '');
-					}
-					return string;
-			};
-
-			// Get value of body generated content
-			var checkBreadcrumbMedia = function() {
-					var media = window.getComputedStyle(breadcrumbNav, ':after').getPropertyValue('content');
-					return removeQuotes(media);
-			};
-
-			// Toggle className Helper Function
-			var toggleClassName = function(element, toggleClass) {
-					var reg = new RegExp('(\\s|^)' + toggleClass + '(\\s|$)');
-					if (!element.className.match(reg)) {
-						element.className += ' ' + toggleClass;
-					} else {
-						element.className = element.className.replace(reg, '');
-					}
-			};
-
-			// Process event on Breadcrumb Nav
-			var breadcrumbListener = function(ev) {
-					ev = ev || win.event;
-					var target = ev.target || ev.srcElement;
-					if (target.className.indexOf(breadcrumbToggleClass) !== -1) {
-						ev.preventDefault();
-						toggleClassName(target.parentNode, breadcrumbHoverClass);
-					}
-			};
-
-			// Add Enhancement Class
-			doc.documentElement.className += ' ' + enhanceclass;
-
-			// Fire checkMedia to get value
-			checkBreadcrumbMedia();
-
-			/**
-			 * Do nothing if pointing device can relay a hover state
-			 * Else, attach event listener to breadcrumb
-			 */
-			if (checkBreadcrumbMedia() === "hover") {
-				return;
-			} else {
-				breadcrumbNav.addEventListener('click', breadcrumbListener, false);
-			}
-
-	}(this, this.document));
-
+function initBreadcrumbs(auRoot) {
+    map.breadcrumbs = [];
+    let rootElement = $("#breadCrumbRootLevel")
+        .append(buildMainLevel(auRoot));
+    rootElement.find(".clearfilter").remove();
 }
 
+function buildMainLevel(auElement) {
+    map.breadcrumbs.push(auElement);
+
+    let element = $(breadcrumbItemTemplate.replace("{auDisplayName}", auElement.DisplayName)
+            .replace("{elementId}", auElement.Id));
+    auElement.jqElement = element;
+    element.on("click", (ev) => {
+
+    });
+
+    let childrenContainer = element.find(".breadcrumbs-dropdown-content");
+
+    if (childrenContainer) {
+        auElement.ChildAus.forEach(auChildElement => {
+            let childElement = $("<li></li>").text(auChildElement.DisplayName);
+            childElement.on("click", (ev) => {
+                if (map.breadcrumbs.length == auChildElement.Level) {
+                    $("#breadCrumbRootLevel").append(buildMainLevel(auChildElement));
+                } else {
+                    while (map.breadcrumbs.length > auChildElement.Level) {
+                        map.breadcrumbs[map.breadcrumbs.length - 1].jqElement.remove();
+                        map.breadcrumbs.pop();
+                    }
+                    $("#breadCrumbRootLevel").append(buildMainLevel(auChildElement));
+                }
+                updateMarkers(map.markers);
+            });
+            childrenContainer.append(childElement);
+        });
+    }
+    if (auElement.ChildAus.length === 0) {
+        auElement.jqElement.find(".nextlevel").remove();
+    }
+    let clearFilterElement = element.find(".clearfilter");
+    if (clearFilterElement) {
+        clearFilterElement.on("click", (ev) => {
+            while (map.breadcrumbs.length > auElement.Level) {
+                map.breadcrumbs[map.breadcrumbs.length - 1].jqElement.remove();
+                map.breadcrumbs.pop();
+            }
+            updateMarkers(map.markers);
+        });
+    }
+
+    return element;
+}
