@@ -33,6 +33,44 @@ $( document ).init(function() {
         theme: "dark-2"
     });
 
+    ///Hide breadcrumb dropdown on map click
+    map.on('click', function(e) {
+        $('.breadcrumbs-dropdown-content').collapse();
+    });
+
+    ///Handling click event for the Clear Filter button inside Bootstrap control sidebar START
+     $('.parent').on('click', function(e) {
+      // Do not trigger if target elm or it's child has `no-orange` class
+      if(!treeHasClass(e.target, "no-orange", this)) {
+        $(this).css('backgroundColor', 'darkorange');
+      }
+    });
+
+    $('.no-collapse').on('click', function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      $('.original-dropper .dropdown-toggle').dropdown("toggle");
+      //Disable Clear Filter button after click
+      $(this).prop("disabled",true);
+      console.log('clicked');
+    });
+    /**
+     * Checks if any of parent nodes of elm has a class name
+     * @param {HTMLElement} elm the starting node
+     * @param {string} className
+     * @param {HTMLElement} stopAtElm if this parent is reached, search stops
+    **/
+    function treeHasClass(elm, className, stopAtElm) {
+      while(elm != null && elm != stopAtElm) {
+        if(elm.classList.contains(className)) {
+          return true;
+        }
+        elm = elm.parentNode;
+      }
+      return false;
+    }
+    ///Handling click event for the Clear Filter button inside Bootstrap control sidebar END
+
     // This is the Carto Positron basemap
     let basemap = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     // let basemap = L.tileLayer("https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png", {
@@ -208,13 +246,35 @@ function createMarkers(sidebar, features) {
         let feature = features[i];
     	let marker = createMarker(feature);
         markers.push(marker);
+
+        let icon;
         // AwesomeMarkers is used to create facility icons. TODO: add icons
-        let icon = L.AwesomeMarkers.icon({
-            icon: 'glyphicon-glyphicon-plus',
-            iconColor: 'white',
-            markerColor: getMarkerColor(feature.properties.ac1),
-            prefix: 'glyphicon'
+        //If 'mh4uCooperation' value equals 'Так', add a custom icon to the marker
+        if (feature.properties.mh4uCooperation == 'Так') {
+                icon = L.AwesomeMarkers.icon({
+                // icon: 'star',
+                icon: 'certificate',
+                prefix: 'fa',
+                iconColor: 'orange',
+                markerColor: getMarkerColor(feature.properties.ac1),
+            });
+
+            //icon = L.icon({ prefix: 'glyphicon', glyph: 'adjust' });
+            // icon = L.icon({
+            // iconUrl: './img/MH4U_Sign-white.png',
+            // iconSize: [32, 37],
+            // iconAnchor: [16, 37],
+            // popupAnchor: [0, -28]
+        // });
+
+        }
+        else {
+            icon = L.AwesomeMarkers.icon({
+                icon: 'plus',
+                prefix: 'fa',
+                markerColor: getMarkerColor(feature.properties.ac1),
         });
+        }
         marker.setIcon(icon);
 
         //Function to open right sidebar with facility description after clicking on marker
@@ -227,15 +287,19 @@ function createMarkers(sidebar, features) {
 function createFacilitiesArray(array) {
     let regions = array.data.forEach(region => {
 
+        //Get region name from the sheet tab name
+        let regionTabName = region.name;
+        let regionName = regionTabName.replace(/.*?\[.*?\]/, '');
+
         let rows = region.elements;
         rows.forEach(row => {
 
             let lat = parseFloat(row.Latitude);
             let lon = parseFloat(row.Longitude);
 
-            // let showOnMap = Boolean(row["Додати на мапу"]);
+            // If the showOnMap checkbox is set to true, and
+            // if feature has the lat and long property, add feature to the map
             let showOnMap = row["Додати на мапу"];
-            //If feature has the lat and long property AND the showOnMap checkbox is set to true
             if (lat && lon && showOnMap === "TRUE") {
                 let coords = [parseFloat(row.Longitude), parseFloat(row.Latitude)];
                 let feature = {
@@ -249,9 +313,10 @@ function createFacilitiesArray(array) {
                         'recorddate': row["Інформація актуальна станом на:"],
                         'address': row["Адреса"],
                         'district': row["Район"],
-                        'region': row["Область"],
+                        'region': regionName,
                         'phonenumber': row["контактний номер"],
                         'email': row["електронна пошта веб сайт"],
+                        'mh4uCooperation': row["Співпраця з MH4U"],
                         'patienttype': row["Цільове населення"],
                         'mentalhealthworkers': row["фахівці з психічного здоров'я"],
                         'ac1': row["Activity code 1"],

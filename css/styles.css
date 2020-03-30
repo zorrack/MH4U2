@@ -1,5 +1,5 @@
 body {
-	padding: 0;
+  padding: 0;
     margin: 0;
     height: 600px;
     overflow: hidden;
@@ -19,7 +19,6 @@ body {
 }
 
 .bund-logo {
-  width: inherit;
   box-sizing: initial;
   float: none;
   display: inline;
@@ -33,6 +32,10 @@ body {
 
 span.icon {
   font-family: FontAwesome;
+}
+
+.label-primary {
+  background-color: 'orange';
 }
 
 
@@ -110,7 +113,7 @@ span.icon {
 
 #map {
     width: 100%;
-    height: 90vh;
+    height: 95vh;
 }
 
 p {
@@ -171,29 +174,56 @@ a:focus {
 
 /* ---------------------------------------------------
     LEFT (FILTERING) BAR STYLE
-
     Color scheme:
-    #7500ff - background, base color (electric indigo)
+    #0E5F9F - background, base color (saphire blue)
     #063961 - background, 2nd color (for accents and active elements) (dark midnight blue)
     #2C8C99 - background, 3rd color (celadon green) 
-
-    #ffd000 - accent color (for buttons, dividers) (YELLOW (NCS))
+    #F7BB06 - accent color (for buttons, dividers) (selective yellow)
     #DBC300 - accent color (for buttons, dividers) on hover
     #931621 - danger color (ruby red)
 ----------------------------------------------------- */
-
-.mCSB_container {
-  height: 100%;
-}
 
 .wrapper {
     display: flex;
     align-items: stretch;
 }
 
+.btn-clear-filter {
+  background-image: url('../css/images/Data-Clear-Filters-icon.png');
+  height: 25px;
+  width: 15px;
+  background-position: 50%;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  image-rendering: optimize-contrast;         /* CSS3 Proposed  */
+  image-rendering: pixelated;                 /* CSS4 Proposed  */
+  image-rendering: -o-crisp-edges; /* Opera */
+  image-rendering: -webkit-optimize-contrast; /* Webkit (non-standard naming) */
+  -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
+}
+
+#control-bar {
+    min-width: 250px;
+    max-width: 250px;
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+    z-index: 999;
+    background-color: #7500ff;
+    color: #fff;
+    transition: all 0.3s;
+    overflow-y: scroll;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
 .control-bar-header {
     background: #fff!important;
-    color: #063961;
+    color: #7500ff;
+}
+
+#control-bar .control-bar-header {
+    padding: 10px;
+    background: #6d7fcc;
 }
 
 .controlbar-decoration {
@@ -204,39 +234,19 @@ a:focus {
   background-repeat: no-repeat;
 }
 
-#control-bar {
-    min-width: 250px;
-    max-width: 250px;
-    /*height: 100vh;*/
-    top: 0;
+.fixed-content {
     bottom: 0;
-    z-index: 999;
-    /*background-color: #0E5F9F;*/
-    background-color: #7500ff;
-    color: #fff;
-    transition: all 0.3s;
-    overflow-y: scroll;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+    /*position: fixed;*/
+    position: fixed;
+    overflow-x: hidden;
+    width: 250px;
+    padding: 5px;
+    background-color: #f5f5f5;
 }
 
 #control-bar.active {
     margin-left: -250px;
     background: #0E5F9F;
-}
-
-#control-bar .control-bar-header {
-    padding: 10px;
-    background: #6d7fcc;
-}
-
-.fixed-content {
-    bottom: 0;
-    /*position: fixed;*/
-    position: relative;
-    overflow-x: hidden;
-    width: 250px;
-    padding: 5px;
-    background-color: #f5f5f5;
 }
 
 #control-bar ul.components {
@@ -285,11 +295,7 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background-color: #fff;
-}
-
-.filter-subitem {
-  display: inline;
+    background: #6d7fcc;
 }
 
 ul.CTAs {
@@ -315,7 +321,7 @@ a.article:hover {
     color: #fff !important;
 }
 
-.label{
+.label {
     margin-left: 20px;
 }
 
@@ -363,8 +369,8 @@ a.article:hover {
 }  
 
 path.leaflet-interactive{
-    stroke: #063961;
-    fill: #0E5F9F;
+    stroke: #7500ff;
+    fill: #472172;
     radius: 30px;
     filter: brightness(1) sepia(1) hue-rotate(-70deg) saturate(5); 
 }

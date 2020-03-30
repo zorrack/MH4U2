@@ -6,7 +6,7 @@ function getData(tabletop, mappingData, configData) {
     let sheets = (tabletop.sheets());
     createDataTypes(dataTypesTemplate, sheets);
 
-    mappingData = dataTypesTemplate.find(sheet => sheet.type === "[add]"); 
+    mappingData = dataTypesTemplate.find(sheet => sheet.type === "[Так]"); 
 
     return mappingData;
 
@@ -18,14 +18,12 @@ function createRegions(mappingSheets) {
             for (let i = 0; i < mappingSheets.length; i++) {
                 regions.push(mappingSheets.sheets[i]);
             }
-            console.log("regions" + regions);
 }
 
-
 function createDataTypes(dataTypesTemplate, sheets) {
+    //keys are the names of each tab of the spreadsheet
     let keys = Object.keys(sheets);
     dataTypesTemplate.forEach(element => {
-
         let type = element.type;
         let match = keys.filter((sheet) => sheet.includes(type));
 
@@ -45,7 +43,7 @@ var dataTypesTemplate  = [
 
     {
         ///Region tab that should be added to map
-        type: "[add]",
+        type: "[Так]",
         name: "mapping data sheets",
         parse: true,
         addToMap: true,
@@ -53,7 +51,7 @@ var dataTypesTemplate  = [
     },
         ///Region tab that should NOT be added to map
         {
-        type: "[hide]",
+        type: "[Ні]",
         name: "hidden mapping data sheets",
         parse: false,
         addToMap: false,
