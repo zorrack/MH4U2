@@ -53,8 +53,12 @@ const filtersSectionBinding = [
         elementType: elementTypes.CHECKBOX
     },
     {
-        filterClass: "boolean-category-check",
+        filterClass: "boolean-categories",
         arrayName: "booleanCategories"
+    },
+    {
+        filterClass: "other-categories-check",
+        arrayName: "otherCategories"
     }
 ];
 
@@ -100,6 +104,10 @@ const buttonsJson = [
 
         buttonId : "clearbooleancategoryFiltersBtn",
         className : "boolean-category-check"
+    },
+    {
+        buttonId : "clearOtherCategoryFiltersBtn",
+        className : "other-categories-check",
     }
 ];
 

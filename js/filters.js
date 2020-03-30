@@ -4,25 +4,6 @@ function createFilters(markers) {
         [... document.getElementsByClassName('filtercontrol ' + binding.filterClass)].forEach(element => {
             element.affectedMarkers =
                 markers.filter(marker => marker.feature.properties[binding.featurePropertyName] === element.value);
-
-            /*let predicate;
-            switch (binding.elementType) {
-                case elementTypes.CHECKBOX: {
-                    predicate = function (element, binding, marker) {
-                        return element.checked &&
-                            marker.feature.properties[binding.featurePropertyName] === element.value;
-                    };
-                    break;
-                }
-                case elementTypes.DROPDOWN: {
-                    predicate = function (element, binding, marker) {
-                        return element.value !== "---" &&
-                            marker.feature.properties[binding.featurePropertyName] === element.value;
-                    };
-                    break;
-                }
-                default: predicate = () => true;
-            }*/
             element.onchange = () => updateMarkers(markers);
         });
     });

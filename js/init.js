@@ -133,7 +133,14 @@ function getFilteredMarkers(markers) {
                 .includes(marker.feature.properties.ac1);
             let isInpatientCategoryChecked = checkboxStates.booleanCategories
                 .includes(marker.feature.properties.isinpatient);
-            return isPatientTypeChecked || isServiceCategoryChecked || isInpatientCategoryChecked //true if either of variables is true
+
+            let otherCategoryMatch = false;
+            checkboxStates.otherCategories.forEach(category => {
+                otherCategoryMatch |= marker.feature.properties.hasOwnProperty("f_" + category) &&
+                    marker.feature.properties["f_" + category] === "Yes";
+            });
+            return isPatientTypeChecked || isServiceCategoryChecked || isInpatientCategoryChecked ||
+                otherCategoryMatch; //true if either of variables is true
         });
     }
     //If no filter checkbox is checked, return all the features in the array.
