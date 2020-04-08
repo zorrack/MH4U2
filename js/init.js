@@ -36,6 +36,7 @@ $( document ).init(function() {
     ///Hide breadcrumb dropdown on map click
     map.on('click', function(e) {
         $('.breadcrumbs-dropdown-content').collapse();
+        $(".info.legend.leaflet-control").hide();
     });
 
     ///Handling click event for the Clear Filter button inside Bootstrap control sidebar START
@@ -50,9 +51,6 @@ $( document ).init(function() {
       e.stopPropagation();
       e.preventDefault();
       $('.original-dropper .dropdown-toggle').dropdown("toggle");
-      //Disable Clear Filter button after click
-      $(this).prop("disabled",true);
-      console.log('clicked');
     });
     /**
      * Checks if any of parent nodes of elm has a class name
@@ -73,9 +71,8 @@ $( document ).init(function() {
 
     // This is the Carto Positron basemap
     let basemap = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    // let basemap = L.tileLayer("https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png", {
     maxZoom: 18,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     });
     basemap.addTo(map);
 
@@ -87,7 +84,7 @@ $( document ).init(function() {
     map.layerControl = layerControl;
     layerControl.addTo(map);
 
-///map legend START  
+    ///map legend START  
     let legend = new L.Control.Legend();
     legend.addTo(map);
 
@@ -131,15 +128,15 @@ function getFilteredMarkers(markers) {
                 .includes(marker.feature.properties.patienttype);
             let isServiceCategoryChecked = checkboxStates.serviceCategories
                 .includes(marker.feature.properties.ac1);
-            let isInpatientCategoryChecked = checkboxStates.booleanCategories
-                .includes(marker.feature.properties.isinpatient);
+            let isFacilityTypeChecked = checkboxStates.facilityTypes
+                .includes(marker.feature.properties.facilitytype);
 
             let otherCategoryMatch = false;
             checkboxStates.otherCategories.forEach(category => {
                 otherCategoryMatch |= marker.feature.properties.hasOwnProperty("f_" + category) &&
                     marker.feature.properties["f_" + category] === "Yes";
             });
-            return isPatientTypeChecked || isServiceCategoryChecked || isInpatientCategoryChecked ||
+            return isPatientTypeChecked || isServiceCategoryChecked || isFacilityTypeChecked ||
                 otherCategoryMatch; //true if either of variables is true
         });
     }
@@ -204,6 +201,7 @@ function init(map, sidebar) {
             }).addTo(map);
             map.markerCluster = markerCluster;
             buildOtherCategories();
+
             let overlays = createOverlays(codes);
             let markers = createMarkers (map.sidebar, collection.features);
             map.markers = markers;
@@ -213,11 +211,7 @@ function init(map, sidebar) {
             addMarkerSearch(markerCluster);
             initBreadcrumbs(map.rootAdministrativeUnit);
 
-            $(".breadcrumbs-dropdown-content").mCustomScrollbar({
-                theme: "dark-2"
-            });
-
-            //When all the map controls being initialized, hide map loader
+            //When all the map controls are initialized, hide map loader
             loader.hide();
         },
     });
@@ -256,8 +250,8 @@ function createMarkers(sidebar, features) {
 
         let icon;
         // AwesomeMarkers is used to create facility icons. TODO: add icons
-        //If 'mh4uCooperation' value equals 'Так', add a custom icon to the marker
-        if (feature.properties.mh4uCooperation == 'Так') {
+        //If 'mh4uCooperation' value equals 'Yes', add a custom icon to the marker
+        if (feature.properties.mh4uCooperation == 'Yes') {
                 icon = L.AwesomeMarkers.icon({
                 // icon: 'star',
                 icon: 'certificate',
@@ -265,15 +259,6 @@ function createMarkers(sidebar, features) {
                 iconColor: 'orange',
                 markerColor: getMarkerColor(feature.properties.ac1),
             });
-
-            //icon = L.icon({ prefix: 'glyphicon', glyph: 'adjust' });
-            // icon = L.icon({
-            // iconUrl: './img/MH4U_Sign-white.png',
-            // iconSize: [32, 37],
-            // iconAnchor: [16, 37],
-            // popupAnchor: [0, -28]
-        // });
-
         }
         else {
             icon = L.AwesomeMarkers.icon({
@@ -327,8 +312,8 @@ function createFacilitiesArray(array) {
                         'patienttype': row["Цільове населення"],
                         'mentalhealthworkers': row["фахівці з психічного здоров'я"],
                         'ac1': row["Activity code 1"],
-                        //TODO: set up both inpatient and outpatient data filter 
-                        'isinpatient': row["амбулаторний чи стаціонарний"]
+                        'ac2': row["Activity code 2"],
+                        'facilitytype': row["амбулаторна чи стаціонарна"]
                     }
                 }
                 Object.keys(row)

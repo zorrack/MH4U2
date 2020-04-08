@@ -21,7 +21,7 @@ function populateInfoSidebar(e, sidebar) {
 	L.DomEvent.stopPropagation(e);
 	//TODO: Add styles to sidebar content elements
 	document.getElementById('sidebar-content').innerHTML = html;
-	if(e.target.feature.properties.mh4uCooperation == 'Так') {
+	if(e.target.feature.properties.mh4uCooperation == 'Yes') {
 		$(".official-name-header").prepend(mh4uCooperationBadge);
 	}
 	sidebar.show();

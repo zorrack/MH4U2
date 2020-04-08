@@ -60,7 +60,7 @@
                 <ul class="list-unstyled components">
                     <li>
                         <a href="#patienttypeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <button type="button" id="clearPatientTypeFiltersBtn" class="btn btn-info btn-sm no-collapse" title="Очистити фільтр" disabled><div class="btn-clear-filter"></div></button>
+                        <button type="button" id="clearPatientTypeFiltersBtn" class="btn btn-info btn-sm clear-filter no-collapse" title="Очистити фільтр" disabled><div class="btn-clear-filter"></div></button>
                         Цільове населення</a>
 
                         <ul class="collapse list-unstyled" id="patienttypeSubmenu">
@@ -160,7 +160,7 @@
 
                     <li>
                         <a href="#servicecategorySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <button type="button" id="clearServiceCategoryFiltersBtn" class="btn btn-info btn-sm no-collapse" title="Очистити фільтр"><div class="btn-clear-filter"></div></button>
+                        <button type="button" id="clearServiceCategoryFiltersBtn" class="btn btn-info btn-sm clear-filter no-collapse" title="Очистити фільтр" disabled><div class="btn-clear-filter"></div></button>
                         Тип послуг</a>
                         <ul class="collapse list-unstyled" id="servicecategorySubmenu">
                             <div class="form-check">
@@ -231,36 +231,12 @@
                     </li>
 
                     <li>
-                        <a href="#booleancategorySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Амбулаторний чи стаціонарний сервіс?</a>
-                        <ul class="collapse list-unstyled" id="booleancategorySubmenu">
-                            <div class="form-check">
-                                <button type="button" id="clearbooleancategoryFiltersBtn" class="btn btn-info">Очистити фільтри</button>
-
-                                <li>
-                                    <div class="inputs" id="boolean-categories">
-                                        <label>
-                                            <input type="checkbox" class="filtercontrol boolean-category-check" value="Inpatient" name="check"> <span class="label-text">Стаціонарний сервіс</span>
-                                        </label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div class="inputs" id="boolean-categories">
-                                        <label>
-                                            <input type="checkbox" class="filtercontrol boolean-category-check" value="Outpatient" name="check"> <span class="label-text">Амбулаторний сервіс</span>
-                                        </label>
-                                    </div>
-                                </li>
-                            </div>
-                        </ul>
-                    </li>
-
-                    <li>
                         <!-- This is the filter dropdown item template prototype START-->
-                        <a href="#otherCategoriesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Інші категорії</a>
+                        <a href="#otherCategoriesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <button type="button" id="clearOtherCategoryFiltersBtn" class="btn btn-info btn-sm clear-filter no-collapse" title="Очистити фільтр" disabled><div class="btn-clear-filter"></div></button>
+                        Фахівці</a>
 
                         <ul class="collapse list-unstyled" id="otherCategoriesSubmenu">
-                            <button type="button" id="clearOtherCategoryFiltersBtn" class="btn btn-info">Очистити фільтри</button>
                             <div class="form-check">
                                 <!-- This is the filter dropdown item template prototype START-->
                                 <!-- Items will be inserted here -->
@@ -268,6 +244,28 @@
                             </div>
                         </ul>
                     </li>
+
+                    <li>
+                        <a href="#facilityTypeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <button type="button" id="clearFacilityTypeFiltersBtn" class="btn btn-info btn-sm clear-filter no-collapse" title="Очистити фільтр" disabled><div class="btn-clear-filter"></div></button>
+                        Тип закладу</a>
+
+                        <ul class="collapse list-unstyled" id="facilityTypeSubmenu">
+                            <div class="form-check">
+                                <!-- This is a custom checkbox formatting START -->
+                                <li>
+                                    <div class="inputs" id="facility-types">
+                                        <label class="check">Амбулаторна
+                                            <input type="checkbox" class="filtercontrol facility-type-check" value="Амбулаторна" name="check"> <span class="label-text checkmark"></span>
+                                        </label>
+                                    </div>
+                                </li>
+                                <!-- This is a custom checkbox formatting END -->
+                                <!-- This is the filter dropdown item template prototype END-->
+                            </div>
+                        </ul>
+                    </li>
+
                 </ul>
                 <div class="controlbar-decoration"></div>
                 <div class="fixed-content">
