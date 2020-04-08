@@ -331,15 +331,48 @@ function createFacilitiesArray(array) {
                         'isinpatient': row["амбулаторний чи стаціонарний"]
                     }
                 }
+
+                let customFilterCategories = {};
+
                 Object.keys(row)
-                    .filter(el => el.includes("_filter")).forEach(filterColumn => {
-                    let filterName = filterColumn.replace("_filter", "");
-                    let canonicalName = filterName.trim();
-                    let filterValue = row[filterName];
-                    otherCategories.add(canonicalName);
-                    feature["properties"][`f_${canonicalName}`] = row[filterColumn];
-                    feature["properties"][canonicalName] = (typeof filterValue !== "undefined")?filterValue:"";
+                    .filter(el => el.includes("F_")).forEach(filterColumn => {
+                    let filterName = filterColumn.replace("F_", "");
+                    let arr = filterName.split("_");
+
+                    let categoryName = arr[0].trim();
+                    let filterValueName = arr[1].trim();
+
+                    if (!customFilterCategories.hasOwnProperty(categoryName)) {
+                        customFilterCategories[categoryName] = [];
+                    }
+
+                    let filterObject = {
+                        "filterProperty": filterColumn,
+                        "filterValueName": filterValueName
+                    };
+
+                    customFilterCategories[categoryName].push(filterObject);
+
+                    let filterProperty = {
+                        "filterValue": row[filterColumn],
+                        "filterAttributes": []
+                    };
+
+                    feature["properties"][`${filterColumn}`] = filterProperty;
+                    Object.keys(row)
+                        .filter(el => el.includes(`A_${filterName}`))
+                        .forEach(attributeColumn => {
+                            let attributeArray = attributeColumn.split("_");
+                            if (attributeArray.length == 4) {
+                                filterProperty.filterAttributes.push({
+                                    "attributeName": attributeArray[3],
+                                    "attributeValue": row[attributeColumn]
+                                });
+                           };
+                        });
                 });
+                otherCategories = customFilterCategories;
+
                 collection.features.push(feature);
             }
         }) 
