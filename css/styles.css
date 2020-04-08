@@ -35,7 +35,7 @@ span.icon {
 }
 
 .label-primary {
-  background-color: 'orange';
+  background-color: #ffd000;
 }
 
 
@@ -113,8 +113,13 @@ span.icon {
 
 #map {
     width: 100%;
-    height: 95vh;
+    height: 90vh;
 }
+
+.leaflet-control-attribution {
+    bottom: 0;
+    right: 0;
+}    
 
 p {
   font-size: 1.1em;
@@ -157,8 +162,12 @@ a:focus {
 }
 
 .btn-info {
-    /*background-color: #08b5ff;*/
     margin: 4px;
+}
+
+.clear-filter {
+  border-color: #ffc107;
+  border-width: 2px;
 }
 
 .btn-warning {
@@ -246,7 +255,6 @@ a:focus {
 
 #control-bar.active {
     margin-left: -250px;
-    background: #0E5F9F;
 }
 
 #control-bar ul.components {

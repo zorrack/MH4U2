@@ -24,3 +24,10 @@ function buildCheckboxFilters(categoryName, categoryValues, parentElement) {
         parentElement.append($(modifiedTemplate));
     })
 }
+
+
+// function buildPatientTypeCategories() {
+
+//     let categoriesParent = $("#patientTypeCategoriesSubmenu .form-check");
+//     buildCheckboxFilters("patient-type-categories", patientTypeCategories, categoriesParent);
+// }

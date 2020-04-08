@@ -59,30 +59,52 @@ const filtersSectionBinding = [
     {
         filterClass: "other-categories-check",
         arrayName: "otherCategories"
+    },
+    {
+        filterClass: "facility-type-check",
+        arrayName: "facilityTypes",
+        featurePropertyName: "facilitytype",
+        elementType: elementTypes.CHECKBOX
     }
 ];
 
 const codesProperties = [
 	{
 		name: "ac1",
-		columnName: "Activity code"
+		columnName: "Activity code",
+        category: "1"
 	},
 	{
 		name: "activitycategory",
-		columnName: "Activity category"
+		columnName: "Activity category",
+        category: "1"
 	},
 	{
 		name: "activitycodename",
-		columnName: "Activity code name"
+		columnName: "Activity code name",
+        category: "1"
 	},
 	{
 		name: "subactivitycode",
-		columnName: "Subactivity code"
+		columnName: "Subactivity code",
+        category: "1"
 	},
 	{
 		name: "subactivitycodename",
-		columnName: "Subactivity code name"
-	}
+		columnName: "Subactivity code name",
+        category: "1"
+	},
+    {
+        name: "ac2",
+        columnName: "Activity code",
+        category: "2"
+    },
+    {
+        name: "subactivitycode2",
+        columnName: "Subactivity code",
+        category: "2"
+    }
+
 ];
 
 const buttonsJson = [
@@ -99,15 +121,16 @@ const buttonsJson = [
         className : "mental-health-worker"
     },
     {
-        buttonId : "clearisInpatientFiltersBtn",
-        className : "is-inpatient-check",
-
         buttonId : "clearbooleancategoryFiltersBtn",
         className : "boolean-category-check"
     },
     {
         buttonId : "clearOtherCategoryFiltersBtn",
         className : "other-categories-check",
+    },
+    {
+        buttonId : "clearFacilityTypeFiltersBtn",
+        className : "facility-type-check",
     }
 ];
 
