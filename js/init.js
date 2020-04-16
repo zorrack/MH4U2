@@ -132,9 +132,18 @@ function getFilteredMarkers(markers) {
                 .includes(marker.feature.properties.facilitytype);
 
             let otherCategoryMatch = false;
-            checkboxStates.otherCategories.forEach(category => {
-                otherCategoryMatch |= marker.feature.properties.hasOwnProperty("f_" + category) &&
-                    marker.feature.properties["f_" + category] === "Yes";
+            Object.keys(otherCategories).forEach(category => {
+                let categoryCanonicalName = category.replace(/ /g, "");
+                if (checkboxStates[categoryCanonicalName].length > 0) {
+                    checkboxStates[categoryCanonicalName].forEach(valueName => {
+                        otherCategoryMatch |= marker.feature.properties.hasOwnProperty(`F_${category}_${valueName}`) &&
+                            marker.feature.properties[`F_${category}_${valueName}`].filterValue === "Yes";
+                    });
+                    /*otherCategories[category].forEach(filter => {
+                        otherCategoryMatch |= marker.feature.properties.hasOwnProperty(filter.filterProperty) &&
+                            marker.feature.properties[filter.filterProperty].filterValue === "Yes";
+                    })*/
+                }
             });
             return isPatientTypeChecked || isServiceCategoryChecked || isFacilityTypeChecked ||
                 otherCategoryMatch; //true if either of variables is true

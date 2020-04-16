@@ -10,7 +10,14 @@ function buildOtherCategories() {
             .replace(/{categoryCanonicalName}/g, categoryCanonicalName);
         let categoryObject = $(categoryTemplate);
         categoriesRoot.append(categoryObject);
-
+        buttonsJson.push({
+            buttonId: `clear${categoryCanonicalName}FiltersBtn`,
+            className: `${categoryCanonicalName}-check`
+        });
+        filtersSectionBinding.push({
+            filterClass: `${categoryCanonicalName}-check`,
+            arrayName: categoryCanonicalName
+        });
         let categoriesParent = categoryObject.find(`#${categoryCanonicalName}Submenu .form-check`);
         buildCheckboxFilters(categoryCanonicalName, otherCategories[category], categoriesParent);
     });
