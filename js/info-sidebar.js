@@ -19,10 +19,25 @@ function populateInfoSidebar(e, sidebar) {
 	}
 
 	L.DomEvent.stopPropagation(e);
-	//TODO: Add styles to sidebar content elements
 	document.getElementById('sidebar-content').innerHTML = html;
-	if(e.target.feature.properties.mh4uCooperation == 'Так') {
+	if(e.target.feature.properties.mh4uCooperation == 'Yes') {
 		$(".official-name-header").prepend(mh4uCooperationBadge);
 	}
 	sidebar.show();
+}
+
+function getPatientTypes(markers) {
+
+	let namePattern = "F_Цільове населення_";
+	markers.features.forEach(feature => {
+		let patientTypes = feature.properties.patienttype;
+		let propertyNames = Object.keys(feature.properties).filter(propertyName => propertyName
+				.includes(namePattern) && feature.properties[propertyName].filterValue === "Yes");
+
+				propertyNames.forEach(name => {
+		 			let patientType = name.replace(namePattern, "");
+		 			patientTypes.push(patientType)
+				})
+	})
+
 }

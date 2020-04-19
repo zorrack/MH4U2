@@ -1,17 +1,3 @@
-// var codesJson = [ ];
-
-// function getCodes(acCodes) {
-//     for (let i = 0; i < acCodes.length; i++) {
-//         let row = acCodes[i];
-//         let feature = {};
-
-//         for (let j = 0; j < codesProperties.length; j++) {
-//         	feature[codesProperties[j].name] = row[codesProperties[j].columnName];
-//         }
-// 		codesJson.push(feature);
-//     }
-// }
-
 function mergeCodes(arr, codeArr) {
     let codeSet = codeArr.map(codeType => codeType.data).flat().find(sheet => sheet.name === codesTab);
 
@@ -21,6 +7,7 @@ function mergeCodes(arr, codeArr) {
             let codeElement = {};
             codesProperties.forEach(codeProperty => {
                 codeElement[codeProperty.name] = code[codeProperty.columnName];
+                // codeElement.category = code[codeProperty.category];
             });
             codes.push(codeElement);
 
@@ -30,7 +17,7 @@ function mergeCodes(arr, codeArr) {
                 codesProperties.forEach(codeProperty => {
                     element.properties[codeProperty.name] = code[codeProperty.columnName];
                 });
-            });        
+            });
         });
     }
     return codes;

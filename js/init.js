@@ -32,27 +32,26 @@ $( document ).init(function() {
     $("#sidebar").mCustomScrollbar({
         theme: "dark-2"
     });
+    
 
     ///Hide breadcrumb dropdown on map click
     map.on('click', function(e) {
-        $('.breadcrumbs-dropdown-content').collapse();
+        $('.breadcrumbs-dropdown-content').addClass('collapse');
+        $('.info.legend.leaflet-control').hide();
     });
 
     ///Handling click event for the Clear Filter button inside Bootstrap control sidebar START
-     $('.parent').on('click', function(e) {
-      // Do not trigger if target elm or it's child has `no-orange` class
-      if(!treeHasClass(e.target, "no-orange", this)) {
-        $(this).css('backgroundColor', 'darkorange');
-      }
-    });
+    //  $('.parent').on('click', function(e) {
+    //   // Do not trigger if target elm or it's child has `no-orange` class
+    //   if(!treeHasClass(e.target, "no-orange", this)) {
+    //     $(this).css('backgroundColor', 'darkorange');
+    //   }
+    // });
 
     $('.no-collapse').on('click', function(e) {
       e.stopPropagation();
       e.preventDefault();
-      $('.original-dropper .dropdown-toggle').dropdown("toggle");
-      //Disable Clear Filter button after click
-      $(this).prop("disabled",true);
-      console.log('clicked');
+      $('.dropdown-toggle').dropdown("toggle");
     });
     /**
      * Checks if any of parent nodes of elm has a class name
@@ -60,22 +59,21 @@ $( document ).init(function() {
      * @param {string} className
      * @param {HTMLElement} stopAtElm if this parent is reached, search stops
     **/
-    function treeHasClass(elm, className, stopAtElm) {
-      while(elm != null && elm != stopAtElm) {
-        if(elm.classList.contains(className)) {
-          return true;
-        }
-        elm = elm.parentNode;
-      }
-      return false;
-    }
+    // function treeHasClass(elm, className, stopAtElm) {
+    //   while(elm != null && elm != stopAtElm) {
+    //     if(elm.classList.contains(className)) {
+    //       return true;
+    //     }
+    //     elm = elm.parentNode;
+    //   }
+    //   return false;
+    // }
     ///Handling click event for the Clear Filter button inside Bootstrap control sidebar END
 
     // This is the Carto Positron basemap
     let basemap = L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    // let basemap = L.tileLayer("https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png", {
     maxZoom: 18,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     });
     basemap.addTo(map);
 
@@ -87,7 +85,7 @@ $( document ).init(function() {
     map.layerControl = layerControl;
     layerControl.addTo(map);
 
-///map legend START  
+    ///map legend START  
     let legend = new L.Control.Legend();
     legend.addTo(map);
 
@@ -111,6 +109,9 @@ $( document ).init(function() {
 
     init(map, sidebar);
 
+    $('.breadcrumbs-dropdown').on('click', function () {
+        $('.breadcrumbs-dropdown-content').removeClass('collapse');
+    });
 });
 
 function getFilteredMarkers(markers) {
@@ -127,20 +128,39 @@ function getFilteredMarkers(markers) {
     //If at least one filtering checkbox is checked, filter by the selected feature property is applied
     if(checkboxIsChecked) {
         filteredMarkers = markers.filter(marker => {
-            let isPatientTypeChecked = checkboxStates.patientTypes
-                .includes(marker.feature.properties.patienttype);
-            let isServiceCategoryChecked = checkboxStates.serviceCategories
-                .includes(marker.feature.properties.ac1);
-            let isInpatientCategoryChecked = checkboxStates.booleanCategories
-                .includes(marker.feature.properties.isinpatient);
+            let selectedCategoryMatch = true;
 
-            let otherCategoryMatch = false;
-            checkboxStates.otherCategories.forEach(category => {
-                otherCategoryMatch |= marker.feature.properties.hasOwnProperty("f_" + category) &&
-                    marker.feature.properties["f_" + category] === "Yes";
+            if (checkboxStates.serviceCategories.length > 0) {
+                selectedCategoryMatch &= checkboxStates.serviceCategories
+                    .includes(marker.feature.properties.ac1);
+            }
+
+            if (checkboxStates.facilityTypes.length > 0) {
+                selectedCategoryMatch &= checkboxStates.facilityTypes
+                    .includes(marker.feature.properties.facilitytype);
+            }
+
+            let otherCategoryMatch = true;
+            let otherCategoryChecked = false;
+
+            Object.keys(otherCategories).forEach(category => {
+                let categoryCanonicalName = category.replace(/ /g, "");
+                if (checkboxStates[categoryCanonicalName].length > 0) {
+                    otherCategoryChecked = true;
+                    let categoryMatch = false;
+                    checkboxStates[categoryCanonicalName].forEach(valueName => {
+                        categoryMatch |= marker.feature.properties.hasOwnProperty(`F_${category}_${valueName}`) &&
+                            marker.feature.properties[`F_${category}_${valueName}`].filterValue === "Yes";
+                    });
+                    otherCategoryMatch &= categoryMatch;
+                }
             });
-            return isPatientTypeChecked || isServiceCategoryChecked || isInpatientCategoryChecked ||
-                otherCategoryMatch; //true if either of variables is true
+
+            if (otherCategoryChecked) {
+                selectedCategoryMatch &= otherCategoryMatch;
+            }
+
+            return selectedCategoryMatch; //true if either of variables is true
         });
     }
     //If no filter checkbox is checked, return all the features in the array.
@@ -180,22 +200,12 @@ function init(map, sidebar) {
 
         key: dataURL,
         callback: (data, tabletop, mappingData) => {        
-            parseNumbers: true;
-            simpleSheet: false;
+            initData(tabletop);
+            let mappingSheets = getFacilitiesData();
 
-            let mappingSheets = getData(tabletop);
-            createRegions(mappingSheets);
-            wanted: mappingSheets;
-            
             createFacilitiesArray(mappingSheets);
             let codes = mergeCodes(collection, dataTypesTemplate);
-
-            // initAdministrativeUnitsTree();
-
-            // let regions = getRegions(collection.features);
-            // populateRegionsTemplate(regions, regionsTemplate);
-            // document.getElementById('breadcrumb').appendChild(createRegionNavigation(regionsTemplate));
-            // toggleRegionNavigation(selectedAdministrativeUnit);
+            getPatientTypes(collection);
 
             //Create marker cluster layer group.
             let markerCluster = L.markerClusterGroup({
@@ -203,7 +213,11 @@ function init(map, sidebar) {
                 zoomToBoundsOnClick: true,
             }).addTo(map);
             map.markerCluster = markerCluster;
-            buildOtherCategories();
+            let categoriesRoot = $("#filterCategoriesUL");
+            buildServiceCategory(categoriesRoot, codes);
+            buildFacilityTypeCategory(categoriesRoot);
+            buildOtherCategories(categoriesRoot);
+
             let overlays = createOverlays(codes);
             let markers = createMarkers (map.sidebar, collection.features);
             map.markers = markers;
@@ -213,11 +227,7 @@ function init(map, sidebar) {
             addMarkerSearch(markerCluster);
             initBreadcrumbs(map.rootAdministrativeUnit);
 
-            $(".breadcrumbs-dropdown-content").mCustomScrollbar({
-                theme: "dark-2"
-            });
-
-            //When all the map controls being initialized, hide map loader
+            //When all the map controls are initialized, hide map loader
             loader.hide();
         },
     });
@@ -256,8 +266,8 @@ function createMarkers(sidebar, features) {
 
         let icon;
         // AwesomeMarkers is used to create facility icons. TODO: add icons
-        //If 'mh4uCooperation' value equals 'Так', add a custom icon to the marker
-        if (feature.properties.mh4uCooperation == 'Так') {
+        //If 'mh4uCooperation' value equals 'Yes', add a custom icon to the marker
+        if (feature.properties.mh4uCooperation == 'Yes') {
                 icon = L.AwesomeMarkers.icon({
                 // icon: 'star',
                 icon: 'certificate',
@@ -265,15 +275,6 @@ function createMarkers(sidebar, features) {
                 iconColor: 'orange',
                 markerColor: getMarkerColor(feature.properties.ac1),
             });
-
-            //icon = L.icon({ prefix: 'glyphicon', glyph: 'adjust' });
-            // icon = L.icon({
-            // iconUrl: './img/MH4U_Sign-white.png',
-            // iconSize: [32, 37],
-            // iconAnchor: [16, 37],
-            // popupAnchor: [0, -28]
-        // });
-
         }
         else {
             icon = L.AwesomeMarkers.icon({
@@ -324,22 +325,56 @@ function createFacilitiesArray(array) {
                         'phonenumber': row["контактний номер"],
                         'email': row["електронна пошта веб сайт"],
                         'mh4uCooperation': row["Співпраця з MH4U"],
-                        'patienttype': row["Цільове населення"],
+                        'patienttype': [],
                         'mentalhealthworkers': row["фахівці з психічного здоров'я"],
                         'ac1': row["Activity code 1"],
-                        //TODO: set up both inpatient and outpatient data filter 
-                        'isinpatient': row["амбулаторний чи стаціонарний"]
+                        'ac2': row["Activity code 2"],
+                        'facilitytype': row["амбулаторна чи стаціонарна"]
                     }
                 }
+
+                let customFilterCategories = {};
+
                 Object.keys(row)
-                    .filter(el => el.includes("_filter")).forEach(filterColumn => {
-                    let filterName = filterColumn.replace("_filter", "");
-                    let canonicalName = filterName.trim();
-                    let filterValue = row[filterName];
-                    otherCategories.add(canonicalName);
-                    feature["properties"][`f_${canonicalName}`] = row[filterColumn];
-                    feature["properties"][canonicalName] = (typeof filterValue !== "undefined")?filterValue:"";
+                    .filter(el => el.includes("F_")).forEach(filterColumn => {
+                    let filterName = filterColumn.replace("F_", "");
+                    let arr = filterName.split("_");
+
+                    let categoryName = arr[0].trim();
+                    let filterValueName = arr[1].trim();
+
+                    if (!customFilterCategories.hasOwnProperty(categoryName)) {
+                        customFilterCategories[categoryName] = [];
+                    }
+
+                    let filterObject = {
+                        "filterProperty": filterColumn,
+                        "filterDisplayName": filterValueName,
+                        "filterValueName": filterValueName
+                    };
+
+                    customFilterCategories[categoryName].push(filterObject);
+
+                    let filterProperty = {
+                        "filterValue": row[filterColumn],
+                        "filterAttributes": []
+                    };
+
+                    feature["properties"][`${filterColumn}`] = filterProperty;
+                    Object.keys(row)
+                        .filter(el => el.includes(`A_${filterName}`))
+                        .forEach(attributeColumn => {
+                            let attributeArray = attributeColumn.split("_");
+                            if (attributeArray.length == 4) {
+                                filterProperty.filterAttributes.push({
+                                    "attributeName": attributeArray[3],
+                                    "attributeValue": row[attributeColumn]
+                                });
+                           };
+                        });
                 });
+                otherCategories = customFilterCategories;
+
                 collection.features.push(feature);
             }
         }) 

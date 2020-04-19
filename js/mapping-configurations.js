@@ -1,7 +1,8 @@
 const elementTypes = {
-    CHECKBOX: 1,
-    DROPDOWN: 2,
-    TEXT: 3
+    KEYVALUE_CHECKBOX: 1,
+    YESNO_CHECKBOX: 2,
+    DROPDOWN: 3,
+    TEXT: 4
 }
 
 const searchByMapping = [
@@ -14,6 +15,7 @@ const searchByMapping = [
 ];
 
 const codesTab = "[conf] Coding table for mental health services mapping";
+const validationTab = "[conf]Validation rule set";
 
 const administrativeUnitsBindingTemplate = [
     {
@@ -35,98 +37,69 @@ const administrativeUnitsBindingTemplate = [
 
 const filtersSectionBinding = [
     {
-        filterClass: "patient-type-check",
-        arrayName: "patientTypes",
-        featurePropertyName: "patienttype",
-        elementType: elementTypes.CHECKBOX
-    },
-    {
-        filterClass: "service-category",
+        filterClass: "Типпослуг-check",
         arrayName: "serviceCategories",
         featurePropertyName: "ac1",
-        elementType: elementTypes.CHECKBOX
+        elementType: elementTypes.KEYVALUE_CHECKBOX
     },
     {
-        filterClass: "mental-health-worker",
-        arrayName: "mentalHealthWorkers",
-        featurePropertyName: "healthworker", //TODO: Add this filter type to the actual layout
-        elementType: elementTypes.CHECKBOX
-    },
-    {
-        filterClass: "boolean-categories",
-        arrayName: "booleanCategories"
-    },
-    {
-        filterClass: "other-categories-check",
-        arrayName: "otherCategories"
+        filterClass: "Типзакладу-check",
+        arrayName: "facilityTypes",
+        featurePropertyName: "facilitytype",
+        elementType: elementTypes.KEYVALUE_CHECKBOX
     }
 ];
 
 const codesProperties = [
 	{
 		name: "ac1",
-		columnName: "Activity code"
+		columnName: "Activity code",
+        category: "1"
 	},
 	{
 		name: "activitycategory",
-		columnName: "Activity category"
+		columnName: "Activity category",
+        category: "1"
 	},
 	{
 		name: "activitycodename",
-		columnName: "Activity code name"
+		columnName: "Activity code name",
+        category: "1"
 	},
 	{
 		name: "subactivitycode",
-		columnName: "Subactivity code"
+		columnName: "Subactivity code",
+        category: "1"
 	},
 	{
 		name: "subactivitycodename",
-		columnName: "Subactivity code name"
-	}
+		columnName: "Subactivity code name",
+        category: "1"
+	},
+    {
+        name: "ac2",
+        columnName: "Activity code",
+        category: "2"
+    },
+    {
+        name: "subactivitycode2",
+        columnName: "Subactivity code",
+        category: "2"
+    }
+
 ];
 
 const buttonsJson = [
     {
-        buttonId : "clearPatientTypeFiltersBtn",
-        className : "patient-type-check",
-    },
-    {
-        buttonId : "clearServiceCategoryFiltersBtn",
-        className : "service-category"
-    },
-    {
-        buttonId : "clearMentalHealthWorkersBtn",
-        className : "mental-health-worker"
-    },
-    {
-        buttonId : "clearisInpatientFiltersBtn",
-        className : "is-inpatient-check",
-
-        buttonId : "clearbooleancategoryFiltersBtn",
-        className : "boolean-category-check"
+        buttonId : "clearТиппослугFiltersBtn",
+        className : "Типпослуг-check"
     },
     {
         buttonId : "clearOtherCategoryFiltersBtn",
         className : "other-categories-check",
-    }
-];
-
-//TODO: populate an array of health workers in a facility for filtering
-const mentalHealthWorkers = [
+    },
     {
-        healthworkersavailiable :[
-           "Сімейні лікарі_filter",
-            "Психіатри_filter",
-            "Дитячі психіатри_filter",
-            "Неврологи _filter",
-            "Педіатри_filter",
-            "Наркологи_filter",
-            "Медичні психологи_filter",
-            "Лікарі психотерапевти_filter",
-            "Психологи_filter",
-            "Психотерапевти _filter",
-            "Логопеди_filter",
-            "Терапевти _filter"
-        ]
+        buttonId : "clearТипзакладуFiltersBtn",
+        className : "Типзакладу-check",
     }
 ];
