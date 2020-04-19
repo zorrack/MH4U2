@@ -32,25 +32,26 @@ $( document ).init(function() {
     $("#sidebar").mCustomScrollbar({
         theme: "dark-2"
     });
+    
 
     ///Hide breadcrumb dropdown on map click
     map.on('click', function(e) {
-        $('.breadcrumbs-dropdown-content').collapse();
-        $(".info.legend.leaflet-control").hide();
+        $('.breadcrumbs-dropdown-content').addClass('collapse');
+        $('.info.legend.leaflet-control').hide();
     });
 
     ///Handling click event for the Clear Filter button inside Bootstrap control sidebar START
-     $('.parent').on('click', function(e) {
-      // Do not trigger if target elm or it's child has `no-orange` class
-      if(!treeHasClass(e.target, "no-orange", this)) {
-        $(this).css('backgroundColor', 'darkorange');
-      }
-    });
+    //  $('.parent').on('click', function(e) {
+    //   // Do not trigger if target elm or it's child has `no-orange` class
+    //   if(!treeHasClass(e.target, "no-orange", this)) {
+    //     $(this).css('backgroundColor', 'darkorange');
+    //   }
+    // });
 
     $('.no-collapse').on('click', function(e) {
       e.stopPropagation();
       e.preventDefault();
-      $('.original-dropper .dropdown-toggle').dropdown("toggle");
+      $('.dropdown-toggle').dropdown("toggle");
     });
     /**
      * Checks if any of parent nodes of elm has a class name
@@ -58,15 +59,15 @@ $( document ).init(function() {
      * @param {string} className
      * @param {HTMLElement} stopAtElm if this parent is reached, search stops
     **/
-    function treeHasClass(elm, className, stopAtElm) {
-      while(elm != null && elm != stopAtElm) {
-        if(elm.classList.contains(className)) {
-          return true;
-        }
-        elm = elm.parentNode;
-      }
-      return false;
-    }
+    // function treeHasClass(elm, className, stopAtElm) {
+    //   while(elm != null && elm != stopAtElm) {
+    //     if(elm.classList.contains(className)) {
+    //       return true;
+    //     }
+    //     elm = elm.parentNode;
+    //   }
+    //   return false;
+    // }
     ///Handling click event for the Clear Filter button inside Bootstrap control sidebar END
 
     // This is the Carto Positron basemap
@@ -108,6 +109,9 @@ $( document ).init(function() {
 
     init(map, sidebar);
 
+    $('.breadcrumbs-dropdown').on('click', function () {
+        $('.breadcrumbs-dropdown-content').removeClass('collapse');
+    });
 });
 
 function getFilteredMarkers(markers) {
@@ -195,6 +199,7 @@ function init(map, sidebar) {
             
             createFacilitiesArray(mappingSheets);
             let codes = mergeCodes(collection, dataTypesTemplate);
+            getPatientTypes(collection);
 
             // initAdministrativeUnitsTree();
 
@@ -318,7 +323,7 @@ function createFacilitiesArray(array) {
                         'phonenumber': row["контактний номер"],
                         'email': row["електронна пошта веб сайт"],
                         'mh4uCooperation': row["Співпраця з MH4U"],
-                        'patienttype': row["Цільове населення"],
+                        'patienttype': [],
                         'mentalhealthworkers': row["фахівці з психічного здоров'я"],
                         'ac1': row["Activity code 1"],
                         'ac2': row["Activity code 2"],

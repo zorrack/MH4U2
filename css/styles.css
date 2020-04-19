@@ -30,6 +30,35 @@ body {
    -ms-interpolation-mode: nearest-neighbor; /* IE (non-standard property) */
 }
 
+/* Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 812px) 
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: landscape) {
+
+  .fixed-content {
+    max-height: 50px;
+  }
+
+  .logo {
+    max-height: 50px;
+  }
+
+  .control-bar-header p {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .bund-logo {
+    height: 50px;
+  }
+
+  .fixed-content p {
+    display: none;
+  }
+}
+
 span.icon {
   font-family: FontAwesome;
 }
@@ -84,6 +113,7 @@ span.icon {
 
 .leaflet-sidebar {
     float: right;
+    z-index: 700;
 }
 
 .leaflet-sidebar > .leaflet-control {
@@ -448,6 +478,10 @@ path.leaflet-interactive{
 
 .breadcrumbs-dropdown:hover .breadcrumbs-dropdown-content {
   display: block;
+}
+
+.collapse {
+  display: none!important;
 }
 
 /* ---------------------------------------------------
