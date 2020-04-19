@@ -1,23 +1,21 @@
-    const dataURL = 'https://docs.google.com/spreadsheets/d/1owqbO4TlfVq3dw-Zyp-DxrooyCB0m1Hohstlha_o800/edit?usp=sharing';
-    const acCodesURL = 'https://docs.google.com/spreadsheets/d/1jX20bMaNFLYijteEGjJBDNzpkVqTC_YP0mA2B1zpED4/edit?usp=sharing';
+const dataURL = 'https://docs.google.com/spreadsheets/d/1owqbO4TlfVq3dw-Zyp-DxrooyCB0m1Hohstlha_o800/edit?usp=sharing';
+const acCodesURL = 'https://docs.google.com/spreadsheets/d/1jX20bMaNFLYijteEGjJBDNzpkVqTC_YP0mA2B1zpED4/edit?usp=sharing';
 
-function getData(tabletop, mappingData, configData) {
-
+function initData(tabletop) {
     let sheets = (tabletop.sheets());
     createDataTypes(dataTypesTemplate, sheets);
+}
 
-    mappingData = dataTypesTemplate.find(sheet => sheet.type === "[Так]"); 
-
-    return mappingData;
-
+function getFacilitiesData(tabletop) {
+    return dataTypesTemplate.find(sheet => sheet.type === "[Так]");
 };
 
 
 function createRegions(mappingSheets) {
 	let regions = [];
-            for (let i = 0; i < mappingSheets.length; i++) {
-                regions.push(mappingSheets.sheets[i]);
-            }
+    for (let i = 0; i < mappingSheets.length; i++) {
+        regions.push(mappingSheets.sheets[i]);
+    }
 }
 
 function createDataTypes(dataTypesTemplate, sheets) {

@@ -124,29 +124,39 @@ function getFilteredMarkers(markers) {
     //If at least one filtering checkbox is checked, filter by the selected feature property is applied
     if(checkboxIsChecked) {
         filteredMarkers = markers.filter(marker => {
-            let isPatientTypeChecked = checkboxStates.patientTypes
-                .includes(marker.feature.properties.patienttype);
-            let isServiceCategoryChecked = checkboxStates.serviceCategories
-                .includes(marker.feature.properties.ac1);
-            let isFacilityTypeChecked = checkboxStates.facilityTypes
-                .includes(marker.feature.properties.facilitytype);
+            let selectedCategoryMatch = true;
 
-            let otherCategoryMatch = false;
+            if (checkboxStates.serviceCategories.length > 0) {
+                selectedCategoryMatch &= checkboxStates.serviceCategories
+                    .includes(marker.feature.properties.ac1);
+            }
+
+            if (checkboxStates.facilityTypes.length > 0) {
+                selectedCategoryMatch &= checkboxStates.facilityTypes
+                    .includes(marker.feature.properties.facilitytype);
+            }
+
+            let otherCategoryMatch = true;
+            let otherCategoryChecked = false;
+
             Object.keys(otherCategories).forEach(category => {
                 let categoryCanonicalName = category.replace(/ /g, "");
                 if (checkboxStates[categoryCanonicalName].length > 0) {
+                    otherCategoryChecked = true;
+                    let categoryMatch = false;
                     checkboxStates[categoryCanonicalName].forEach(valueName => {
-                        otherCategoryMatch |= marker.feature.properties.hasOwnProperty(`F_${category}_${valueName}`) &&
+                        categoryMatch |= marker.feature.properties.hasOwnProperty(`F_${category}_${valueName}`) &&
                             marker.feature.properties[`F_${category}_${valueName}`].filterValue === "Yes";
                     });
-                    /*otherCategories[category].forEach(filter => {
-                        otherCategoryMatch |= marker.feature.properties.hasOwnProperty(filter.filterProperty) &&
-                            marker.feature.properties[filter.filterProperty].filterValue === "Yes";
-                    })*/
+                    otherCategoryMatch &= categoryMatch;
                 }
             });
-            return isPatientTypeChecked || isServiceCategoryChecked || isFacilityTypeChecked ||
-                otherCategoryMatch; //true if either of variables is true
+
+            if (otherCategoryChecked) {
+                selectedCategoryMatch &= otherCategoryMatch;
+            }
+
+            return selectedCategoryMatch; //true if either of variables is true
         });
     }
     //If no filter checkbox is checked, return all the features in the array.
@@ -186,22 +196,11 @@ function init(map, sidebar) {
 
         key: dataURL,
         callback: (data, tabletop, mappingData) => {        
-            parseNumbers: true;
-            simpleSheet: false;
+            initData(tabletop);
+            let mappingSheets = getFacilitiesData();
 
-            let mappingSheets = getData(tabletop);
-            createRegions(mappingSheets);
-            wanted: mappingSheets;
-            
             createFacilitiesArray(mappingSheets);
             let codes = mergeCodes(collection, dataTypesTemplate);
-
-            // initAdministrativeUnitsTree();
-
-            // let regions = getRegions(collection.features);
-            // populateRegionsTemplate(regions, regionsTemplate);
-            // document.getElementById('breadcrumb').appendChild(createRegionNavigation(regionsTemplate));
-            // toggleRegionNavigation(selectedAdministrativeUnit);
 
             //Create marker cluster layer group.
             let markerCluster = L.markerClusterGroup({
@@ -209,7 +208,10 @@ function init(map, sidebar) {
                 zoomToBoundsOnClick: true,
             }).addTo(map);
             map.markerCluster = markerCluster;
-            buildOtherCategories();
+            let categoriesRoot = $("#filterCategoriesUL");
+            buildServiceCategory(categoriesRoot, codes);
+            buildFacilityTypeCategory(categoriesRoot);
+            buildOtherCategories(categoriesRoot);
 
             let overlays = createOverlays(codes);
             let markers = createMarkers (map.sidebar, collection.features);
@@ -342,6 +344,7 @@ function createFacilitiesArray(array) {
 
                     let filterObject = {
                         "filterProperty": filterColumn,
+                        "filterDisplayName": filterValueName,
                         "filterValueName": filterValueName
                     };
 
