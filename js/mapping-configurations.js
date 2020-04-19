@@ -1,7 +1,8 @@
 const elementTypes = {
-    CHECKBOX: 1,
-    DROPDOWN: 2,
-    TEXT: 3
+    KEYVALUE_CHECKBOX: 1,
+    YESNO_CHECKBOX: 2,
+    DROPDOWN: 3,
+    TEXT: 4
 }
 
 const searchByMapping = [
@@ -14,6 +15,7 @@ const searchByMapping = [
 ];
 
 const codesTab = "[conf] Coding table for mental health services mapping";
+const validationTab = "[conf]Validation rule set";
 
 const administrativeUnitsBindingTemplate = [
     {
@@ -35,36 +37,16 @@ const administrativeUnitsBindingTemplate = [
 
 const filtersSectionBinding = [
     {
-        filterClass: "patient-type-check",
-        arrayName: "patientTypes",
-        featurePropertyName: "patienttype",
-        elementType: elementTypes.CHECKBOX
-    },
-    {
-        filterClass: "service-category",
+        filterClass: "Типпослуг-check",
         arrayName: "serviceCategories",
         featurePropertyName: "ac1",
-        elementType: elementTypes.CHECKBOX
+        elementType: elementTypes.KEYVALUE_CHECKBOX
     },
     {
-        filterClass: "mental-health-worker",
-        arrayName: "mentalHealthWorkers",
-        featurePropertyName: "healthworker", //TODO: Add this filter type to the actual layout
-        elementType: elementTypes.CHECKBOX
-    },
-    {
-        filterClass: "boolean-categories",
-        arrayName: "booleanCategories"
-    },
-    {
-        filterClass: "other-categories-check",
-        arrayName: "otherCategories"
-    },
-    {
-        filterClass: "facility-type-check",
+        filterClass: "Типзакладу-check",
         arrayName: "facilityTypes",
         featurePropertyName: "facilitytype",
-        elementType: elementTypes.CHECKBOX
+        elementType: elementTypes.KEYVALUE_CHECKBOX
     }
 ];
 
@@ -109,27 +91,15 @@ const codesProperties = [
 
 const buttonsJson = [
     {
-        buttonId : "clearPatientTypeFiltersBtn",
-        className : "patient-type-check",
-    },
-    {
-        buttonId : "clearServiceCategoryFiltersBtn",
-        className : "service-category"
-    },
-    {
-        buttonId : "clearMentalHealthWorkersBtn",
-        className : "mental-health-worker"
-    },
-    {
-        buttonId : "clearbooleancategoryFiltersBtn",
-        className : "boolean-category-check"
+        buttonId : "clearТиппослугFiltersBtn",
+        className : "Типпослуг-check"
     },
     {
         buttonId : "clearOtherCategoryFiltersBtn",
         className : "other-categories-check",
     },
     {
-        buttonId : "clearFacilityTypeFiltersBtn",
-        className : "facility-type-check",
+        buttonId : "clearТипзакладуFiltersBtn",
+        className : "Типзакладу-check",
     }
 ];

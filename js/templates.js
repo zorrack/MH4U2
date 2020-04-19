@@ -13,7 +13,7 @@ const breadcrumbItemTemplate = `
 const checkboxFilterItemTemplate = `
     <li>
         <div class="inputs" id="{categoryName}">
-            <label class="check">{categoryItem}
+            <label class="check">{categoryItemLabel}
                 <input type="checkbox" class="filtercontrol {categoryName}-check" value="{categoryItem}" name="check"> <span class="label-text checkmark"></span>
             </label>
         </div>
